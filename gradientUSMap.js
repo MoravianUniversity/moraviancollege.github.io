@@ -7,8 +7,8 @@
 	var min = "0";
 	var max = "0";
 	var feature_desired = "poke_ratio";
-	var start_color = "#33FF00";
-	var end_color = "black";
+	var start_color = "#00CCFF";
+	var end_color = "#003300";
 
 	var svg;
 
@@ -90,8 +90,7 @@
 
 		//Define quantize scale to sort data values into buckets of color
 		var color = d3.scale.quantize()
-							.range(makeRange(2));
-							//Colors taken from colorbrewer.js, included in the D3 download
+							.range(makeRange(2, start_color, end_color));
 
 		var mapDiv = d3.select("body")
 						.append("div")
@@ -203,7 +202,7 @@
 
 		else {
 			var newcolor = d3.scale.quantize()
-								.range(makeRange(val));
+								.range(makeRange(val, start_color, end_color));
 			newcolor.domain([
             	min,max
     		]);
@@ -254,7 +253,7 @@
 	}
 
 	var drawBoxes = function(boxNum) {
-		var colorArray = makeRange(boxNum);
+		var colorArray = makeRange(boxNum, start_color, end_color);
 		d3.selectAll(".rectangle").remove();
 		for(var i = 0; i < boxNum; i++){
 			svg.append("rect")
@@ -313,12 +312,12 @@
 		gradient
 		    .append("stop")
 		    .attr("offset", "0")
-		    .attr("stop-color", "#33FF00")
+		    .attr("stop-color", start_color)
 		    
 		gradient
 		    .append("stop")
 		    .attr("offset", "1")
-		    .attr("stop-color", "black")
+		    .attr("stop-color", end_color)
 		    
 		svg
 		    .append("rect")
@@ -333,23 +332,39 @@
 
 	}
 
-	var makeRange = function(step) {
-		rang = [];
-		steps = 100 / step;
-		for (var i = 0; i < 100; i+=steps) {
-			var num = Math.round(255 - i/100 * 255);
-			rang.push("rgb(0," + num + ",0)");
-		}
-		return rang;
-	}
+	var makeRange = function(step, startColor, endColor) {
 
-	var rangeFunction = function(step, startColor, endColor) {
+		var Rstart = hexToR(startColor);
+		var Gstart = hexToG(startColor);
+		var Bstart = hexToB(startColor);
+
+		var Rend = hexToR(endColor);
+		var Gend = hexToG(endColor);
+		var Bend = hexToB(endColor);
+
+		var Rchange = Rend - Rstart;
+		var Gchange = Gend - Gstart;
+		var Bchange = Bend - Bstart;
+
+		var Rstep = Rchange/(step-1);
+		var Gstep = Gchange/(step-1);
+		var Bstep = Bchange/(step-1);
+
+		function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+		function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+		function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+		function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+
 		rang = [];
-		steps = 100 / step;
-		for (var i = 0; i < 100; i+=steps) {
-			var num = Math.round(255 - i/100 * 255);
-			rang.push("rgb(0," + num + ",0)");
+
+		for (var i = 0; i < step; i++) {
+			var newR, newG, newB;
+			newR = (Rstart + i*Rstep).toFixed(0);
+			newG = (Gstart + i*Gstep).toFixed(0);
+			newB = (Bstart + i*Bstep).toFixed(0);
+			rang.push("rgb(" + newR + "," + newG + "," + newB + ")");
 		}
+		
 		return rang;
 	}
 
@@ -391,7 +406,7 @@
         d3.csv("json/countyPokes/"+csvValueFile, function(data) {
 
             var color = d3.scale.quantize()
-                            .range(makeRange(2));
+                            .range(makeRange(2, start_color, end_color));
 
             min = d3.min(data, function(d) { return d.poke_ratio; });
             max = d3.max(data, function(d) { return d.poke_ratio; });
@@ -416,6 +431,16 @@
                         for (var k = 0; k < len-1; k++) {
                             str += part[k];
                             if (k != len-2) {
+                                str += " ";
+                            }
+                        }
+                        dataState = str;
+                    }
+                    else if (part[len-2] == "Census") {
+                    	var str = "";
+                        for (var k = 0; k < len-2; k++) {
+                            str += part[k];
+                            if (k != len-3) {
                                 str += " ";
                             }
                         }
