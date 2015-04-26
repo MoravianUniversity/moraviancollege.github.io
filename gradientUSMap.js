@@ -90,7 +90,7 @@
 
 		//Define quantize scale to sort data values into buckets of color
 		var color = d3.scale.quantize()
-							.range(gradientMap.makeRange(2));
+							.range(makeRange(2));
 							//Colors taken from colorbrewer.js, included in the D3 download
 
 		var mapDiv = d3.select("body")
@@ -113,7 +113,7 @@
 			max = d3.max(data, function(d) { return d.poke_ratio; });
 			color.domain([min,max]);
 
-			gradientMap.rangeBoxes(2, 100, min, max);
+			gradientMap.rangeBoxes(2);
 
 			d3.json(usMapFile, function(json) {
 				//Merge the ag. data and GeoJSON
@@ -203,7 +203,7 @@
 
 		else {
 			var newcolor = d3.scale.quantize()
-								.range(gradientMap.makeRange(val));
+								.range(makeRange(val));
 			newcolor.domain([
             	min,max
     		]);
@@ -227,12 +227,22 @@
 
 	}
 
-	gradientMap.rangeBoxes = function(numOfBoxes, maxLabelPosition) {
+	gradientMap.rangeBoxes = function(numOfBoxes) {
 		drawMinLabel();
 		drawBoxes(numOfBoxes);
 	}
 
 	var link = function(d) {
+
+		d3.select("#stateName").remove();
+
+		d3.select("#mapSVG")
+			.append("text")
+			.attr("x", 100)
+			.attr("y", 100)
+			.attr("id", "stateName")
+			.text(d.properties.name);
+
 		var abbreviation = state_abbreviations[d.properties.name];
 		var path = abbreviation + "Counties.json";
 
@@ -244,7 +254,7 @@
 	}
 
 	var drawBoxes = function(boxNum) {
-		var colorArray = gradientMap.makeRange(boxNum);
+		var colorArray = makeRange(boxNum);
 		d3.selectAll(".rectangle").remove();
 		for(var i = 0; i < boxNum; i++){
 			svg.append("rect")
@@ -323,9 +333,18 @@
 
 	}
 
-	gradientMap.makeRange = function(step) {
+	var makeRange = function(step) {
 		rang = [];
-		numGradientBox = step;
+		steps = 100 / step;
+		for (var i = 0; i < 100; i+=steps) {
+			var num = Math.round(255 - i/100 * 255);
+			rang.push("rgb(0," + num + ",0)");
+		}
+		return rang;
+	}
+
+	var rangeFunction = function(step, startColor, endColor) {
+		rang = [];
 		steps = 100 / step;
 		for (var i = 0; i < 100; i+=steps) {
 			var num = Math.round(255 - i/100 * 255);
@@ -372,13 +391,13 @@
         d3.csv("json/countyPokes/"+csvValueFile, function(data) {
 
             var color = d3.scale.quantize()
-                            .range(gradientMap.makeRange(2));
+                            .range(makeRange(2));
 
             min = d3.min(data, function(d) { return d.poke_ratio; });
             max = d3.max(data, function(d) { return d.poke_ratio; });
             color.domain([min,max]);
 
-            gradientMap.rangeBoxes(2, 100, min, max);
+            gradientMap.rangeBoxes(2);
 
         	d3.json("json/stateJSON/"+stateFile, function(json) {
 
@@ -419,7 +438,7 @@
 
                 // create a first guess for the projection
                 var center = d3.geo.centroid(json)
-                var scale  = 150; // MAKES NO SENSE WHY DOES IT HAVE TO BE A VARIABLE AND WHY DOES IT CHANGE NOTHING
+                var scale  = 150;
                 var offset = [w/2, h/2];
                 var projection = d3.geo.mercator().scale(scale).center(center)
                     .translate(offset);
@@ -430,11 +449,22 @@
                 // using the path determine the bounds of the current map and use 
                 // these to determine better values for the scale and translation
                 var bounds  = path.bounds(json);
-                var hscale  = scale*w  / (bounds[1][0] - bounds[0][0]);
-                var vscale  = scale*h / (bounds[1][1] - bounds[0][1]);
-                var scale   = (hscale < vscale) ? hscale : vscale;
-                var offset  = [w - (bounds[0][0] + bounds[1][0])/2,
+                var hscale, vscale, scale, offset;
+
+				if (stateFile.substring(0,2) == "AK") {
+                	hscale  = scale*w*5 / (bounds[1][0] - bounds[0][0]);
+                    vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
+                    scale   = (hscale < vscale) ? hscale : vscale;
+                	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
+                                  h - (bounds[0][1] + bounds[1][1])/2.5];
+                }
+                else {
+                	hscale  = scale*w*.75  / (bounds[1][0] - bounds[0][0]);
+                	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
+                	scale   = (hscale < vscale) ? hscale : vscale;
+                	offset  = [w - (bounds[0][0] + bounds[1][0])/2,
                                   h - (bounds[0][1] + bounds[1][1])/2];
+                }
 
                 // new projection
                 projection = d3.geo.mercator().center(center)
