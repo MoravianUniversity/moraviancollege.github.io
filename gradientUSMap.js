@@ -7,6 +7,14 @@
 	var min = "0";
 	var max = "0";
 	var feature_desired = "poke_ratio";
+
+	// defualt path names for the files
+	var usMapFile 		= "json/us-states.json";
+	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
+	var countyMapPath 	= "json/stateJSON/";
+	var countyValuePath = "json/countyPokes/";
+	
+	// default values for the color range
 	var start_color = "#00CCFF";
 	var end_color = "#003300";
 
@@ -65,7 +73,7 @@
 	state_abbreviations["Wyoming"] = "WY";
 	state_abbreviations["Puerto Rico"] = "PR";
 
-	gradientMap.drawMap = function(usMapFile, csvValueFile) {
+	gradientMap.drawMap = function() {
 
 		d3.select("#mapSVG").remove();
         d3.select("#comboDiv").remove();
@@ -106,7 +114,7 @@
 			.append("div")
 			.attr("id", "tooltip");
 
-		d3.csv(csvValueFile, function(data) {
+		d3.csv(csvUSValueFile, function(data) {
 
 			min = d3.min(data, function(d) { return d.poke_ratio; });
 			max = d3.max(data, function(d) { return d.poke_ratio; });
@@ -127,7 +135,7 @@
 			            var jsonState = state_abbreviations[json.features[j].properties.name];
 			            if (dataState == jsonState) {
 			                //Copy the data value into the JSON
-			                json.features[j].properties.poke_ratio = dataValue;
+			                json.features[j].properties.value = dataValue;
 			                //Stop looking through the JSON
 			                break;
 			        	}
@@ -146,7 +154,7 @@
 			       .attr("stroke-width", 1)
 			       .style("fill", function(d) {
 	                    //Get data value
-	                    var value = d.properties.poke_ratio;
+	                    var value = d.properties.value;
 
 	                    if (value) {//If value exists…
 	                    	return color(value);
@@ -161,20 +169,20 @@
 			});
 
 		});
-	};
+	}
 
 	gradientMap.mouseOver = function(d) {
 		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
 
 		// state
 		if (d.properties.name) {
-			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.poke_ratio))  
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))  
 				.style("left", (d3.event.pageX) + "px")     
 				.style("top", (d3.event.pageY - 28) + "px");
 		}
 		// county
-		else if (d.properties.poke_ratio) {
-			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.poke_ratio))  
+		else if (d.properties.value) {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))  
 				.style("left", (d3.event.pageX) + "px")     
 				.style("top", (d3.event.pageY - 28) + "px");
 		}
@@ -184,7 +192,6 @@
 				.style("left", (d3.event.pageX) + "px")     
 				.style("top", (d3.event.pageY - 28) + "px");
 		}
-
 		
 	}
 	
@@ -212,7 +219,7 @@
 		d3.selectAll("path")
 			.style("fill", function(d) {
                 //Get data value
-                var value = d.properties.poke_ratio;
+                var value = d.properties.value;
                 if (!inter && value) {//If value exists…
                 	return newcolor(value);
                 } 
@@ -224,6 +231,22 @@
                 }
             });
 
+	}
+
+	gradientMap.setColors = function(start, end) {
+		start_color = start;
+		end_color = end;
+	}
+
+	gradientMap.setFeature = function(feature) {
+		feature_desired = feature;
+	}
+
+	gradientMap.setPaths = function(usPath, uscsvPath, countyPath, countycsvPath) {
+		usMapFile 		= usPath;
+		csvUSValueFile 	= uscsvPath;
+		countyMapPath 	= countyPath;
+		countyValuePath = countycsvPath;
 	}
 
 	gradientMap.rangeBoxes = function(numOfBoxes) {
@@ -397,13 +420,13 @@
 		});
 	}
 
-	gradientMap.drawCounties = function(stateFile, csvValueFile) {
+	gradientMap.drawCounties = function(stateFile, csvFile) {
     	d3.selectAll("path").remove();
         gradientMap.mouseOut();
 
     	svg = d3.select("svg");
 
-        d3.csv("json/countyPokes/"+csvValueFile, function(data) {
+        d3.csv(countyValuePath+csvFile, function(data) {
 
             var color = d3.scale.quantize()
                             .range(makeRange(2, start_color, end_color));
@@ -414,7 +437,7 @@
 
             gradientMap.rangeBoxes(2);
 
-        	d3.json("json/stateJSON/"+stateFile, function(json) {
+        	d3.json(countyMapPath+stateFile, function(json) {
 
                 //Merge the ag. data and GeoJSON
                 //Loop through once for each ag. data value
@@ -454,7 +477,7 @@
                         var jsonState = json.features[j].properties.NAME;
                         if (dataState == jsonState) {
                             //Copy the data value into the JSON
-                            json.features[j].properties.poke_ratio = dataValue;
+                            json.features[j].properties.value = dataValue;
                             //Stop looking through the JSON
                             break;
                         }
@@ -510,7 +533,7 @@
                     })
                     .style("fill", function(d) {
                             //Get data value
-                            var value = d.properties.poke_ratio;
+                            var value = d.properties.value;
 
                             if (value) {//If value exists…
                                 return color(value);
