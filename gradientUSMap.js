@@ -236,10 +236,12 @@
 	gradientMap.setColors = function(start, end) {
 		start_color = start;
 		end_color = end;
+		return this;
 	}
 
 	gradientMap.setFeature = function(feature) {
 		feature_desired = feature;
+		return this;
 	}
 
 	gradientMap.setPaths = function(usPath, uscsvPath, countyPath, countycsvPath) {
@@ -247,6 +249,7 @@
 		csvUSValueFile 	= uscsvPath;
 		countyMapPath 	= countyPath;
 		countyValuePath = countycsvPath;
+		return this;
 	}
 
 	gradientMap.rangeBoxes = function(numOfBoxes) {
@@ -393,9 +396,9 @@
 
 	gradientMap.tooltipHtml = function(n, d){	/* function to create html content string in tooltip div. */
 		var specified_value = d.toFixed(2);
-		var feat = feature_desired.charAt(0).toUpperCase() + feature_desired.slice(1);
+		var feat = feature_desired.replace(" ", "&nbsp");
 		return "<h4>"+n+"</h4><table>"+
-			"<tr><td>"+feat+": </td><td>"+(specified_value)+"</td></tr>"+
+			"<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
 			"</table>";
 	}
 

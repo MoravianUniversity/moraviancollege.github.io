@@ -29,7 +29,7 @@
 			}
 			#tooltip {   
 				position: absolute;           
-				text-align: center;
+				text-align: left;
 				padding: 20px;             
 				margin: 10px;
 				font: 12px sans-serif;        
@@ -41,6 +41,7 @@
 			#tooltip h4{
 				margin:0;
 				font-size:14px;
+				text-align: center;
 			}
 			#tooltip{
 				background:rgba(0,0,0,0.9);
@@ -63,7 +64,7 @@
 				width:50px;
 			}
 			#tooltip tr td:nth-child(2){
-				text-align:center;
+				text-align:left;
 			}
 		</style>
 
@@ -91,11 +92,11 @@
 			var county_path_file = "json/stateJSON/";
 			var county_poke_data_file = "json/countyPokes/";
 
-			gradientMap.setColors("#00FBFF","#070082");
-			gradientMap.setFeature("Poke Ratio");
-			gradientMap.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+			var map = gradientMap.setColors("#FF0000","#FFFF00")
+						.setFeature("Poke Ratio")
+						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
 
-			gradientMap.drawMap();
+			map.drawMap();
 
 		</script>
 
