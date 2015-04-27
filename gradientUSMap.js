@@ -404,9 +404,6 @@
 
 	var makeCombo = function() {
 		// maybe need to change this to append to the svg instead does not work right now
-		var cbText = d3.select("#comboDiv")
-						.append("text")
-						.text("Gradient:");
 
 		var combo = d3.select("#comboDiv")
 						.append("select")
