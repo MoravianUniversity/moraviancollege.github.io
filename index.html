@@ -85,6 +85,8 @@
 		<div id="comboDiv">
 		</div>
 
+		<div style="background-color: black"></div>
+
 		<script type="text/javascript">
 
 			var us_poke_data_file = "json/poke_ratio_correct2.csv";
@@ -92,9 +94,13 @@
 			var county_path_file = "json/stateJSON/";
 			var county_poke_data_file = "json/countyPokes/";
 
+
+
 			var map = gradientMap.setColors("#FF0000","#FFFF00")
 						.setFeature("Poke Ratio")
-						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
+						.setStartingGradient(-1)
+						.setup();
 
 			map.drawMap();
 

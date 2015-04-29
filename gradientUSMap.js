@@ -6,6 +6,7 @@
 	var h = 600;
 	var min = "0";
 	var max = "0";
+	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
 
 	// defualt path names for the files
@@ -13,6 +14,62 @@
 	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
 	var countyMapPath 	= "json/stateJSON/";
 	var countyValuePath = "json/countyPokes/";
+
+	var getStateValuesFunction = function(data, stateName) {
+
+		var stateAbbr = state_abbreviations[stateName];
+
+		for (var i = 0; i < data.length; i++) {
+            //Grab state name
+            var dataState = data[i].state;
+
+            //Grab data value, and convert from string to float
+            if (dataState == stateAbbr) {
+            	return parseFloat(data[i].poke_ratio);
+        	}
+
+		}
+	};
+
+	var getCountyValuesFunction = function(data, countyName) {
+		//Merge the ag. data and GeoJSON
+        //Loop through once for each ag. data value
+        for (var i = 0; i < data.length; i++) {
+            //Grab state name
+            var dataCounty = data[i].county;
+
+            var part = dataCounty.split(" ");
+
+            // if the last thing is county/borough get rid of it
+            var len = part.length;
+            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish") {
+                var str = "";
+                for (var k = 0; k < len-1; k++) {
+                    str += part[k];
+                    if (k != len-2) {
+                        str += " ";
+                    }
+                }
+                dataCounty = str;
+            }
+            else if (part[len-2] == "Census") {
+            	var str = "";
+                for (var k = 0; k < len-2; k++) {
+                    str += part[k];
+                    if (k != len-3) {
+                        str += " ";
+                    }
+                }
+                dataCounty = str;
+            }
+
+            if (dataCounty == countyName) {
+            	//Grab data value, and convert from string to float
+            	return parseFloat(data[i].poke_ratio);
+            }
+           
+        }
+	};
 	
 	// default values for the color range
 	var start_color = "#00CCFF";
@@ -73,32 +130,13 @@
 	state_abbreviations["Wyoming"] = "WY";
 	state_abbreviations["Puerto Rico"] = "PR";
 
-	gradientMap.drawMap = function() {
-
-		d3.select("#mapSVG").remove();
-        d3.select("#comboDiv").remove();
-        d3.select("#tooltip").remove();
+	gradientMap.setup = function() {
 
 		d3.select("body")
 			.append("div")
 			.attr("id", "comboDiv");
 
 		makeCombo();
-
-		//Define map projection
-		var projection = d3.geo.albersUsa()
-							   .translate([w/2, h/2])
-							   .scale([900]);
-
-		// Path of GeoJSON
-		var path = d3.geo.path()
-							.projection(projection);
-
-		var numGradientBox = 2;
-
-		//Define quantize scale to sort data values into buckets of color
-		var color = d3.scale.quantize()
-							.range(makeRange(2, start_color, end_color));
 
 		var mapDiv = d3.select("body")
 						.append("div")
@@ -114,33 +152,51 @@
 			.append("div")
 			.attr("id", "tooltip");
 
+		return this;
+
+	}
+
+	gradientMap.drawMap = function() {
+
+		d3.selectAll("path").remove();
+		d3.select("#stateName").remove();
+        mouseOut();
+
+		//Define map projection
+		var projection = d3.geo.albersUsa()
+							   .translate([w/2, h/2])
+							   .scale([900]);
+
+		// Path of GeoJSON
+		var path = d3.geo.path()
+						.projection(projection);
+
+		var color;
+		var continuous = false;
+		//Define quantize scale to sort data values into buckets of color
+		if (current_gradient != -1) {
+			color = d3.scale.quantize()
+							.range(makeRange(current_gradient, start_color, end_color));
+		}
+		// this means they want a continuous gradient
+		else {
+			continuous = true;
+		}
+
 		d3.csv(csvUSValueFile, function(data) {
 
 			min = d3.min(data, function(d) { return d.poke_ratio; });
 			max = d3.max(data, function(d) { return d.poke_ratio; });
-			color.domain([min,max]);
 
-			gradientMap.rangeBoxes(2);
+			if (!continuous) {
+				color.domain([min,max]);
+				gradientMap.rangeBoxes(current_gradient);
+			}
+			else {
+				drawContinuousGrad();
+			}
 
 			d3.json(usMapFile, function(json) {
-				//Merge the ag. data and GeoJSON
-		        //Loop through once for each ag. data value
-		        for (var i = 0; i < data.length; i++) {
-		            //Grab state name
-		            var dataState = data[i].state;
-		            //Grab data value, and convert from string to float
-		            var dataValue = parseFloat(data[i].poke_ratio);
-		            //Find the corresponding state inside the GeoJSON
-		            for (var j = 0; j < json.features.length; j++) {
-			            var jsonState = state_abbreviations[json.features[j].properties.name];
-			            if (dataState == jsonState) {
-			                //Copy the data value into the JSON
-			                json.features[j].properties.value = dataValue;
-			                //Stop looking through the JSON
-			                break;
-			        	}
-		        	}
-		        }
 
 			   svg.selectAll("path")
 			       .data(json.features)
@@ -154,24 +210,28 @@
 			       .attr("stroke-width", 1)
 			       .style("fill", function(d) {
 	                    //Get data value
+	                    d.properties.value = getStateValuesFunction(data, d.properties.name);
 	                    var value = d.properties.value;
 
-	                    if (value) {//If value exists…
-	                    	return color(value);
-	                    } 
-	                    else {//If value is undefined…
-	                        return "#ccc";
-	                    }
+	                    if (!continuous && value) {//If value exists…
+		                	return color(value);
+		                } 
+		                else if (continuous && value) {
+		                	return d3.interpolate(start_color, end_color)((value - min)/(max-min));
+		                }
+		                else {//If value is undefined…
+		                    return "#ccc";
+		                }
                     })
 			       .on("click", link)
-			       .on("mouseover", gradientMap.mouseOver)
-			       .on("mouseout", gradientMap.mouseOut);
+			       .on("mouseover", mouseOver)
+			       .on("mouseout", mouseOut);
 			});
 
 		});
 	}
 
-	gradientMap.mouseOver = function(d) {
+	var mouseOver = function(d) {
 		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
 
 		// state
@@ -195,11 +255,11 @@
 		
 	}
 	
-	gradientMap.mouseOut = function() {
+	var mouseOut = function() {
 		d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
 	}
 
-	gradientMap.change_gradient = function(val) {
+	var change_gradient = function(val) {
 
 		var inter = false;
 		if (val == -1) {
@@ -233,6 +293,11 @@
 
 	}
 
+	gradientMap.setFunctions = function (function1, function2) {
+		getStateValuesFunction = function1;
+		getCountyValuesFunction = function2;
+	}
+
 	gradientMap.setColors = function(start, end) {
 		start_color = start;
 		end_color = end;
@@ -249,6 +314,14 @@
 		csvUSValueFile 	= uscsvPath;
 		countyMapPath 	= countyPath;
 		countyValuePath = countycsvPath;
+		return this;
+	}
+
+	gradientMap.setStartingGradient = function(number) {
+		if (number == -1) {
+			return this;
+		}
+		current_gradient = number;
 		return this;
 	}
 
@@ -273,9 +346,9 @@
 
 		var csvPath = abbreviation + "poke.csv";
 
-		gradientMap.mouseOut();
+		mouseOut();
 
-		gradientMap.drawCounties(path, csvPath);
+		drawCounties(path, csvPath);
 	}
 
 	var drawBoxes = function(boxNum) {
@@ -326,6 +399,8 @@
 		var minY = 10;
 		var maxY = 300;
 
+		d3.select("linearGradient").remove();
+
 		var gradient = svg
 		    .append("linearGradient")
 		    .attr("y1", "0")
@@ -354,6 +429,7 @@
 		    .attr("fill", "url(#gradient)")
 		    .attr("class", "rectangle");
 
+		drawMinLabel();
 		drawMaxLabel(300);
 
 	}
@@ -412,81 +488,63 @@
 
 		for (var i = 2; i <= 10; i++) {
 			combo.append("option")
+					.attr("id", "option" + i.toString())
 					.attr("value", i)
 					.text(i);
 		}
 		combo.append("option")
+				.attr("id", "optionc")
 				.attr("value", -1)
 				.text("continuous");
 
+		if (current_gradient == -1) {
+			d3.select("#optionc")
+				.attr("selected", "selected");
+		}
+		else {
+			d3.select("#option"+current_gradient.toString())
+				.attr("selected", "selected");
+		}
+
 		d3.select("select").on("change", function() {
-			gradientMap.change_gradient(this.options[this.selectedIndex].value);
+			var value = this.options[this.selectedIndex].value;
+			change_gradient(value);
+			current_gradient = value;
 		});
 	}
 
-	gradientMap.drawCounties = function(stateFile, csvFile) {
+	var drawCounties = function(stateFile, csvFile) {
     	d3.selectAll("path").remove();
-        gradientMap.mouseOut();
+        mouseOut();
 
-    	svg = d3.select("svg");
+    	var color;
+		var continuous = false;
+		//Define quantize scale to sort data values into buckets of color
+		if (current_gradient != -1) {
+			color = d3.scale.quantize()
+							.range(makeRange(current_gradient, start_color, end_color));
+		}
+		// this means they want a continuous gradient
+		else {
+			continuous = true;
+		}
 
         d3.csv(countyValuePath+csvFile, function(data) {
 
-            var color = d3.scale.quantize()
-                            .range(makeRange(2, start_color, end_color));
-
             min = d3.min(data, function(d) { return d.poke_ratio; });
             max = d3.max(data, function(d) { return d.poke_ratio; });
-            color.domain([min,max]);
 
-            gradientMap.rangeBoxes(2);
+           	if (!continuous) {
+				color.domain([min,max]);
+				gradientMap.rangeBoxes(current_gradient);
+			}
+			else {
+				drawContinuousGrad();
+			}
+
+            gradientMap.rangeBoxes(current_gradient);
 
         	d3.json(countyMapPath+stateFile, function(json) {
-
-                //Merge the ag. data and GeoJSON
-                //Loop through once for each ag. data value
-                for (var i = 0; i < data.length; i++) {
-                    //Grab state name
-                    var dataState = data[i].county;
-
-                    var part = dataState.split(" ");
-
-                    // if the last thing is county/borough get rid of it
-                    var len = part.length;
-                    if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish") {
-                        var str = "";
-                        for (var k = 0; k < len-1; k++) {
-                            str += part[k];
-                            if (k != len-2) {
-                                str += " ";
-                            }
-                        }
-                        dataState = str;
-                    }
-                    else if (part[len-2] == "Census") {
-                    	var str = "";
-                        for (var k = 0; k < len-2; k++) {
-                            str += part[k];
-                            if (k != len-3) {
-                                str += " ";
-                            }
-                        }
-                        dataState = str;
-                    }
-
-                    //Grab data value, and convert from string to float
-                    var dataValue = parseFloat(data[i].poke_ratio);
-                    //Find the corresponding state inside the GeoJSON
-                    for (var j = 0; j < json.features.length; j++) {
-                        var jsonState = json.features[j].properties.NAME;
-                        if (dataState == jsonState) {
-                            //Copy the data value into the JSON
-                            json.features[j].properties.value = dataValue;
-                            //Stop looking through the JSON
-                            break;
-                        }
-                    }
-                }
 
                 // create a first guess for the projection
                 var center = d3.geo.centroid(json)
@@ -537,20 +595,24 @@
                     })
                     .style("fill", function(d) {
                             //Get data value
+                            d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
 
-                            if (value) {//If value exists…
-                                return color(value);
-                            } 
-                            else {//If value is undefined…
-                                return "#ccc";
-                            }
+                            if (!continuous && value) {//If value exists…
+				                return color(value);
+				            } 
+				            else if (continuous && value) {
+				               	return d3.interpolate(start_color, end_color)((value - min)/(max-min));
+				            }
+				            else {//If value is undefined…
+				                return "#ccc";
+				            }
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
                     .on("click", click)
-                    .on("mouseover", gradientMap.mouseOver)
-                    .on("mouseout", gradientMap.mouseOut);
+                    .on("mouseover", mouseOver)
+                    .on("mouseout", mouseOut);
 
             });
         });
