@@ -517,6 +517,9 @@
     	d3.selectAll("path").remove();
         mouseOut();
 
+        d3.select("#floatingBarsG")
+        	.style("visibility", "visible");
+
     	var color;
 		var continuous = false;
 		//Define quantize scale to sort data values into buckets of color
@@ -615,6 +618,8 @@
                     .on("mouseout", mouseOut);
 
             });
+			d3.select("#floatingBarsG")
+        		.style("visibility", "hidden");
         });
     }
 
