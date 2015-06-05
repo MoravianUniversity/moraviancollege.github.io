@@ -72,8 +72,8 @@
 	};
 	
 	// default values for the color range
-	var start_color = "#00CCFF";
-	var end_color = "#003300";
+	var start_color = "#00FF00";
+	var end_color = "#FF0000";
 
 	var svg;
 
