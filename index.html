@@ -17,7 +17,9 @@
 
 			<p style="text-indent:50px">The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.78. 
 			</p>
+
 			<p style="text-indent:50px">The map below shows poke ratio per state (including Puerto Rico) by Light-Blue to Dark-Blue Scale, while states without any data available is in Grey. You may change the gradient level for more details.
+
 			</p>
 
 		</div>
@@ -57,7 +59,9 @@
 
 
 
+
 			var map = gradientMap.setColors("#002966","#B2D1FF")
+
 						.setFeature("Poke Ratio")
 						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
 						.setStartingGradient(-1)
