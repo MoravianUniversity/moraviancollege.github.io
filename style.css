@@ -57,8 +57,10 @@ svg {
 }
 #floatingBarsG{
 	position: absolute;
-	margin-left: 690px;
-	margin-top: 275px;
+	margin-left: 45%;
+	margin-right: 50%;
+	margin-top: 278px;
+	margin-bottom: 49%;
 	width:62px;
 	height:77px
 }
