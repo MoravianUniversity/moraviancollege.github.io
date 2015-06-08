@@ -573,6 +573,28 @@
                 	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
                                   h - (bounds[0][1] + bounds[1][1])/2.5];
                 }
+              /*  else if (stateFile.substring(0,2) == "ID") {
+                	hscale  = scale*w*.75 / (bounds[1][0] - bounds[0][0]);
+                    vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
+                    scale   = (hscale < vscale) ? hscale : vscale;
+                	offset  = [w - (bounds[0][0] + bounds[1][0])/2,
+                                  h - (bounds[0][1] + bounds[1][1])/2.5];
+                }
+                else if (stateFile.substring(0,2) == "NH") {
+                	hscale  = scale*w*.75 / (bounds[1][0] - bounds[0][0]);
+                    vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
+                    scale   = (hscale < vscale) ? hscale : vscale;
+                	offset  = [w - (bounds[0][0] + bounds[1][0])/2,
+                                  h - (bounds[0][1] + bounds[1][1])/2.5];
+                }
+                
+                else if (stateFile.substring(0,2) == "MD") {
+                	hscale  = scale*w*.75 / (bounds[1][0] - bounds[0][0]);
+                    vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
+                    scale   = (hscale < vscale) ? hscale : vscale;
+                	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
+                                  h - (bounds[0][1] + bounds[1][1])/2];
+                }*/
                 else {
                 	hscale  = scale*w*.75  / (bounds[1][0] - bounds[0][0]);
                 	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
