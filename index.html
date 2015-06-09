@@ -1,101 +1,59 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-
-	<head>
-
-		<meta charset="utf-8">
-		<title>Map</title>
-		<script type="text/javascript" src="d3/d3.v3.js"></script>
-		<script type="text/javascript" src="gradientUSMap.js"></script>		
-		<link rel="stylesheet" type="text/css" href="style.css">
-	</head>
-
-	<body>
-
-		<div id="pageTitle">
-			<h1 style="text-align:center">HA1C Tests Per Patient</h1>
-
-			<p style="text-indent:50px">The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.78. 
-			</p>
-<<<<<<< HEAD
-			<p style="text-indent:50px">The map below shows poke ratio per state (including Puerto Rico) by Light Blue-Dark Blue  Scale, while states without any data available is in Grey. You may change the gradient level for more details.
-=======
-			<p style="text-indent:50px">The map below shows poke ratio per state (including Puerto Rico) by Light-Blue to Dark-Blue Scale, while states without any data available is in Grey. You may change the gradient level for more details.
->>>>>>> 379e92a309e8804eb1691c8e7d161e1f62c1906b
-			</p>
-
-		</div>
-
-		
-
-		<div id="floatingBarsG" style="visibility: hidden">
-			<div class="blockG" id="rotateG_01">
-			</div>
-			<div class="blockG" id="rotateG_02">
-			</div>
-			<div class="blockG" id="rotateG_03">
-			</div>
-			<div class="blockG" id="rotateG_04">
-			</div>
-			<div class="blockG" id="rotateG_05">
-			</div>
-			<div class="blockG" id="rotateG_06">
-			</div>
-			<div class="blockG" id="rotateG_07">
-			</div>
-			<div class="blockG" id="rotateG_08">
-			</div>
-		</div>
-
-		<div id="comboDiv">
-		</div>
-
-		<div style="background-color: black"></div>
-
-		<script type="text/javascript">
-
-			var us_poke_data_file = "json/poke_ratio_correct2.csv";
-			var map_json_file = "json/us-states.json";
-			var county_path_file = "json/stateJSON/";
-			var county_poke_data_file = "json/countyPokes/";
-
-
-
-			var map = gradientMap.setColors("#002966","#B2D1FF")
-						.setFeature("Poke Ratio")
-						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
-						.setStartingGradient(-1)
-						.setup();
-
-			map.drawMap();
-		
-		</script>
-		<h3>Moravian College Summer Team 2015</h3>
-		 	<ul style="list-style-type:none">
-		 		<li>Megan Biernat</li>
-		 		<li>William Collins</li>
-		 		<li>Alec Gerhart</li>
-		 		<li>Anna Lamoureux</li>
-		 		<li>Steve MacDonald</li>
-		 		<li>Charles McDonald</li> 
-		 		<li>Martin Nesbitt</li>
-		 		<li>Andrew Reed</li> 
-		 		<li>Josh Russett</li> 
-		 		<li>Michael Turnbach</li>
-		 		<li>John Vonelli</li>
-		 	</ul>	
-		 	</p>
-		<h3> Senior Capstone Contributors Spring 2015 </h3>
-			<ul style="list-style-type:none">
-				<li>Michael Vitone</li>
-				<li>Jason Boccuti</li>
-				<li>Hansen Huang</li>
-				<li>Steve Chakif</li>
-				<li>Jon Diehl</li>
-				<li>Lewis Cooper</li>
-			</ul>
-
-
-	</body>	
-
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>Map</title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1344.72">
+  <style type="text/css">
+    p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; text-indent: 50.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; min-height: 14.0px}
+    p.p7 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    li.li6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+    span.s2 {-webkit-text-stroke: 0px #000000}
+    ul.ul1 {list-style-type: none}
+  </style>
+</head>
+<body>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; text-align: center; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>HA1C Tests Per Patient</b></span></h1>
+<p class="p2"><span class="s1">The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.78.<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><span class="s1">The map below shows poke ratio per state (including Puerto Rico) by Light-Blue to Dark-Blue Scale, while states without any data available is in Grey. You may change the gradient level for more details.<span class="Apple-converted-space"> </span></span></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p4"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 14.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Moravian College Summer Team 2015</b></span></h3>
+<ul class="ul1">
+  <li class="li6"><span class="s2"></span><span class="s1">Megan Biernat</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">William Collins</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Alec Gerhart</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Anna Lamoureux</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Steve MacDonald</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Charles McDonald</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Martin Nesbitt</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Andrew Reed</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Josh Russett</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Michael Turnbach</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">John Vonelli</span></li>
+</ul>
+<p class="p7"><span class="s1"></span><br></p>
+<h3 style="margin: 0.0px 0.0px 14.0px 0.0px; font: 14.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Senior Capstone Contributors Spring 2015<span class="Apple-converted-space"> </span></b></span></h3>
+<ul class="ul1">
+  <li class="li6"><span class="s2"></span><span class="s1">Michael Vitone</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Jason Boccuti</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Hansen Huang</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Steve Chakif</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Jon Diehl</span></li>
+  <li class="li6"><span class="s2"></span><span class="s1">Lewis Cooper</span></li>
+</ul>
+</body>
 </html>
