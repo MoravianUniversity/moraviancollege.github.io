@@ -545,8 +545,6 @@
 				drawContinuousGrad();
 			}
 
-            gradientMap.rangeBoxes(current_gradient);
-
         	d3.json(countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
