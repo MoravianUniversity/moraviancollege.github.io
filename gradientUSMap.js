@@ -376,7 +376,7 @@
 		svg.append("text")
         	.attr("x", 0)
             .attr("y", 25)
-            .text("min = " + min.substring(0,4))
+            .text("min = " + Number(min).toFixed(2))
         	.attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
@@ -389,7 +389,7 @@
 		svg.append("text")
         	.attr("x", position)
             .attr("y", 25)
-            .text("max = " + max.substring(0,4))
+            .text("max = " + Number(max).toFixed(2))
         	.attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
@@ -545,8 +545,6 @@
 			else {
 				drawContinuousGrad();
 			}
-
-            gradientMap.rangeBoxes(current_gradient);
 
         	d3.json(countyMapPath+stateFile, function(json) {
 
