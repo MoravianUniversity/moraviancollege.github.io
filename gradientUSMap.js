@@ -8,6 +8,7 @@
 	var max = "0";
 	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
+	
 
 	// defualt path names for the files
 	var usMapFile 		= "json/us-states.json";
@@ -544,8 +545,6 @@
 			else {
 				drawContinuousGrad();
 			}
-
-            gradientMap.rangeBoxes(current_gradient);
 
         	d3.json(countyMapPath+stateFile, function(json) {
 

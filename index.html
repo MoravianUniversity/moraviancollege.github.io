@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+ <html>
 	<head>
 
 		<meta charset="utf-8">
@@ -47,24 +46,46 @@
 		</div>
 
 		<div style="background-color: black"></div>
-		
-		
 
-		<script src="USMapPoke.js"></script>
+		<script type="text/javascript">
+			var us_poke_data_file = "json/poke_ratio_correct2.csv";
+			var map_json_file = "json/us-states.json";
+			var county_path_file = "json/stateJSON/";
+			var county_poke_data_file = "json/countyPokes/";
+			var map = gradientMap.setColors("#002966","#B2D1FF")
+						.setFeature("Poke Ratio")
+						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
+						.setStartingGradient(-1)
+						.setup();
+			map.drawMap();
 		
-		<p style="text-noindent:50px">Moravian College Summer Team: Megan Biernat, William Collins, Alec Gerhart, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, John Vonelli 
-		</p>
-		
+		</script>
+		<h3>Moravian College Summer Team 2015</h3>
+		 	<ul style="list-style-type:none">
+		 		<li>Megan Biernat</li>
+		 		<li>William Collins</li>
+		 		<li>Alec Gerhart</li>
+		 		<li>Anna Lamoureux</li>
+		 		<li>Steve MacDonald</li>
+		 		<li>Charles McDonald</li> 
+		 		<li>Martin Nesbitt</li>
+		 		<li>Andrew Reed</li> 
+		 		<li>Josh Russett</li> 
+		 		<li>Michael Turnbach</li>
+		 		<li>John Vonelli</li>
+		 	</ul>	
+		 	</p>
 		<h3> Senior Capstone Contributors Spring 2015 </h3>
-	<ol> 
-		<li> Michael Vitone </li>
-		<li>Jason Boccuti</li>
-		<li>Hansen Huang</li>
-		<li>Steve Chakif</li>
-		<li>Jon Diehl</li>
-		<li>Lewis Cooper</li>
-	</ol>
+			<ul style="list-style-type:none">
+				<li>Michael Vitone</li>
+				<li>Jason Boccuti</li>
+				<li>Hansen Huang</li>
+				<li>Steve Chakif</li>
+				<li>Jon Diehl</li>
+				<li>Lewis Cooper</li>
+			</ul>
+
 
 	</body>	
 
-</html>
+ </html>
