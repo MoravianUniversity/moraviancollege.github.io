@@ -1,6 +1,3 @@
-
-
-
 function drawTheUSPokeRatioMap(){
 
 	var getStateValuesFunction = function(data, stateName) {
@@ -58,12 +55,14 @@ function drawTheUSPokeRatioMap(){
            
         }
 	};
-
-	var us_poke_data_file = "json/poke_ratio_correct2.csv";
+	
+	//Create file paths. Used in setPaths function
+	var us_poke_data_file = " json/poke_ratio_correct2.csv";
 	var map_json_file = "json/us-states.json";
 	var county_path_file = "json/stateJSON/";
 	var county_poke_data_file = "json/countyPokes/";
-
+	
+	//Build map
 	var map = gradientMap.setColors("#002966","#B2D1FF")
 				.setFeature("Poke Ratio")
 				//.setFunctions(getStateValuesFunction, getCountyValuesFunction)
@@ -71,12 +70,9 @@ function drawTheUSPokeRatioMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
-
+	//Draw map
 	map.drawMap();
 };
-
-
-
 
 
 drawTheUSPokeRatioMap();
