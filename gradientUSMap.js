@@ -623,8 +623,8 @@
     }
 
     var click = function() {
-        var poke_data = "json/poke_ratio_correct2.csv";
-        var map_json_file = "json/us-states.json";
+        var poke_data = csvUSValueFile;
+        var map_json_file = usMapFile;
 
         gradientMap.drawMap(map_json_file, poke_data);
     }
