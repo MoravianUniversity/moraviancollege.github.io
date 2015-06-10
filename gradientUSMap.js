@@ -294,7 +294,7 @@
 
 	}
 
-	gradientMap.setFunctions = function (function1, function2) {
+	gradientMap.setFunctions = function(function1, function2) {
 		getStateValuesFunction = function1;
 		getCountyValuesFunction = function2;
 	}
