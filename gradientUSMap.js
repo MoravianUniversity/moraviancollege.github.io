@@ -26,6 +26,7 @@
 	var start_color = "#FF0000";
 	var end_color = "#00B800";
 
+
 	var svg;
 
 	state_abbreviations = {};
