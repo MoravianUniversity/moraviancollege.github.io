@@ -198,7 +198,7 @@
 	gradientMap.setFunctions = function(function1, function2) {
 		getStateValuesFunction = function1;
 		getCountyValuesFunction = function2;
-		return this
+		return this;
 	}
 
 	gradientMap.setColors = function(start, end) {
@@ -231,7 +231,7 @@
 	gradientMap.setStateAbbreviations = function(st_abbr) {
 		
 		state_abbreviations = st_abbr;
-		return this
+		return this;
 		
 	}
 
@@ -239,6 +239,8 @@
 		drawMinLabel();
 		drawBoxes(numOfBoxes);
 	}
+	
+	var rest_of_filename = "poke.csv";
 
 	var link = function(d) {
 
@@ -253,12 +255,20 @@
 
 		var abbreviation = state_abbreviations[d.properties.name];
 		var path = abbreviation + "Counties.json";
-
-		var csvPath = abbreviation + "poke.csv";
+		
+		
+		var csvPath = abbreviation + rest_of_filename;
 
 		mouseOut();
 
 		drawCounties(path, csvPath);
+	}
+	
+	gradientMap.setRestFileName = function(new_name) {
+		
+		rest_of_filename = new_name;
+		return this;
+		
 	}
 
 	var drawBoxes = function(boxNum) {

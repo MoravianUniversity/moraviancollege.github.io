@@ -118,6 +118,7 @@ function drawTheUSPokeRatioMap(){
 	//Build map
 	var map = gradientMap.setColors("#002966","#B2D1FF")
 				.setFeature("Poke Ratio")
+				.setRestFileName("poke.csv")
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 				.setStateAbbreviations(state_abbreviations)
 				.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
