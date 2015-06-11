@@ -15,14 +15,17 @@
 	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
 	var countyMapPath 	= "json/stateJSON/";
 	var countyValuePath = "json/countyPokes/";
+	var stateCenteringFile = "json/Scrape.txt";
 
 	var getStateValuesFunction = function(data, stateName) {};
 
 	var getCountyValuesFunction = function(data, countyName) {};
 	
 	// default values for the color range
+
 	var start_color = "#FF0000";
 	var end_color = "#00B800";
+
 
 	var svg;
 
@@ -455,8 +458,8 @@
         	d3.json(countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
-                var center = d3.geo.centroid(json)
-                var scale  = 150;
+                var center = d3.geo.centroid(json)                
+                var scale  = 10;
                 var offset = [w/2, h/2];
                 var projection = d3.geo.mercator().scale(scale).center(center)
                     .translate(offset);
@@ -467,6 +470,7 @@
                 // using the path determine the bounds of the current map and use 
                 // these to determine better values for the scale and translation
                 var bounds  = path.bounds(json);
+                
                 var hscale, vscale, scale, offset;
 
 				if (stateFile.substring(0,2) == "AK") {
@@ -477,16 +481,17 @@
                                   h - (bounds[0][1] + bounds[1][1])/2.5];
                 }
                 else {
-                	hscale  = scale*w*.75  / (bounds[1][0] - bounds[0][0]);
+      				hscale  = scale*w*.75  /(bounds[1][0] - bounds[0][0]);
                 	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
                 	scale   = (hscale < vscale) ? hscale : vscale;
-                	offset  = [w - (bounds[0][0] + bounds[1][0])/2,
-                                  h - (bounds[0][1] + bounds[1][1])/2];
+                	offset  = [ w-(bounds[0][0] + bounds[1][0])/2,	
+                                  h-(bounds[0][1] + bounds[1][1])/2];
+                    
                 }
 
                 // new projection
-                projection = d3.geo.mercator().center(center)
-                  				.scale(scale).translate(offset);
+                projection = d3.geo.mercator().scale(scale)
+                .center(center).translate(offset);
                 path = path.projection(projection);
 
                 // add a rectangle to see the bound of the svg
