@@ -19,6 +19,7 @@
 
 	var getStateValuesFunction = function(data, stateName) {};
 
+
 	var getCountyValuesFunction = function(data, countyName) {};
 	
 	// default values for the color range
