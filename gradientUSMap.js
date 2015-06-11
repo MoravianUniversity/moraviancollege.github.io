@@ -8,127 +8,30 @@
 	var max = "0";
 	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
+	
 
 	// defualt path names for the files
 	var usMapFile 		= "json/us-states.json";
 	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
 	var countyMapPath 	= "json/stateJSON/";
 	var countyValuePath = "json/countyPokes/";
+	var stateCenteringFile = "json/Scrape.txt";
 
-	var getStateValuesFunction = function(data, stateName) {
+	var getStateValuesFunction = function(data, stateName) {};
 
-		var stateAbbr = state_abbreviations[stateName];
 
-		for (var i = 0; i < data.length; i++) {
-            //Grab state name
-            var dataState = data[i].state;
-
-            //Grab data value, and convert from string to float
-            if (dataState == stateAbbr) {
-            	return parseFloat(data[i].poke_ratio);
-        	}
-
-		}
-	};
-
-	var getCountyValuesFunction = function(data, countyName) {
-		//Merge the ag. data and GeoJSON
-        //Loop through once for each ag. data value
-        for (var i = 0; i < data.length; i++) {
-            //Grab state name
-            var dataCounty = data[i].county;
-
-            var part = dataCounty.split(" ");
-
-            // if the last thing is county/borough get rid of it
-            var len = part.length;
-            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish"|| part[len-1] =="City") {
-                var str = "";
-                for (var k = 0; k < len-1; k++) {
-                    str += part[k];
-                    if (k != len-2) {
-                        str += " ";
-                    }
-                }
-                dataCounty = str;
-            }
-            else if (part[len-2] == "Census") {
-            	var str = "";
-                for (var k = 0; k < len-2; k++) {
-                    str += part[k];
-                    if (k != len-3) {
-                        str += " ";
-                    }
-                }
-                dataCounty = str;
-            }
-
-            if (dataCounty == countyName) {
-            	//Grab data value, and convert from string to float
-            	return parseFloat(data[i].poke_ratio);
-            }
-           
-        }
-	};
+	var getCountyValuesFunction = function(data, countyName) {};
 	
 	// default values for the color range
+
 	var start_color = "#FF0000";
 	var end_color = "#00B800";
+
 
 	var svg;
 
 	state_abbreviations = {};
-	state_abbreviations["Alabama"] = "AL";
-	state_abbreviations["Alaska"] = "AK";
-	state_abbreviations["Arizona"] = "AZ";
-	state_abbreviations["Arkansas"] = "AR";
-	state_abbreviations["California"] = "CA";
-	state_abbreviations["Colorado"] = "CO";
-	state_abbreviations["Connecticut"] = "CT";
-	state_abbreviations["Delaware"] = "DE";
-	state_abbreviations["Florida"] = "FL";
-	state_abbreviations["Georgia"] = "GA";
-	state_abbreviations["Hawaii"] = "HI";
-	state_abbreviations["Idaho"] = "ID";
-	state_abbreviations["Illinois"] = "IL";
-	state_abbreviations["Indiana"] = "IN";
-	state_abbreviations["Iowa"] = "IA";
-	state_abbreviations["Kansas"] = "KS";
-	state_abbreviations["Kentucky"] = "KY";
-	state_abbreviations["Louisiana"] = "LA";
-	state_abbreviations["Maine"] = "ME";
-	state_abbreviations["Maryland"] = "MD";
-	state_abbreviations["Massachusetts"] = "MA";
-	state_abbreviations["Michigan"] = "MI";
-	state_abbreviations["Minnesota"] = "MN";
-	state_abbreviations["Mississippi"] = "MS";
-	state_abbreviations["Missouri"] = "MO";
-	state_abbreviations["Montana"] = "MT";
-	state_abbreviations["Nebraska"] = "NE";
-	state_abbreviations["Nevada"] = "NV";
-	state_abbreviations["New Hampshire"] = "NH";
-	state_abbreviations["New Jersey"] = "NJ";
-	state_abbreviations["New Mexico"] = "NM";
-	state_abbreviations["New York"] = "NY";
-	state_abbreviations["North Carolina"] = "NC";
-	state_abbreviations["North Dakota"] = "ND";
-	state_abbreviations["Ohio"] = "OH";
-	state_abbreviations["Oklahoma"] = "OK";
-	state_abbreviations["Oregon"] = "OR";
-	state_abbreviations["Pennsylvania"] = "PA";
-	state_abbreviations["Rhode Island"] = "RI";
-	state_abbreviations["South Carolina"] = "SC";
-	state_abbreviations["South Dakota"] = "SD";
-	state_abbreviations["Tennessee"] = "TN";
-	state_abbreviations["Texas"] = "TX";
-	state_abbreviations["Utah"] = "UT";
-	state_abbreviations["Vermont"] = "VT";
-	state_abbreviations["Virginia"] = "VA";
-	state_abbreviations["Washington"] = "WA";
-	state_abbreviations["West Virginia"] = "WV";
-	state_abbreviations["Wisconsin"] = "WI";
-	state_abbreviations["Wyoming"] = "WY";
-	state_abbreviations["Puerto Rico"] = "PR";
+	
 
 	gradientMap.setup = function() {
 
@@ -293,9 +196,10 @@
 
 	}
 
-	gradientMap.setFunctions = function (function1, function2) {
+	gradientMap.setFunctions = function(function1, function2) {
 		getStateValuesFunction = function1;
 		getCountyValuesFunction = function2;
+		return this
 	}
 
 	gradientMap.setColors = function(start, end) {
@@ -323,6 +227,13 @@
 		}
 		current_gradient = number;
 		return this;
+	}
+	
+	gradientMap.setStateAbbreviations = function(st_abbr) {
+		
+		state_abbreviations = st_abbr;
+		return this
+		
 	}
 
 	gradientMap.rangeBoxes = function(numOfBoxes) {
@@ -356,7 +267,7 @@
 		d3.selectAll(".rectangle").remove();
 		for(var i = 0; i < boxNum; i++){
 			svg.append("rect")
-			   .attr("x", 50 + 25*i)
+			   .attr("x", 55 + 25*i)
 			   .attr("y", 10)
 			   .attr("width", 25)
 			   .attr("height", 25)
@@ -375,7 +286,7 @@
 		svg.append("text")
         	.attr("x", 0)
             .attr("y", 25)
-            .text("min = " + min.substring(0,4))
+            .text("\00  min = " + Number(min).toFixed(2) + " ")
         	.attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
@@ -386,17 +297,18 @@
 	var drawMaxLabel = function(position) {
 		d3.select("#maxLabel").remove();
 		svg.append("text")
-        	.attr("x", position)
+        	.attr("x", 8 + position)
             .attr("y", 25)
-            .text("max = " + max.substring(0,4))
+            .text("\00  max = " + Number(max).toFixed(2))
         	.attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
+            .attr("class", "text")
             .attr("id", "maxLabel");
 	}
 
 	var drawContinuousGrad = function(){
-		var minY = 10;
+		var minY = 15;
 		var maxY = 300;
 
 		d3.select("linearGradient").remove();
@@ -422,7 +334,7 @@
 		    
 		svg
 		    .append("rect")
-		    .attr("x", 50)
+		    .attr("x", 54)
 		    .attr("y", 10)
 		    .attr("width", 250)
 		    .attr("height", 25)
@@ -430,7 +342,7 @@
 		    .attr("class", "rectangle");
 
 		drawMinLabel();
-		drawMaxLabel(300);
+		drawMaxLabel(298);
 
 	}
 
@@ -545,13 +457,11 @@
 				drawContinuousGrad();
 			}
 
-            gradientMap.rangeBoxes(current_gradient);
-
         	d3.json(countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
-                var center = d3.geo.centroid(json)
-                var scale  = 150;
+                var center = d3.geo.centroid(json)                
+                var scale  = 10;
                 var offset = [w/2, h/2];
                 var projection = d3.geo.mercator().scale(scale).center(center)
                     .translate(offset);
@@ -562,6 +472,7 @@
                 // using the path determine the bounds of the current map and use 
                 // these to determine better values for the scale and translation
                 var bounds  = path.bounds(json);
+                
                 var hscale, vscale, scale, offset;
 
 				if (stateFile.substring(0,2) == "AK") {
@@ -572,16 +483,17 @@
                                   h - (bounds[0][1] + bounds[1][1])/2.5];
                 }
                 else {
-                	hscale  = scale*w*.75  / (bounds[1][0] - bounds[0][0]);
+      				hscale  = scale*w*.75  /(bounds[1][0] - bounds[0][0]);
                 	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
                 	scale   = (hscale < vscale) ? hscale : vscale;
-                	offset  = [w - (bounds[0][0] + bounds[1][0])/2,
-                                  h - (bounds[0][1] + bounds[1][1])/2];
+                	offset  = [ w-(bounds[0][0] + bounds[1][0])/2,	
+                                  h-(bounds[0][1] + bounds[1][1])/2];
+                    
                 }
 
                 // new projection
-                projection = d3.geo.mercator().center(center)
-                  				.scale(scale).translate(offset);
+                projection = d3.geo.mercator().scale(scale)
+                .center(center).translate(offset);
                 path = path.projection(projection);
 
                 // add a rectangle to see the bound of the svg
@@ -624,8 +536,8 @@
     }
 
     var click = function() {
-        var poke_data = "json/poke_ratio_correct2.csv";
-        var map_json_file = "json/us-states.json";
+        var poke_data = csvUSValueFile;
+        var map_json_file = usMapFile;
 
         gradientMap.drawMap(map_json_file, poke_data);
     }

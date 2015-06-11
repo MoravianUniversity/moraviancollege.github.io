@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+ <html>
 	<head>
 
 		<meta charset="utf-8">
@@ -18,6 +17,7 @@
 			<p style="text-indent:50px">The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.78. 
 			</p>
 			<p style="text-indent:50px">The map below shows poke ratio per state (including Puerto Rico) by Light-Blue to Dark-Blue Scale, while states without any data available is in Grey. You may change the gradient level for more details.
+
 			</p>
 			<p style="text-indent:50px">Directions: to navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Country Map Button.
             </p>
@@ -58,27 +58,36 @@
 
 		<div style="background-color: black"></div>
 
-		<script type="text/javascript">
 
-			var us_poke_data_file = "json/poke_ratio_correct2.csv";
-			var map_json_file = "json/us-states.json";
-			var county_path_file = "json/stateJSON/";
-			var county_poke_data_file = "json/countyPokes/";
+		<!--USMapPoke.js builds map-->
+		<script src="USMapPoke.js"></script>
+		
+		<h3>Moravian College Summer Team 2015</h3>
+		 	<ul style="list-style-type:none">
+		 		<li>Megan Biernat</li>
+		 		<li>William Collins</li>
+		 		<li>Alec Gerhart</li>
+		 		<li>Anna Lamoureux</li>
+		 		<li>Steve MacDonald</li>
+		 		<li>Charles McDonald</li> 
+		 		<li>Martin Nesbitt</li>
+		 		<li>Andrew Reed</li> 
+		 		<li>Josh Russett</li> 
+		 		<li>Michael Turnbach</li>
+		 		<li>John Vonelli</li>
+		 	</ul>	
+		 	</p>
+		<h3> Senior Capstone Contributors Spring 2015 </h3>
+			<ul style="list-style-type:none">
+				<li>Michael Vitone</li>
+				<li>Jason Boccuti</li>
+				<li>Hansen Huang</li>
+				<li>Steve Chakif</li>
+				<li>Jon Diehl</li>
+				<li>Lewis Cooper</li>
+			</ul>
 
-
-
-			var map = gradientMap.setColors("#002966","#B2D1FF")
-						.setFeature("Poke Ratio")
-						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
-						.setStartingGradient(-1)
-						.setup();
-
-			map.drawMap();
-
-		</script>
-		<p style="text-noindent:50px">Moravian College Summer Team: Megan Biernat, William Collins, Alec Gerhart, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, John Vonelli 
-		</p>
 
 	</body>	
 
-</html>
+ </html>

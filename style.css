@@ -14,7 +14,13 @@ svg {
 	fill-opacity:0.5;
 }
 #stateName {
-	position: absolute;
+	display: block;
+	position: static;
+	text-align: center;
+	font-size: 20px;
+	font: 20px sans-serif;
+	margin: 2px;
+	color: black;
 }
 #tooltip {   
 	position: absolute;           
