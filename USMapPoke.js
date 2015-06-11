@@ -27,7 +27,7 @@ function drawTheUSPokeRatioMap(){
 
             // if the last thing is county/borough get rid of it
             var len = part.length;
-            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish") {
+            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish"|| part[len-1] =="City") {
                 var str = "";
                 for (var k = 0; k < len-1; k++) {
                     str += part[k];
