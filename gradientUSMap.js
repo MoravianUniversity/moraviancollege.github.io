@@ -88,8 +88,9 @@
 
 		d3.csv(csvUSValueFile, function(data) {
 
-			min = d3.min(data, function(d) { return d.poke_ratio; });
-			max = d3.max(data, function(d) { return d.poke_ratio; });
+            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
+            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            
 
 			if (!continuous) {
 				color.domain([min,max]);
@@ -462,8 +463,11 @@
 
         d3.csv(countyValuePath+csvFile, function(data) {
 
-            min = d3.min(data, function(d) { return d.poke_ratio; });
-            max = d3.max(data, function(d) { return d.poke_ratio; });
+            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
+            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            //test edit
+            //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
+            
            	if (!continuous) {
 				color.domain([min,max]);
 				gradientMap.rangeBoxes(current_gradient);

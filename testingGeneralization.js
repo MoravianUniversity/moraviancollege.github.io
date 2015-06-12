@@ -110,7 +110,7 @@ function drawTheUSPokeRatioMap(){
 	state_abbreviations["Puerto Rico"] = "PR";
 	
 	//Create file paths. Used in setPaths function
-	var us_poke_data_file = " json/poke_ratio_correct2-2.csv";
+	var us_poke_data_file = " json/poke_ratio_correct2-test.csv";
 	var map_json_file = "json/us-states.json";
 	var county_path_file = "json/stateJSON/";
 	var county_poke_data_file = "test_files/";
