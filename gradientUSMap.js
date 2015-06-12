@@ -458,7 +458,6 @@
 
             min = d3.min(data, function(d) { return d.poke_ratio; });
             max = d3.max(data, function(d) { return d.poke_ratio; });
-
            	if (!continuous) {
 				color.domain([min,max]);
 				gradientMap.rangeBoxes(current_gradient);
