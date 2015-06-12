@@ -244,11 +244,10 @@
 	var link = function(d) {
 
 		d3.select("#stateName").remove();
-
+		//This is where the SVG generates the state name with x and y coordinates
 		svg.append("text")
-        	.attr("x", 600)
-            .attr("y", 35)
-            .attr("text-align", "right")
+        	.attr("x", 650)
+            .attr("y", 30)
             .text(d.properties.name)
             .attr("fill", "black")
             .attr("class", "text")
