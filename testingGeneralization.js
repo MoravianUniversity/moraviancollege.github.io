@@ -1,116 +1,4 @@
 function drawTheUSPokeRatioMap(){
-	
-	var drawCounties = function(stateFile, csvFile) {
-    	d3.selectAll("path").remove();
-        mouseOut();
-
-        d3.select("#floatingBarsG")
-        	.style("visibility", "visible");
-
-    	var color;
-		var continuous = false;
-		//Define quantize scale to sort data values into buckets of color
-		if (current_gradient != -1) {
-			color = d3.scale.quantize()
-							.range(makeRange(current_gradient, start_color, end_color));
-		}
-		// this means they want a continuous gradient
-		else {
-			continuous = true;
-		}
-
-        d3.csv(countyValuePath+csvFile, function(data) {
-
-            min = d3.min(data, function(d) { return d.poke_ratio; });
-            max = d3.max(data, function(d) { return d.poke_ratio; });
-
-           	if (!continuous) {
-				color.domain([min,max]);
-				gradientMap.rangeBoxes(current_gradient);
-			}
-			else {
-				drawContinuousGrad();
-			}
-
-        	d3.json(countyMapPath+stateFile, function(json) {
-
-                // create a first guess for the projection
-                var center = d3.geo.centroid(json)                
-                var scale  = 10;
-                var offset = [w/2, h/2];
-                var projection = d3.geo.mercator().scale(scale).center(center)
-                    .translate(offset);
-
-                // create the path
-                var path = d3.geo.path().projection(projection);
-
-                // using the path determine the bounds of the current map and use 
-                // these to determine better values for the scale and translation
-                var bounds  = path.bounds(json);
-                
-                var hscale, vscale, scale, offset;
-
-				if (stateFile.substring(0,2) == "AK") {
-                	hscale  = scale*w*5 / (bounds[1][0] - bounds[0][0]);
-                    vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
-                    scale   = (hscale < vscale) ? hscale : vscale;
-                	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
-                                  h - (bounds[0][1] + bounds[1][1])/2.5];
-                }
-                else {
-      				hscale  = scale*w*.75  /(bounds[1][0] - bounds[0][0]);
-                	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
-                	scale   = (hscale < vscale) ? hscale : vscale;
-                	offset  = [ w-(bounds[0][0] + bounds[1][0])/2,	
-                                  h-(bounds[0][1] + bounds[1][1])/2];
-                    
-                }
-
-                // new projection
-                projection = d3.geo.mercator().scale(scale)
-                .center(center).translate(offset);
-                path = path.projection(projection);
-
-                // add a rectangle to see the bound of the svg
-                svg.append("rect").attr('width', w).attr('height', h)
-                  .style('stroke', 'black').style('fill', 'none');
-
-                svg.selectAll("path")
-                    .data(json.features)
-                    .enter()
-                    .append("path")
-                    .attr("d", path)
-                    .attr("id", function(d) {
-                        return d.properties.NAME;
-                    })
-                    .style("fill", function(d) {
-                            //Get data value
-                            d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
-                            var value = d.properties.value;
-
-                            if (!continuous && value) {//If value exists…
-				                return color(value);
-				            } 
-				            else if (continuous && value) {
-				               	return d3.interpolate(start_color, end_color)((value - min)/(max-min));
-				            }
-				            else {//If value is undefined…
-				                return "#ccc";
-				            }
-                    })
-                    .style("stroke-width", "1")
-                    .style("stroke", "black")
-                    .on("click", click)
-                    .on("mouseover", mouseOver)
-                    .on("mouseout", mouseOut);
-
-            });
-			d3.select("#floatingBarsG")
-        		.style("visibility", "hidden");
-        });
-    }
-	
-	
 
 	var getStateValuesFunction = function(data, stateName) {
 
@@ -222,16 +110,15 @@ function drawTheUSPokeRatioMap(){
 	state_abbreviations["Puerto Rico"] = "PR";
 	
 	//Create file paths. Used in setPaths function
-	var us_poke_data_file = " json/poke_ratio_correct2.csv";
+	var us_poke_data_file = " json/poke_ratio_correct2-2.csv";
 	var map_json_file = "json/us-states.json";
 	var county_path_file = "json/stateJSON/";
-	var county_poke_data_file = "json/countyPokes/";
+	var county_poke_data_file = "test_files/";
 	
 	//Build map
 	var map = gradientMap.setColors("#002966","#B2D1FF")
 				.setFeature("Poke Ratio")
-				.setRestFileName("poke.csv")
-				//.setDrawCounties(drawCounties)
+				.setRestFileName("2.csv")
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 				.setStateAbbreviations(state_abbreviations)
 				.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
