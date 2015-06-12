@@ -396,12 +396,12 @@
 	}
 
 	var makeCombo = function() {
-		// maybe need to change this to append to the svg instead does not work right now
-
+		// this function creates the drop down menu for changing the grid scale
+		// color selector is how many colors you want displayed
 		var combo = d3.select("#comboDiv")
 						.append("select")
 					  	.attr("id", "color-selector")
-					  	.style("left", "855px");
+					  	.style("right-margin", "50%");
 
 		for (var i = 2; i <= 10; i++) {
 			combo.append("option")
@@ -435,7 +435,7 @@
         mouseOut();
 
         d3.select("#floatingBarsG")
-        	.style("visibility", "visible");
+        	.style("visibility", "hidden");
 
     	var color;
 		var continuous = false;
