@@ -27,7 +27,7 @@ function drawTheUSPokeRatioMap(){
 
             // if the last thing is county/borough get rid of it
             var len = part.length;
-            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish"|| part[len-1] =="City") {
+            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish") {
                 var str = "";
                 for (var k = 0; k < len-1; k++) {
                     str += part[k];
@@ -48,7 +48,7 @@ function drawTheUSPokeRatioMap(){
                 dataCounty = str;
             }
 
-            if (dataCounty == countyName) {
+            if (dataCounty.toLowerCase() == countyName.toLowerCase()) {
             	//Grab data value, and convert from string to float
             	return parseFloat(data[i].poke_ratio);
             }
