@@ -515,6 +515,11 @@
                     })
                     .style("fill", function(d) {
                             //Get data value
+                            if ( d.properties.LSAD == "city")
+                            {
+                            	d.properties.NAME += " City";
+                            }
+                            
                             d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
 
