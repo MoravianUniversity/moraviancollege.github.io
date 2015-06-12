@@ -245,12 +245,16 @@
 
 		d3.select("#stateName").remove();
 
-		d3.select("#mapSVG")
-			.append("text")
-			.attr("x", 100)
-			.attr("y", 100)
-			.attr("id", "stateName")
-			.text(d.properties.name);
+		svg.append("text")
+        	.attr("x", 600)
+            .attr("y", 35)
+            .attr("text-align", "right")
+            .text(d.properties.name)
+            .attr("fill", "black")
+            .attr("class", "text")
+            .attr("id", "stateName");
+			
+		
 
 		var abbreviation = state_abbreviations[d.properties.name];
 		var path = abbreviation + "Counties.json";
@@ -305,6 +309,8 @@
             .attr("fill", "black")
             .attr("class", "text")
             .attr("id", "maxLabel");
+        
+        
 	}
 
 	var drawContinuousGrad = function(){
