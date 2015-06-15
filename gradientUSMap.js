@@ -19,6 +19,7 @@
 
 	var getStateValuesFunction = function(data, stateName) {};
 
+
 	var getCountyValuesFunction = function(data, countyName) {};
 	
 	// default values for the color range
@@ -87,8 +88,9 @@
 
 		d3.csv(csvUSValueFile, function(data) {
 
-			min = d3.min(data, function(d) { return d.poke_ratio; });
-			max = d3.max(data, function(d) { return d.poke_ratio; });
+            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
+            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            
 
 			if (!continuous) {
 				color.domain([min,max]);
@@ -198,7 +200,7 @@
 	gradientMap.setFunctions = function(function1, function2) {
 		getStateValuesFunction = function1;
 		getCountyValuesFunction = function2;
-		return this
+		return this;
 	}
 
 	gradientMap.setColors = function(start, end) {
@@ -231,7 +233,7 @@
 	gradientMap.setStateAbbreviations = function(st_abbr) {
 		
 		state_abbreviations = st_abbr;
-		return this
+		return this;
 		
 	}
 
@@ -239,26 +241,39 @@
 		drawMinLabel();
 		drawBoxes(numOfBoxes);
 	}
+	
+	var rest_of_filename = "poke.csv";
 
 	var link = function(d) {
 
 		d3.select("#stateName").remove();
-
-		d3.select("#mapSVG")
-			.append("text")
-			.attr("x", 100)
-			.attr("y", 100)
-			.attr("id", "stateName")
-			.text(d.properties.name);
+		//This is where the SVG generates the state name with x and y coordinates
+		svg.append("text")
+        	.attr("x", 650)
+            .attr("y", 30)
+            .text(d.properties.name)
+            .attr("fill", "black")
+            .attr("class", "text")
+            .attr("id", "stateName");
+			
+		
 
 		var abbreviation = state_abbreviations[d.properties.name];
 		var path = abbreviation + "Counties.json";
-
-		var csvPath = abbreviation + "poke.csv";
+		
+		
+		var csvPath = abbreviation + rest_of_filename;
 
 		mouseOut();
 
 		drawCounties(path, csvPath);
+	}
+	
+	gradientMap.setRestFileName = function(new_name) {
+		
+		rest_of_filename = new_name;
+		return this;
+		
 	}
 
 	var drawBoxes = function(boxNum) {
@@ -266,7 +281,7 @@
 		d3.selectAll(".rectangle").remove();
 		for(var i = 0; i < boxNum; i++){
 			svg.append("rect")
-			   .attr("x", 50 + 25*i)
+			   .attr("x", 55 + 25*i)
 			   .attr("y", 10)
 			   .attr("width", 25)
 			   .attr("height", 25)
@@ -285,7 +300,7 @@
 		svg.append("text")
         	.attr("x", 0)
             .attr("y", 25)
-            .text("min = " + Number(min).toFixed(2))
+            .text("\00  min = " + Number(min).toFixed(2) + " ")
         	.attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
@@ -296,17 +311,20 @@
 	var drawMaxLabel = function(position) {
 		d3.select("#maxLabel").remove();
 		svg.append("text")
-        	.attr("x", position)
+        	.attr("x", 8 + position)
             .attr("y", 25)
-            .text("max = " + Number(max).toFixed(2))
+            .text("\00  max = " + Number(max).toFixed(2))
         	.attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
+            .attr("class", "text")
             .attr("id", "maxLabel");
+        
+        
 	}
 
 	var drawContinuousGrad = function(){
-		var minY = 10;
+		var minY = 15;
 		var maxY = 300;
 
 		d3.select("linearGradient").remove();
@@ -332,7 +350,7 @@
 		    
 		svg
 		    .append("rect")
-		    .attr("x", 50)
+		    .attr("x", 54)
 		    .attr("y", 10)
 		    .attr("width", 250)
 		    .attr("height", 25)
@@ -340,7 +358,7 @@
 		    .attr("class", "rectangle");
 
 		drawMinLabel();
-		drawMaxLabel(300);
+		drawMaxLabel(298);
 
 	}
 
@@ -389,12 +407,12 @@
 	}
 
 	var makeCombo = function() {
-		// maybe need to change this to append to the svg instead does not work right now
-
+		// this function creates the drop down menu for changing the grid scale
+		// color selector is how many colors you want displayed
 		var combo = d3.select("#comboDiv")
 						.append("select")
 					  	.attr("id", "color-selector")
-					  	.style("left", "855px");
+					  	.style("right-margin", "50%");
 
 		for (var i = 2; i <= 10; i++) {
 			combo.append("option")
@@ -423,71 +441,12 @@
 		});
 	}
 
-	
-	function computeCenter(data){
-	
-		var nums = []
-		var allNums =[]
-	
-		var bigLat = 0
-    	var smallLat = 500
-    	var bigLong = 0
-    	var smallLong = -500
-		// return the center
-		
-			for (x = 0; x < data.features.length; x+=1) {
-				for (y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
-					for(z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
-					
-						nums.push(data.features[x].geometry.coordinates[y][z]);
-					}
-				}
-			}
-
-			for(i = 0; i< nums.length; i++) {
-				for(j = 0; j< nums[i].length; j++) {
-					allNums.push(nums[i][j]);
-				}
-			}
-			
-			
-			for (val in allNums) {
-
-				var save = allNums[val]	
-				if(save < 0) {
-					if (save < bigLong) {
-						bigLong = save;				
-					}
-				}
-			
-				if(save > 0) {
-					if (save > bigLat) {
-						bigLat = save;				
-					}
-				}
-			
-				if (save < 0 && save > bigLong) {
-					if (save > smallLong) {
-						smallLong = save;
-					}
-				}
-			
-				if (save > 0 && save < bigLat) {
-					if (save < smallLat) {
-						smallLat = save;
-					}
-				}
-			}
-		return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
-		
-	}
-	
 	var drawCounties = function(stateFile, csvFile) {
     	d3.selectAll("path").remove();
         mouseOut();
 
         d3.select("#floatingBarsG")
-        	.style("visibility", "visible");
+        	.style("visibility", "hidden");
 
     	var color;
 		var continuous = false;
@@ -503,9 +462,11 @@
 
         d3.csv(countyValuePath+csvFile, function(data) {
 
-            min = d3.min(data, function(d) { return d.poke_ratio; });
-            max = d3.max(data, function(d) { return d.poke_ratio; });
-
+            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
+            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            //test edit
+            //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
+            
            	if (!continuous) {
 				color.domain([min,max]);
 				gradientMap.rangeBoxes(current_gradient);
@@ -515,9 +476,10 @@
 			}
 
         	d3.json(countyMapPath+stateFile, function(json) {
+
                 // create a first guess for the projection
-                var center = computeCenter(json);
-                var scale  = 100;
+                var center = d3.geo.centroid(json)                
+                var scale  = 10;
                 var offset = [w/2, h/2];
                 var projection = d3.geo.mercator().scale(scale).center(center)
                     .translate(offset);
@@ -535,15 +497,15 @@
                 	hscale  = scale*w*5 / (bounds[1][0] - bounds[0][0]);
                     vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
-                	offset  = [w - (bounds[0][0] + bounds[1][0])/2.25,
-                                  h - (bounds[0][1] + bounds[1][1])/2.25];
+                	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
+                                  h - (bounds[0][1] + bounds[1][1])/2.5];
                 }
                 else {
       				hscale  = scale*w*.75  /(bounds[1][0] - bounds[0][0]);
                 	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
                 	scale   = (hscale < vscale) ? hscale : vscale;
                 	offset  = [ w-(bounds[0][0] + bounds[1][0])/2,	
-                                  h-(bounds[0][1] + bounds[1][1])/2.1];
+                                  h-(bounds[0][1] + bounds[1][1])/2];
                     
                 }
 
@@ -566,6 +528,11 @@
                     })
                     .style("fill", function(d) {
                             //Get data value
+                            if ( d.properties.LSAD == "city")
+                            {
+                            	d.properties.NAME += " City";
+                            }
+                            
                             d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
 
