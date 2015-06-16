@@ -564,6 +564,7 @@
 
         gradientMap.drawMap(map_json_file, poke_data);
     }
+    
 	
 
 	this.gradientMap = gradientMap;
