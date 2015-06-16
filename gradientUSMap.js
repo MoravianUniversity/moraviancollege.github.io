@@ -610,7 +610,7 @@
 
             });
 			d3.select("#floatingBarsG")
-        		.style("visibility", "hidden");
+        		.style("visibility", "visible");
         });
     }
 
