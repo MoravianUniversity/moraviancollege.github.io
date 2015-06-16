@@ -89,8 +89,7 @@
 		d3.csv(csvUSValueFile, function(data) {
 
             min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
-            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
-            
+            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();            
 
 			if (!continuous) {
 				color.domain([min,max]);
@@ -518,7 +517,7 @@
 
         d3.csv(countyValuePath+csvFile, function(data) {
 
-            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
+      	 	min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
             max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
             //test edit
             //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
