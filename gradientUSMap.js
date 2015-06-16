@@ -9,6 +9,7 @@
 	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
 	
+	
 
 	// defualt path names for the files
 	var usMapFile 		= "json/us-states.json";
@@ -26,7 +27,6 @@
 
 	var start_color = "#FF0000";
 	var end_color = "#00B800";
-
 
 	var svg;
 
@@ -241,6 +241,7 @@
 		drawMinLabel();
 		drawBoxes(numOfBoxes);
 	}
+
 	
 	var rest_of_filename = "poke.csv";
 
@@ -293,7 +294,6 @@
 
         drawMaxLabel(50 + 25*boxNum);
 
-	}
 
 	var drawMinLabel = function() {
 		d3.select("#minLabel").remove();
