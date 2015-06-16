@@ -87,6 +87,8 @@
 		}
 
 		d3.csv(csvUSValueFile, function(data) {
+			
+			var feature = "poke_ratio";
 
             min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
             max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();            
