@@ -9,7 +9,6 @@
 	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
 	
-	
 
 	// defualt path names for the files
 	var usMapFile 		= "json/us-states.json";
@@ -27,6 +26,7 @@
 
 	var start_color = "#FF0000";
 	var end_color = "#00B800";
+
 
 	var svg;
 
@@ -241,7 +241,6 @@
 		drawMinLabel();
 		drawBoxes(numOfBoxes);
 	}
-
 	
 	var rest_of_filename = "poke.csv";
 
@@ -294,6 +293,7 @@
 
         drawMaxLabel(50 + 25*boxNum);
 
+	}
 
 	var drawMinLabel = function() {
 		d3.select("#minLabel").remove();
@@ -440,63 +440,7 @@
 			current_gradient = value;
 		});
 	}
-		function computeCenter(data){
-	
-		var nums = []
-		var allNums =[]
-	
-		var bigLat = 0
-    	var smallLat = 500
-    	var bigLong = 0
-    	var smallLong = -500
-		// return the center
-		
-		for (x = 0; x < data.features.length; x+=1) {
-			for (y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
-				for(z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
-					
-					nums.push(data.features[x].geometry.coordinates[y][z]);
-				}
-			}
-		}
 
-		for(i = 0; i< nums.length; i++) {
-			for(j = 0; j< nums[i].length; j++) {
-				allNums.push(nums[i][j]);
-			}
-		}
-			
-			
-		for (val in allNums) {
-
-			var save = allNums[val]	
-			if(save < 0) {
-				if (save < bigLong) {
-					bigLong = save;				
-				}
-			}
-			
-			if(save > 0) {
-				if (save > bigLat) {
-					bigLat = save;				
-				}
-			}
-			
-			if (save < 0 && save > bigLong) {
-				if (save > smallLong) {
-					smallLong = save;
-				}
-			}
-			
-			if (save > 0 && save < bigLat) {
-				if (save < smallLat) {
-					smallLat = save;
-				}
-			}
-		}
-	return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
-		
-	}
 	var drawCounties = function(stateFile, csvFile) {
     	d3.selectAll("path").remove();
         mouseOut();
@@ -534,7 +478,7 @@
         	d3.json(countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
-                var center = computeCenter(json);              
+                var center = d3.geo.centroid(json)                
                 var scale  = 10;
                 var offset = [w/2, h/2];
                 var projection = d3.geo.mercator().scale(scale).center(center)
@@ -561,7 +505,7 @@
                 	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
                 	scale   = (hscale < vscale) ? hscale : vscale;
                 	offset  = [ w-(bounds[0][0] + bounds[1][0])/2,	
-                                  h-(bounds[0][1] + bounds[1][1])/2.1];
+                                  h-(bounds[0][1] + bounds[1][1])/2];
                     
                 }
 
@@ -620,7 +564,6 @@
 
         gradientMap.drawMap(map_json_file, poke_data);
     }
-    
 	
 
 	this.gradientMap = gradientMap;
