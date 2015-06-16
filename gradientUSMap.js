@@ -131,6 +131,18 @@
 			       .on("mouseover", mouseOver)
 			       .on("mouseout", mouseOut);
 			});
+			
+			var zoom = d3.behavior.zoom()
+    			.on("zoom",function() {
+        		g.attr("transform","translate("+ 
+            	d3.event.translate.join(",")+")scale("+d3.event.scale+")");
+        		g.selectAll("path")  
+            	.attr("d", path.projection(projection)); 
+  			});
+  			
+  			var g = svg.append("g");
+
+			svg.call(zoom)
 
 		});
 	}
@@ -609,6 +621,17 @@
                     .on("mouseout", mouseOut);
 
             });
+            var zoom = d3.behavior.zoom()
+    			.on("zoom",function() {
+        		g.attr("transform","translate("+ 
+            	d3.event.translate.join(",")+")scale("+d3.event.scale+")");
+        		g.selectAll("path")  
+            	.attr("d", path.projection(projection)); 
+  			});
+  			
+  			var g = svg.append("g");
+
+			svg.call(zoom)
 			d3.select("#floatingBarsG")
         		.style("visibility", "hidden");
         });
