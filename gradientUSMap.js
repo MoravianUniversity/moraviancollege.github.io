@@ -88,8 +88,8 @@
 
 		d3.csv(csvUSValueFile, function(data) {
 
-            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
-            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
             
 
 			if (!continuous) {
@@ -529,9 +529,10 @@
 		}
 
         d3.csv(countyValuePath+csvFile, function(data) {
-
-            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
-            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+			
+			
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
             //test edit
             //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
             
@@ -566,7 +567,7 @@
                     vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
                 	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
-                                  h - (bounds[0][1] + bounds[1][1])/2.5];
+                                  h - (bounds[0][1] + bounds[1][1])/2];
                 }
                 else {
       				hscale  = scale*w*.75  /(bounds[1][0] - bounds[0][0]);
