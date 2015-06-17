@@ -88,8 +88,8 @@
 
 		d3.csv(csvUSValueFile, function(data) {
 
-            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
-            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();            
+            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
+            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();            
 
 			if (!continuous) {
 				color.domain([min,max]);
