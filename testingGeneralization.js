@@ -10,7 +10,7 @@ function drawTheUSPokeRatioMap(){
 
             //Grab data value, and convert from string to float
             if (dataState == stateAbbr) {
-            	return parseFloat(data[i].poke_ratio);
+            	return parseFloat(data[i].swag);
         	}
 
 		}
@@ -117,7 +117,7 @@ function drawTheUSPokeRatioMap(){
 	
 	//Build map
 	var map = gradientMap.setColors("#002966","#B2D1FF")
-				.setFeature("Poke Ratio")
+				.setFeature("swag")
 				.setRestFileName("2.csv")
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 				.setStateAbbreviations(state_abbreviations)

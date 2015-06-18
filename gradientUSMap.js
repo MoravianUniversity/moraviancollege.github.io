@@ -400,6 +400,19 @@
 	gradientMap.tooltipHtml = function(n, d){	/* function to create html content string in tooltip div. */
 		var specified_value = d.toFixed(2);
 		var feat = feature_desired.replace(" ", "&nbsp");
+		feat = feat.replace("_", "&nbsp");
+		var feat_words = feat.split("&nbsp");
+		//console.log(feat_words);
+		feat = "";
+		for(var i = 0; i < feat_words.length; i += 1) {
+			
+			feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
+			if(i != feat_words.length){
+				feat_words[i] = feat_words[i] + "&nbsp"
+			}
+			feat = feat + feat_words[i];
+		}
+		
 		return "<h4>"+n+"</h4><table>"+
 			"<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
 			"</table>";
