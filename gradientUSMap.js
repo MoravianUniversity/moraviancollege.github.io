@@ -49,7 +49,9 @@
 
 		svg = mapDiv.append("svg")
 				.attr("width", w)
-				.attr("height", h);
+				.attr("height", h)
+    			.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+  				.append("g");
 
 		d3.select("body")
 			.append("div")
@@ -59,6 +61,11 @@
 
 	}
 
+	function zoom() {
+  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  		
+	}
+	
 	gradientMap.drawMap = function() {
 
 		d3.selectAll("path").remove();
@@ -584,8 +591,8 @@
                 path = path.projection(projection);
 
                 // add a rectangle to see the bound of the svg
-                svg.append("rect").attr('width', w).attr('height', h)
-                  .style('stroke', 'black').style('fill', 'none');
+          //      svg.append("rect").attr('width', w).attr('height', h)
+          //        .style('stroke', 'black').style('fill', 'none');
 
                 svg.selectAll("path")
                     .data(json.features)
@@ -626,7 +633,7 @@
     			.on("zoom",function() {
         		g.attr("transform","translate("+ 
             	d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-        		g.selectAll("path")  
+        		g.selectAll("path")
             	.attr("d", path.projection(projection)); 
   			});
   			
