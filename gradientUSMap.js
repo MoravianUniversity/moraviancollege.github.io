@@ -27,9 +27,22 @@
 	var start_color = "#FF0000";
 	var end_color = "#00B800";
 
-
 	var svg;
+	var grad_svg;
+	
+	var zoom = d3.behavior.zoom()
+    			.scaleExtent([1, 8])
+    			.on("zoom", zoomer);
+	
+	//Define map projection
+	var stateProjection = d3.geo.albersUsa()
+						   .translate([w/2, h/2])
+						   .scale([900]);
 
+	// Path of GeoJSON
+	var statePath = d3.geo.path()
+					.projection(stateProjection);
+	
 	state_abbreviations = {};
 	
 
@@ -37,7 +50,8 @@
 
 		d3.select("body")
 			.append("div")
-			.attr("id", "comboDiv");
+			.attr("id", "comboDiv")
+			;
 
 		makeCombo();
 
@@ -49,30 +63,42 @@
 
 		svg = mapDiv.append("svg")
 				.attr("width", w)
-				.attr("height", h);
+				.attr("height", h)
+    			.call(zoom)
+  				.append("g");
+  				
+  		grad_svg = mapDiv.append("grad_svg")
+  			.attr("width", .2 * w)
+  			.attr("height", .1 * h);
+  			
 
 		d3.select("body")
 			.append("div")
 			.attr("id", "tooltip");
 
 		return this;
-
 	}
-
+	
+	function reset() {
+		zoom.scale(1);
+		zoom.translate([0, 0]);
+		svg.transition().duration(0).
+		attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
+	}
+	
+	function zoomer() {
+  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+//  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
+		
+	}
+	
 	gradientMap.drawMap = function() {
-
+		
+		reset();
+		
 		d3.selectAll("path").remove();
 		d3.select("#stateName").remove();
         mouseOut();
-
-		//Define map projection
-		var projection = d3.geo.albersUsa()
-							   .translate([w/2, h/2])
-							   .scale([900]);
-
-		// Path of GeoJSON
-		var path = d3.geo.path()
-						.projection(projection);
 
 		var color;
 		var continuous = false;
@@ -106,12 +132,12 @@
 			       .data(json.features)
 			       .enter()
 			       .append("svg:path")
-			       .attr("d", path)
+			       .attr("d", statePath)
 			       .attr("id", function(d) {
 			       		return d.properties.name;
 			       })
 			       .attr("stroke", "black")
-			       .attr("stroke-width", 1)
+			       .attr("stroke-width", "1")
 			       .style("fill", function(d) {
 	                    //Get data value
 	                    d.properties.value = getStateValuesFunction(data, d.properties.name);
@@ -131,7 +157,6 @@
 			       .on("mouseover", mouseOver)
 			       .on("mouseout", mouseOut);
 			});
-
 		});
 	}
 
@@ -498,6 +523,9 @@
 		
 	}
 	var drawCounties = function(stateFile, csvFile) {
+		
+		reset();
+		
     	d3.selectAll("path").remove();
         mouseOut();
 
@@ -537,11 +565,11 @@
                 var center = computeCenter(json);              
                 var scale  = 10;
                 var offset = [w/2, h/2];
-                var projection = d3.geo.mercator().scale(scale).center(center)
-                    .translate(offset);
+                var countyProjection = d3.geo.mercator().scale(scale)
+                .center(center).translate(offset);
 
                 // create the path
-                var path = d3.geo.path().projection(projection);
+                var path = d3.geo.path().projection(countyProjection);
 
                 // using the path determine the bounds of the current map and use 
                 // these to determine better values for the scale and translation
@@ -566,13 +594,14 @@
                 }
 
                 // new projection
-                projection = d3.geo.mercator().scale(scale)
+                countyProjection = d3.geo.mercator().scale(scale)
                 .center(center).translate(offset);
-                path = path.projection(projection);
+                
+                path = path.projection(countyProjection);
 
                 // add a rectangle to see the bound of the svg
-                svg.append("rect").attr('width', w).attr('height', h)
-                  .style('stroke', 'black').style('fill', 'none');
+//               svg.append("rect").attr('width', w).attr('height', h)
+//                  .style('stroke', 'black').style('fill', 'none');
 
                 svg.selectAll("path")
                     .data(json.features)
