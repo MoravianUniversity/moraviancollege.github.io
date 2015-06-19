@@ -67,7 +67,7 @@
 		
   		What data do you want shown?<br>
   		<input type="radio" name="feature" id="poke_ratio">Poke Ratio<br>
-  		<input type="radio" name="feature" id="swag">Swag<br>
+  		<input type="radio" name="feature" id="test_data">Test Data<br>
 		
 		<button onclick="showMap()">Show map</button>
 		
@@ -77,7 +77,30 @@
 			
 			function showMap() {
 				
-				if(poke_ratio.checked()
+				if(document.getElementById("poke_ratio").checked == true){
+					
+					var script = document.createElement('script');
+					
+					script.type = 'text/javascript';
+					
+					script.src = 'USMapPoke.js';
+					
+					console.log(1);
+					
+				}
+				
+				if(document.getElementById("test_data").checked == true){
+					
+					var script = document.createElement('script');
+					
+					script.type = 'text/javascript';
+					
+					script.src = 'testingGeneralization.js';
+					
+					console.log(2);
+					
+				}
+				
 				
 			}
 			
@@ -88,8 +111,7 @@
 
 		
 		<!--USMapPoke.js builds map-->
-		<script id="script_source" src="USMapPoke.js"></script>
-		
+		<!--<script id="script_source" src="USMapPoke.js"></script>-->
 		
 		
 		<h3>Moravian College Summer Team 2015</h3>
