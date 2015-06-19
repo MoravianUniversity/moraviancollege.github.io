@@ -1,4 +1,7 @@
-function drawTheUSPokeRatioMap(){
+function drawTheMap(){
+	
+	
+	
 
 	var getStateValuesFunction = function(data, stateName) {
 
@@ -10,7 +13,7 @@ function drawTheUSPokeRatioMap(){
 
             //Grab data value, and convert from string to float
             if (dataState == stateAbbr) {
-            	return parseFloat(data[i].test);
+            	return parseFloat(data[i].number);
         	}
 
 		}
@@ -48,9 +51,9 @@ function drawTheUSPokeRatioMap(){
                 dataCounty = str;
             }
 
-            if (dataCounty == countyName) {
+            if (dataCounty.toLowerCase() == countyName.toLowerCase()) {
             	//Grab data value, and convert from string to float
-            	return parseFloat(data[i].test);
+            	return parseFloat(data[i].number);
             }
            
         }
@@ -110,15 +113,16 @@ function drawTheUSPokeRatioMap(){
 	state_abbreviations["Puerto Rico"] = "PR";
 	
 	//Create file paths. Used in setPaths function
-	var us_poke_data_file = " json/poke_ratio_correct2-test.csv";
+	var us_poke_data_file = " json/poke_ratio_correct2.csv";
 	var map_json_file = "json/us-states.json";
 	var county_path_file = "json/stateJSON/";
-	var county_poke_data_file = "test_files/";
+	var county_poke_data_file = "json/countyPokes/";
 	
 	//Build map
 	var map = gradientMap.setColors("#002966","#B2D1FF")
-				.setFeature("test")
-				.setRestFileName("2.csv")
+				.setFeature("number")
+				.setRestFileName("data.csv")
+				//.setDrawCounties(drawCounties)
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 				.setStateAbbreviations(state_abbreviations)
 				.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
@@ -130,4 +134,4 @@ function drawTheUSPokeRatioMap(){
 };
 
 
-drawTheUSPokeRatioMap();
+drawTheMap();
