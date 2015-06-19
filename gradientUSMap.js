@@ -15,7 +15,6 @@
 	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
 	var countyMapPath 	= "json/stateJSON/";
 	var countyValuePath = "json/countyPokes/";
-	var stateCenteringFile = "json/Scrape.txt";
 
 	var getStateValuesFunction = function(data, stateName) {};
 
@@ -29,6 +28,26 @@
 
 
 	var svg;
+	
+	var zoom = d3.behavior.zoom()
+    			.translate([0, 0])
+    			.scale(1)
+    			.scaleExtent([1, 10])
+    			.on("zoom", zoomer);
+    			
+    function zoomer() {
+  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
+
+	}
+	
+	function reset() {
+	
+		zoom.scale(1);
+		zoom.translate([0, 0]);
+		svg.transition().duration(500).attr('transform', 'translate(' + zoom.translate() + ') scale(' + zoom.scale() + ')');
+	}
+	
 
 	state_abbreviations = {};
 	
@@ -49,7 +68,9 @@
 
 		svg = mapDiv.append("svg")
 				.attr("width", w)
-				.attr("height", h);
+				.attr("height", h)
+				.call(zoom)
+				.append("g");
 
 		d3.select("body")
 			.append("div")
@@ -59,8 +80,10 @@
 
 	}
 
+
 	gradientMap.drawMap = function() {
 
+		reset();
 		d3.selectAll("path").remove();
 		d3.select("#stateName").remove();
         mouseOut();
@@ -69,7 +92,7 @@
 		var projection = d3.geo.albersUsa()
 							   .translate([w/2, h/2])
 							   .scale([900]);
-
+		
 		// Path of GeoJSON
 		var path = d3.geo.path()
 						.projection(projection);
@@ -130,11 +153,13 @@
 			       .on("click", link)
 			       .on("mouseover", mouseOver)
 			       .on("mouseout", mouseOut);
+			       
 			});
 
 		});
 	}
 
+	
 	var mouseOver = function(d) {
 		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
 
@@ -163,6 +188,8 @@
 		d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
 	}
 
+
+	
 	var change_gradient = function(val) {
 
 		var inter = false;
@@ -356,6 +383,7 @@
 		    .attr("height", 25)
 		    .attr("fill", "url(#gradient)")
 		    .attr("class", "rectangle");
+		    
 
 		drawMinLabel();
 		drawMaxLabel(298);
@@ -449,8 +477,9 @@
     	var smallLat = 500
     	var bigLong = 0
     	var smallLong = -500
-		// return the center
 		
+		
+		//Dive down and grab all the coordinates store in nums
 		for (x = 0; x < data.features.length; x+=1) {
 			for (y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
 				for(z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
@@ -459,14 +488,15 @@
 				}
 			}
 		}
-
+		
+		//store the coordinates in pairs
 		for(i = 0; i< nums.length; i++) {
 			for(j = 0; j< nums[i].length; j++) {
 				allNums.push(nums[i][j]);
 			}
 		}
 			
-			
+		//Loop through collection and find the big/small long and lats
 		for (val in allNums) {
 
 			var save = allNums[val]	
@@ -497,7 +527,9 @@
 	return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
 		
 	}
+	
 	var drawCounties = function(stateFile, csvFile) {
+    	reset();
     	d3.selectAll("path").remove();
         mouseOut();
 
@@ -520,8 +552,6 @@
 
             min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
             max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
-            //test edit
-            //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
             
            	if (!continuous) {
 				color.domain([min,max]);
@@ -570,10 +600,6 @@
                 .center(center).translate(offset);
                 path = path.projection(projection);
 
-                // add a rectangle to see the bound of the svg
-                svg.append("rect").attr('width', w).attr('height', h)
-                  .style('stroke', 'black').style('fill', 'none');
-
                 svg.selectAll("path")
                     .data(json.features)
                     .enter()
@@ -606,7 +632,10 @@
                     .style("stroke", "black")
                     .on("click", click)
                     .on("mouseover", mouseOver)
-                    .on("mouseout", mouseOut);
+                    .on("mouseout", mouseOut)
+                    .on("click", drawMap);
+                    
+                    
 
             });
 			d3.select("#floatingBarsG")
