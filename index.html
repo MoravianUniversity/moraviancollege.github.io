@@ -60,6 +60,59 @@
 		</div>
 
 		<div style="background-color: black"></div>
+		
+		<!--Begin Edit-->
+		
+		
+  		What data do you want shown?<br>
+  		<input type="radio" name="feature" id="poke_ratio">Poke Ratio<br>
+  		<input type="radio" name="feature" id="test_data">Test Data<br>
+		
+		<button onclick="<script src='showMap()'></script>">Show map</button>
+		
+		<script>
+			
+			function showMap() {
+				
+				if(document.getElementById("poke_ratio").checked == true){
+					
+					var script = document.createElement('script');
+					
+					script.type = 'text/javascript';
+					
+					script.src = 'USMapPoke.js';
+					
+					console.log(1);
+					
+					return this;
+					
+				}
+				
+				if(document.getElementById("test_data").checked == true){
+					
+					var script = document.createElement('script');
+					
+					script.type = 'text/javascript';
+					
+					script.src = 'testingGeneralization.js';
+					
+					console.log(2);
+					
+					return this;
+					
+				}
+				
+				
+			}
+			
+		</script>
+		
+		<input type="file" id="your-files" multiple>
+		
+
+		
+		
+		<!--End Edit-->
 
 		
 		<!--USMapPoke.js builds map-->
