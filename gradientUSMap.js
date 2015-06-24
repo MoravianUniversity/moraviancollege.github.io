@@ -15,7 +15,6 @@
 	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
 	var countyMapPath 	= "json/stateJSON/";
 	var countyValuePath = "json/countyPokes/";
-	var stateCenteringFile = "json/Scrape.txt";
 
 	var getStateValuesFunction = function(data, stateName) {};
 
@@ -37,6 +36,26 @@
 
 
 	var svg;
+	
+	var zoom = d3.behavior.zoom()
+    			.translate([0, 0])
+    			.scale(1)
+    			.scaleExtent([1, 10])
+    			.on("zoom", zoomer);
+    			
+    function zoomer() {
+  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
+
+	}
+	
+	function reset() {
+	
+		zoom.scale(1);
+		zoom.translate([0, 0]);
+		svg.transition().duration(500).attr('transform', 'translate(' + zoom.translate() + ') scale(' + zoom.scale() + ')');
+	}
+	
 
 	state_abbreviations = {};
 	
@@ -58,9 +77,14 @@
 		svg = mapDiv.append("svg")
 				.attr("width", w)
 				.attr("height", h)
+<<<<<<< HEAD
 				//.append("g")
     			//.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
   				//.append("g");
+=======
+				.call(zoom)
+				.append("g");
+>>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
 
 		d3.select("body")
 			.append("div")
@@ -70,12 +94,17 @@
 
 	}
 
+<<<<<<< HEAD
 	/*function zoom() {
   		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 	}
 */
+=======
+
+>>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
 	gradientMap.drawMap = function() {
 
+		reset();
 		d3.selectAll("path").remove();
 		d3.select("#stateName").remove();
         mouseOut();
@@ -84,7 +113,7 @@
 		var projection = d3.geo.albersUsa()
 							   .translate([w/2, h/2])
 							   .scale([900]);
-
+		
 		// Path of GeoJSON
 		var path = d3.geo.path()
 						.projection(projection);
@@ -104,8 +133,7 @@
 		d3.csv(csvUSValueFile, function(data) {
 
             min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
-            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
-            
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();            
 
 			if (!continuous) {
 				color.domain([min,max]);
@@ -145,11 +173,13 @@
 			       .on("click", link)
 			       .on("mouseover", mouseOver)
 			       .on("mouseout", mouseOut);
+			       
 			});
 			
 		});
 	}
 
+	
 	var mouseOver = function(d) {
 		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
 
@@ -178,6 +208,8 @@
 		d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
 	}
 
+
+	
 	var change_gradient = function(val) {
 
 		var inter = false;
@@ -370,6 +402,7 @@
 		    .attr("height", 25)
 		    .attr("fill", "url(#gradient)")
 		    .attr("class", "rectangle");
+		    
 
 		drawMinLabel();
 		drawMaxLabel(298);
@@ -415,6 +448,19 @@
 	gradientMap.tooltipHtml = function(n, d){	/* function to create html content string in tooltip div. */
 		var specified_value = d.toFixed(2);
 		var feat = feature_desired.replace(" ", "&nbsp");
+		feat = feat.replace("_", "&nbsp");
+		var feat_words = feat.split("&nbsp");
+		//console.log(feat_words);
+		feat = "";
+		for(var i = 0; i < feat_words.length; i += 1) {
+			
+			feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
+			if(i != feat_words.length){
+				feat_words[i] = feat_words[i] + "&nbsp"
+			}
+			feat = feat + feat_words[i];
+		}
+		
 		return "<h4>"+n+"</h4><table>"+
 			"<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
 			"</table>";
@@ -454,13 +500,77 @@
 			current_gradient = value;
 		});
 	}
+<<<<<<< HEAD
 
+=======
+		function computeCenter(data){
+	
+		var nums = []
+		var allNums =[]
+	
+		var bigLat = 0
+    	var smallLat = 500
+    	var bigLong = 0
+    	var smallLong = -500
+		
+		
+		//Dive down and grab all the coordinates store in nums
+		for (x = 0; x < data.features.length; x+=1) {
+			for (y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
+				for(z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
+					
+					nums.push(data.features[x].geometry.coordinates[y][z]);
+				}
+			}
+		}
+		
+		//store the coordinates in pairs
+		for(i = 0; i< nums.length; i++) {
+			for(j = 0; j< nums[i].length; j++) {
+				allNums.push(nums[i][j]);
+			}
+		}
+			
+		//Loop through collection and find the big/small long and lats
+		for (val in allNums) {
+
+			var save = allNums[val]	
+			if(save < 0) {
+				if (save < bigLong) {
+					bigLong = save;				
+				}
+			}
+			
+			if(save > 0) {
+				if (save > bigLat) {
+					bigLat = save;				
+				}
+			}
+			
+			if (save < 0 && save > bigLong) {
+				if (save > smallLong) {
+					smallLong = save;
+				}
+			}
+			
+			if (save > 0 && save < bigLat) {
+				if (save < smallLat) {
+					smallLat = save;
+				}
+			}
+		}
+	return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
+		
+	}
+	
+>>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
 	var drawCounties = function(stateFile, csvFile) {
+    	reset();
     	d3.selectAll("path").remove();
         mouseOut();
 
         d3.select("#floatingBarsG")
-        	.style("visibility", "visible");
+        	.style("visibility", "hidden");
 
     	var color;
 		var continuous = false;
@@ -475,12 +585,12 @@
 		}
 
         d3.csv(countyValuePath+csvFile, function(data) {
-			
-			
-            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+
+      	 	min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
             max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
             //test edit
             //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
+
             
            	if (!continuous) {
 				color.domain([min,max]);
@@ -529,10 +639,13 @@
                 .center(center).translate(offset);
                 path = path.projection(projection);
 
+<<<<<<< HEAD
                 // add a rectangle to see the bound of the svg
         //        svg.append("rect").attr('width', w).attr('height', h)
          //         .style('stroke', 'black').style('fill', 'none');
 
+=======
+>>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
                 svg.selectAll("path")
                     .data(json.features)
                     .enter()
@@ -565,7 +678,10 @@
                     .style("stroke", "black")
                     .on("click", click)
                     .on("mouseover", mouseOver)
-                    .on("mouseout", mouseOut);
+                    .on("mouseout", mouseOut)
+                    .on("click", drawMap);
+                    
+                    
 
             });
 			d3.select("#floatingBarsG")
