@@ -35,8 +35,6 @@
 		</div>
 		
 
-		
-
 		<div id="floatingBarsG" style="visibility: hidden">
 			<div class="blockG" id="rotateG_01">
 			</div>
@@ -61,65 +59,40 @@
 
 		<div style="background-color: black"></div>
 		
-		<!--Begin Edit-->
-		
-		
-  		What data do you want shown?<br>
-  		<input type="radio" name="feature" id="poke_ratio">Poke Ratio<br>
-  		<input type="radio" name="feature" id="test_data">Test Data<br>
-		
-		<button onclick="<script src='showMap()'></script>">Show map</button>
-		
 		<script>
-			
-			function showMap() {
-				
-				if(document.getElementById("poke_ratio").checked == true){
-					
-					var script = document.createElement('script');
-					
-					script.type = 'text/javascript';
-					
-					script.src = 'USMapPoke.js';
-					
-					console.log(1);
-					
-					return this;
-					
-				}
-				
-				if(document.getElementById("test_data").checked == true){
-					
-					var script = document.createElement('script');
-					
-					script.type = 'text/javascript';
-					
-					script.src = 'testingGeneralization.js';
-					
-					console.log(2);
-					
-					return this;
-					
-				}
-				
-				
-			}
-			
-		</script>
+  			
+  			function readURL(input) {
+  				
+  				var reader = new FileReader();
+  				
+  				reader.onLoad = function (e) {
+  					
+  					$('#blah')
+  						.attr('src', e.target.result)
+  				};
+  				
+  				reader.readAsDataURL(input.files[0]);
+  					
+  				}
+  				
+  			}
+  			
+  		</script>
 		
-		<input type="file" id="your-files" multiple>
-		
-
+  		<input type="file" onchange="readURL(this);">
+  		
+  		
+  		
+  		
+  			
 		
 		
-		<!--End Edit-->
-
 		
 		<!--USMapPoke.js builds map-->
 		<script src="USMapPoke.js"></script>
 		
 		
-		<h3>Moravian College Summer Team 2015</h3>
+		<h3 id = 'list'>Moravian College Summer Team 2015</h3>
 		 	<ul style="list-style-type:none">
 		 		<li>Megan Biernat</li>
 		 		<li>William Collins</li>
