@@ -10,7 +10,7 @@ function drawTheUSPokeRatioMap(){
 
             //Grab data value, and convert from string to float
             if (dataState == stateAbbr) {
-            	return parseFloat(data[i].poke_ratio);
+            	return parseFloat(data[i].swag);
         	}
 
 		}

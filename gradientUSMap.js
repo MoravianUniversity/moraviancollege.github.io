@@ -21,6 +21,14 @@
 
 
 	var getCountyValuesFunction = function(data, countyName) {};
+	var drag = d3.behavior.drag()
+        .on("drag", function(d,i) {
+            d.x += d3.event.dx
+            d.y += d3.event.dy
+            d3.select(this).attr("transform", function(d,i){
+                return "translate(" + [ d.x,d.y ] + ")"
+            })
+        });
 	
 	// default values for the color range
 
@@ -49,11 +57,10 @@
 
 		svg = mapDiv.append("svg")
 				.attr("width", w)
-				.attr("height", h);
-				.append("g");
-				.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
-  				.append("g");
-
+				.attr("height", h)
+				//.append("g")
+    			//.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+  				//.append("g");
 
 		d3.select("body")
 			.append("div")
@@ -62,10 +69,11 @@
 		return this;
 
 	}
-	function zoom() {
+
+	/*function zoom() {
   		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 	}
-
+*/
 	gradientMap.drawMap = function() {
 
 		d3.selectAll("path").remove();
@@ -522,8 +530,8 @@
                 path = path.projection(projection);
 
                 // add a rectangle to see the bound of the svg
-                svg.append("rect").attr('width', w).attr('height', h)
-                  .style('stroke', 'black').style('fill', 'none');
+        //        svg.append("rect").attr('width', w).attr('height', h)
+         //         .style('stroke', 'black').style('fill', 'none');
 
                 svg.selectAll("path")
                     .data(json.features)
