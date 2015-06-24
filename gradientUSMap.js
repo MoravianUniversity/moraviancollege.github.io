@@ -77,14 +77,8 @@
 		svg = mapDiv.append("svg")
 				.attr("width", w)
 				.attr("height", h)
-<<<<<<< HEAD
-				//.append("g")
-    			//.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
-  				//.append("g");
-=======
 				.call(zoom)
 				.append("g");
->>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
 
 		d3.select("body")
 			.append("div")
@@ -93,15 +87,7 @@
 		return this;
 
 	}
-
-<<<<<<< HEAD
-	/*function zoom() {
-  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-	}
-*/
-=======
-
->>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
+	
 	gradientMap.drawMap = function() {
 
 		reset();
@@ -500,9 +486,6 @@
 			current_gradient = value;
 		});
 	}
-<<<<<<< HEAD
-
-=======
 		function computeCenter(data){
 	
 		var nums = []
@@ -563,7 +546,6 @@
 		
 	}
 	
->>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
 	var drawCounties = function(stateFile, csvFile) {
     	reset();
     	d3.selectAll("path").remove();
@@ -639,13 +621,6 @@
                 .center(center).translate(offset);
                 path = path.projection(projection);
 
-<<<<<<< HEAD
-                // add a rectangle to see the bound of the svg
-        //        svg.append("rect").attr('width', w).attr('height', h)
-         //         .style('stroke', 'black').style('fill', 'none');
-
-=======
->>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
                 svg.selectAll("path")
                     .data(json.features)
                     .enter()
