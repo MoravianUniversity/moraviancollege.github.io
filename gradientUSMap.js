@@ -29,22 +29,15 @@
 
 	var svg;
 	
+	var grad_svg;
+	var box;
+	
 	var zoom = d3.behavior.zoom()
     			.scaleExtent([1, 8])
     			.on("zoom", zoomer);
 	
-	//Define map projection
-	var stateProjection = d3.geo.albersUsa()
-						   .translate([w/2, h/2])
-						   .scale([900]);
-
-	// Path of GeoJSON
-	var statePath = d3.geo.path()
-					.projection(stateProjection);
-	
 	state_abbreviations = {};
 	
-
 	gradientMap.setup = function() {
 
 		d3.select("body")
@@ -58,13 +51,21 @@
 						.attr("id", "mapSVG")
 						.style("width", "800px")
 						.style("margin", "0 auto");
+  				
+  		grad_svg = mapDiv.append("svg")
+  				.attr("x", 5)
+  				.attr("y", 5)
+  				.attr("width",400)
+  				.attr("height",40);
 
 		svg = mapDiv.append("svg")
+				.attr("style", "outline: thin solid gray;")
 				.attr("width", w)
 				.attr("height", h)
     			.call(zoom)
-  				.append("g");
-  		
+  				.append("g")
+  				.attr("id", "svg-container");   
+            
 		d3.select("body")
 			.append("div")
 			.attr("id", "tooltip");
@@ -78,11 +79,10 @@
 		svg.transition().duration(0).
 		attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
 	}
-	
+
 	function zoomer() {
-  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-//  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
-		
+  		svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
+  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
 	}
 	
 	gradientMap.drawMap = function() {
@@ -92,7 +92,16 @@
 		d3.selectAll("path").remove();
 		d3.select("#stateName").remove();
         mouseOut();
+		
+		//Define map projection
+		var projection = d3.geo.albersUsa()
+						   .translate([w/2, h/2])
+						   .scale([900]);
 
+		// Path of GeoJSON
+		var path = d3.geo.path()
+					.projection(projection);
+	
 		var color;
 		var continuous = false;
 		//Define quantize scale to sort data values into buckets of color
@@ -125,7 +134,7 @@
 			       .data(json.features)
 			       .enter()
 			       .append("svg:path")
-			       .attr("d", statePath)
+			       .attr("d", path)
 			       .attr("id", function(d) {
 			       		return d.properties.name;
 			       })
@@ -298,7 +307,7 @@
 		var colorArray = makeRange(boxNum, start_color, end_color);
 		d3.selectAll(".rectangle").remove();
 		for(var i = 0; i < boxNum; i++){
-			svg.append("rect")
+			grad_svg.append("rect")
 			   .attr("x", 55 + 25*i)
 			   .attr("y", 10)
 			   .attr("width", 25)
@@ -315,7 +324,7 @@
 
 	var drawMinLabel = function() {
 		d3.select("#minLabel").remove();
-		svg.append("text")
+		grad_svg.append("text")
         	.attr("x", 0)
             .attr("y", 25)
             .text("\00  min = " + Number(min).toFixed(2) + " ")
@@ -328,7 +337,7 @@
 
 	var drawMaxLabel = function(position) {
 		d3.select("#maxLabel").remove();
-		svg.append("text")
+		grad_svg.append("text")
         	.attr("x", 8 + position)
             .attr("y", 25)
             .text("\00  max = " + Number(max).toFixed(2))
@@ -347,7 +356,7 @@
 
 		d3.select("linearGradient").remove();
 
-		var gradient = svg
+		var gradient = grad_svg
 		    .append("linearGradient")
 		    .attr("y1", "0")
 		    .attr("y2", "0")
@@ -366,7 +375,7 @@
 		    .attr("offset", "1")
 		    .attr("stop-color", end_color)
 		    
-		svg
+		grad_svg
 		    .append("rect")
 		    .attr("x", 54)
 		    .attr("y", 10)
@@ -591,10 +600,6 @@
                 .center(center).translate(offset);
                 
                 path = path.projection(countyProjection);
-
-                // add a rectangle to see the bound of the svg
-//               svg.append("rect").attr('width', w).attr('height', h)
-//                  .style('stroke', 'black').style('fill', 'none');
 
                 svg.selectAll("path")
                     .data(json.features)
