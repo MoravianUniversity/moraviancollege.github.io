@@ -24,8 +24,8 @@
 	
 	// default values for the color range
 
-	var start_color = "#FF0000";
-	var end_color = "#00B800";
+	var start_color = "#EBF5FF";
+	var end_color = "#002966";
 
 	var svg;
 	
