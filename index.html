@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
-	<body>
+	<body onload="makeMap('USMapPoke.js'); drawBottom();">
 		
 		<div id="pageTitle">
 			<h1 style="text-align:center">HA1C Tests Per Patient</h1>
@@ -61,17 +61,33 @@
 		
 		<script>
   			
-  			function readURL(input) {
+  			function takeFile() {
   				
-  				var reader = new FileReader();
+  				var x = document.getElementById("fileUpload");
   				
-  				reader.onLoad = function (e) {
+  				var txt = "";
+  				
+  				if ('files' in x) {
   					
-  					$('#blah')
-  						.attr('src', e.target.result)
-  				};
-  				
-  				reader.readAsDataURL(input.files[0]);
+  					if (x.files.length == 0) {
+  						
+  						txt = "Select one or more files.";
+  						
+  					} else {
+  						
+  						for (var i = 0; i < x.files.length; i++) {
+  							
+  							var file = x.files[i];
+  							
+  							console.log(file.name);
+  							
+  							console.log(file.size);
+  							
+  							console.log(file.value);
+  							
+  						}
+  						
+  					}
   					
   				}
   				
@@ -79,9 +95,13 @@
   			
   		</script>
 		
-  		<input type="file" onchange="readURL(this);">
+		
   		
+  		<input type="file" id="fileUpload" onChange="takeFile()"><br>
   		
+  		<input type="radio" name="dataSelect" value="Poke Ratio" id="pokeRatio">Poke Ratio<br>
+  		<input type="radio" name="dataSelect" value="Test Data" id="testData">Test Data<br>
+  		<button type="button" onClick="selectData();">Select data</button>
   		
   		
   			
@@ -89,33 +109,69 @@
 		
 		
 		<!--USMapPoke.js builds map-->
-		<script src="USMapPoke.js"></script>
+		<!--<script src="USMapPoke.js" id="scriptSrc"></script>-->
+		<script>
+			
+			function makeMap(source) {
+				
+				var newScript = document.createElement("script");
+				
+				newScript.setAttribute('id', 'scriptSrc');
+				
+				newScript.setAttribute('type','text/javascript');
+				
+				newScript.setAttribute('src', source);
+				
+				document.getElementsByTagName("head")[0].appendChild(newScript);
+				
+				//drawTheMap();
+				
+				
+			}
+			
+			function drawBottom() {
+				
+				var h31 = document.createElement("h3");
+				h31.innerHTML = "Moravian College Summer Team 2015";
+				var ul1 = document.createElement("ul");
+				ul1.style = "list-style-type:none";
+				ul1.innerHTML = "<li>Megan Biernat</li><li>William Collins</li><li>Alec Gerhart</li><li>Anna Lamoureux</li><li>Steve MacDonald</li><li>Charles McDonald</li> <li>Martin Nesbitt</li><li>Andrew Reed</li> <li>Josh Russett</li> <li>Michael Turnbach</li><li>John Vonelli</li>";
+				
+				var h32 = document.createElement("h3");
+				h32.innerHTML = "Senior Capstone Contributors Spring 2015";
+				var ul2 = document.createElement("ul");
+				ul2.style = "list-style-type:none";
+				ul2.innerHTML = "<li>Michael Vitone</li><li>Jason Boccuti</li><li>Hansen Huang</li><li>Steve Chakif</li><li>Jon Diehl</li><li>Lewis Cooper</li>";
+				
+				document.getElementsByTagName("head")[0].appendChild(h31);
+				document.getElementsByTagName("head")[0].appendChild(ul1);
+				document.getElementsByTagName("head")[0].appendChild(h32);
+				document.getElementsByTagName("head")[0].appendChild(ul2);
+				
+			}
+			
+			function selectData() {
+				
+				if (document.getElementById("pokeRatio").checked == true) {
+					
+					makeMap("USMapPoke.js");
+					
+				}
+				
+				if (document.getElementById("testData").checked == true) {
+					
+					makeMap("testingGeneralization.js");
+					
+				}
+				
+				//makeMap();
+				
+			}
+			
+		</script>
 		
 		
-		<h3 id = 'list'>Moravian College Summer Team 2015</h3>
-		 	<ul style="list-style-type:none">
-		 		<li>Megan Biernat</li>
-		 		<li>William Collins</li>
-		 		<li>Alec Gerhart</li>
-		 		<li>Anna Lamoureux</li>
-		 		<li>Steve MacDonald</li>
-		 		<li>Charles McDonald</li> 
-		 		<li>Martin Nesbitt</li>
-		 		<li>Andrew Reed</li> 
-		 		<li>Josh Russett</li> 
-		 		<li>Michael Turnbach</li>
-		 		<li>John Vonelli</li>
-		 	</ul>	
-		 	</p>
-		<h3> Senior Capstone Contributors Spring 2015 </h3>
-			<ul style="list-style-type:none">
-				<li>Michael Vitone</li>
-				<li>Jason Boccuti</li>
-				<li>Hansen Huang</li>
-				<li>Steve Chakif</li>
-				<li>Jon Diehl</li>
-				<li>Lewis Cooper</li>
-			</ul>
+		
 
 
 	</body>	

@@ -1,4 +1,4 @@
-function drawTheUSPokeRatioMap(){
+function drawTheMap(){
 
 	var getStateValuesFunction = function(data, stateName) {
 
@@ -130,4 +130,4 @@ function drawTheUSPokeRatioMap(){
 };
 
 
-drawTheUSPokeRatioMap();
+//drawTheMap();

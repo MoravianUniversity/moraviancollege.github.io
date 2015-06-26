@@ -1,4 +1,4 @@
-function drawTheUSPokeRatioMap(){
+function drawTheMap(){
 	
 	
 	
@@ -135,4 +135,4 @@ function drawTheUSPokeRatioMap(){
 };
 
 
-drawTheUSPokeRatioMap();
+drawTheMap();
