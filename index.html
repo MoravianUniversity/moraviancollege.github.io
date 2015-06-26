@@ -160,7 +160,15 @@
 				
 				if (document.getElementById("testData").checked == true) {
 					
-					makeMap("testingGeneralization.js");
+					//makeMap("testingGeneralization.js");
+					
+					var newScript2 = document.createElement("script");
+					
+					newScript2.setAttribute('src', 'testingGeneralization.js');
+					
+					console.log(1);
+					
+					document.body.appendChild(newScript2);
 					
 				}
 				
