@@ -52,7 +52,6 @@
 						.style("margin", "0 auto");
   		
   		grad_svg = mapDiv.append("svg")
-  				.attr("style", "outline: thin solid gray;")
   				.attr("width",400)
   				.attr("height",40);
 
@@ -60,8 +59,8 @@
 				.attr("style", "outline: thin solid gray;")
 				.attr("width", w)
 				.attr("height", h)
-  				.append("g")
-  				.call(zoom);
+  				.call(zoom)
+  				.append("g");
 
 		d3.select("body")
 			.append("div")
