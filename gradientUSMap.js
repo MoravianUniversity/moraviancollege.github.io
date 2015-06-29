@@ -616,6 +616,10 @@
                             
                             d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
+                            
+                             if (max == min) {
+				            	return end_color;
+				            }
 
                             if (!continuous && value) {//If value exists…
 				                return color(value);
@@ -626,6 +630,7 @@
 				            else {//If value is undefined…
 				                return "#ccc";
 				            }
+				           
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
