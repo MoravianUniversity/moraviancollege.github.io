@@ -8,6 +8,7 @@
 	var max = "0";
 	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
+	var xhr = new XMLHttpRequest();
 	
 
 	// defualt path names for the files
@@ -58,7 +59,6 @@
 	
 
 	state_abbreviations = {};
-	
 
 	gradientMap.setup = function() {
 
@@ -670,7 +670,9 @@
 
         gradientMap.drawMap(map_json_file, poke_data);
     }
-	
+   /* xhr.open("GET", "http://gis.cdc.gov/grasp/diabetes/DiabetesAtlas.html", false);
+    xhr.send();
+	*/
 
 	this.gradientMap = gradientMap;
 })();
