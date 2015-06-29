@@ -531,7 +531,7 @@
         reset();
 
         d3.select("#floatingBarsG")
-        	.style("visibility", "hidden");
+        	.style("visibility", "visible");
 
     	var color;
 		var continuous = false;
