@@ -8,7 +8,6 @@
 	var max = "0";
 	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
-	var xhr = new XMLHttpRequest();
 	
 
 	// defualt path names for the files
@@ -22,14 +21,6 @@
 
 
 	var getCountyValuesFunction = function(data, countyName) {};
-	var drag = d3.behavior.drag()
-        .on("drag", function(d,i) {
-            d.x += d3.event.dx
-            d.y += d3.event.dy
-            d3.select(this).attr("transform", function(d,i){
-                return "translate(" + [ d.x,d.y ] + ")"
-            })
-        });
 	
 	// default values for the color range
 
@@ -46,11 +37,7 @@
     			.on("zoom", zoomer);
 	
 	state_abbreviations = {};
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> ccbd9b508f6e14ab8fa0cc174eedc63abdedb430
 	gradientMap.setup = function() {
 
 		d3.select("body")
@@ -92,14 +79,11 @@
 		svg.transition().duration(0).
 		attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
 	}
-<<<<<<< HEAD
-=======
 
 	function zoomer() {
   		svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
   		g.style("stroke-width", 1.5 / d3.event.scale + "px");
 	}
->>>>>>> ccbd9b508f6e14ab8fa0cc174eedc63abdedb430
 	
 	gradientMap.drawMap = function() {
 		
@@ -175,10 +159,6 @@
 			       .on("mouseover", mouseOver)
 			       .on("mouseout", mouseOut);
 			});
-<<<<<<< HEAD
-			
-=======
->>>>>>> ccbd9b508f6e14ab8fa0cc174eedc63abdedb430
 		});
 	}
 
@@ -303,6 +283,7 @@
             .attr("class", "text")
             .attr("id", "stateName");
 			
+		
 
 		var abbreviation = state_abbreviations[d.properties.name];
 		var path = abbreviation + "Counties.json";
@@ -595,7 +576,7 @@
         	d3.json(countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
-                var center = d3.geo.centroid(json)                
+                var center = computeCenter(json);              
                 var scale  = 10;
                 var offset = [w/2, h/2];
                 var countyProjection = d3.geo.mercator().scale(scale)
@@ -622,7 +603,7 @@
                 	vscale  = scale*h*.75 / (bounds[1][1] - bounds[0][1]);
                 	scale   = (hscale < vscale) ? hscale : vscale;
                 	offset  = [ w-(bounds[0][0] + bounds[1][0])/2,	
-                                  h-(bounds[0][1] + bounds[1][1])/2];
+                                  h-(bounds[0][1] + bounds[1][1])/2.1];
                     
                 }
 
@@ -678,9 +659,7 @@
 
         gradientMap.drawMap(map_json_file, poke_data);
     }
-   /* xhr.open("GET", "http://gis.cdc.gov/grasp/diabetes/DiabetesAtlas.html", false);
-    xhr.send();
-	*/
+	
 
 	this.gradientMap = gradientMap;
 })();

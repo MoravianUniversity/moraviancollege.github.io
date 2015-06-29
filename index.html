@@ -5,13 +5,12 @@
 		<meta charset="utf-8">
 		<title>HA1C Test Data</title>
 		<script type="text/javascript" src="d3/d3.v3.js"></script>
-		<script type="text/javascript" src="gradientUSMap.js"></script>
-		<script src="http://maps.googleapis.com/maps/api/js"></script>		
+		<script type="text/javascript" src="gradientUSMap.js"></script>		
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body>
-		<div id="googleMap" style="width:500px;height:500px;"></div>
+		
 		<div id="pageTitle">
 			<h1 style="text-align:center">HA1C Tests Per Patient</h1>
 
@@ -41,17 +40,9 @@
     	function visitPage(){
         window.location='http://moraviancollege.github.io/';
     	}
-    	function initialize() {
-  		var mapProp = {
-    	center:new google.maps.LatLng(51.508742,-0.120850),
-   	 	zoom:5,
-    	mapTypeId:google.maps.MapTypeId.ROADMAP
-  };
-  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
-  }
-  google.maps.event.addDomListener(window, 'load', initialize);
 		</script>
 		<button onclick="visitPage();">Country View</button>
+        
 
 		</div>
 		
@@ -86,6 +77,7 @@
 		<!--USMapPoke.js builds map-->
 		<script src="USMapPoke.js"></script>
 		
+		
 		<h3>Moravian College Summer Team 2015</h3>
 		 	<ul style="list-style-type:none">
 		 		<li>Megan Biernat</li>
@@ -115,4 +107,3 @@
 	</body>	
 
  </html>
-
