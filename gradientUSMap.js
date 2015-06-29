@@ -546,7 +546,7 @@
         reset();
 
         d3.select("#floatingBarsG")
-        	.style("visibility", "hidden");
+        	.style("visibility", "visible");
 
     	var color;
 		var continuous = false;
@@ -631,6 +631,10 @@
                             
                             d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
+                            
+                             if (max == min) {
+				            	return end_color;
+				            }
 
                             if (!continuous && value) {//If value exists…
 				                return color(value);
@@ -641,6 +645,7 @@
 				            else {//If value is undefined…
 				                return "#ccc";
 				            }
+				           
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")

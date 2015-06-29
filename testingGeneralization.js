@@ -66,6 +66,7 @@ function drawTheTestMap(){
 	state_abbreviations["Colorado"] = "CO";
 	state_abbreviations["Connecticut"] = "CT";
 	state_abbreviations["Delaware"] = "DE";
+	state_abbreviations["District of Columbia"] = "DC";
 	state_abbreviations["Florida"] = "FL";
 	state_abbreviations["Georgia"] = "GA";
 	state_abbreviations["Hawaii"] = "HI";
