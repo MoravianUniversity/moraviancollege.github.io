@@ -22,8 +22,8 @@
 	
 	// default values for the color range
 
-	var start_color = "#FF0000";
-	var end_color = "#00B800";
+	var start_color = "#EBF5FF";
+	var end_color = "#002966";
 
 	var svg;	
 	var grad_svg;
@@ -140,8 +140,8 @@
 
 		d3.csv(csvUSValueFile, function(data) {
 
-            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
-            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
             
 
 			if (!continuous) {
@@ -416,6 +416,18 @@
 	gradientMap.tooltipHtml = function(n, d){	/* function to create html content string in tooltip div. */
 		var specified_value = d.toFixed(2);
 		var feat = feature_desired.replace(" ", "&nbsp");
+		feat = feat.replace("_", "&nbsp");
+		var feat_words = feat.split("&nbsp");
+		//console.log(feat_words);
+		feat = "";
+		for(var i = 0; i < feat_words.length; i += 1) {
+			
+			feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
+			if(i != feat_words.length){
+				feat_words[i] = feat_words[i] + "&nbsp"
+			}
+			feat = feat + feat_words[i];
+		}
 		return "<h4>"+n+"</h4><table>"+
 			"<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
 			"</table>";
@@ -536,8 +548,8 @@
 
         d3.csv(countyValuePath+csvFile, function(data) {
 
-            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
-            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
             //test edit
             //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
             

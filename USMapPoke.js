@@ -67,6 +67,7 @@ function drawTheUSPokeRatioMap(){
 	state_abbreviations["California"] = "CA";
 	state_abbreviations["Colorado"] = "CO";
 	state_abbreviations["Connecticut"] = "CT";
+	state_abbreviations["District of Columbia"] = "DC";
 	state_abbreviations["Delaware"] = "DE";
 	state_abbreviations["Florida"] = "FL";
 	state_abbreviations["Georgia"] = "GA";
@@ -119,7 +120,7 @@ function drawTheUSPokeRatioMap(){
 	var county_poke_data_file = "json/countyPokes/";
 	
 	//Build map
-	var map = gradientMap.setColors("#002966","#B2D1FF")
+	var map = gradientMap.setColors("#EBF5FF","#002966")
 				.setFeature("poke_ratio")
 				.setRestFileName("poke.csv")
 				//.setDrawCounties(drawCounties)
