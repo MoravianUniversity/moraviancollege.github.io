@@ -66,8 +66,13 @@
 			</div>
 		</div>
 
-		<!--<div id="comboDiv">
-		</div>-->
+		<div id="comboDiv">
+		</div>
+  		
+  		<input type="radio" name="dataSelect" value="Poke Ratio" id="pokeRatio">Poke Ratio<br>
+  		<input type="radio" name="dataSelect" value="Test Data" id="testData">Test Data<br>
+  		<button type="button" onClick="selectData();">Select data</button>
+
 
 		<div style="background-color: black"></div>
 
@@ -114,10 +119,10 @@
 				ul2.style = "list-style-type:none";
 				ul2.innerHTML = "<li>Michael Vitone</li><li>Jason Boccuti</li><li>Hansen Huang</li><li>Steve Chakif</li><li>Jon Diehl</li><li>Lewis Cooper</li>";
 				
-				document.getElementsByTagName("head")[0].appendChild(h31);
-				document.getElementsByTagName("head")[0].appendChild(ul1);
-				document.getElementsByTagName("head")[0].appendChild(h32);
-				document.getElementsByTagName("head")[0].appendChild(ul2);
+				document.body.appendChild(h31);
+				document.body.appendChild(ul1);
+				document.body.appendChild(h32);
+				document.body.appendChild(ul2);
 				
 			}
 			
@@ -141,6 +146,7 @@
 					
 				}
 				
+				
 				//makeMap();
 				
 			}
@@ -152,8 +158,6 @@
 			}
 			
 		</script>
-		
-		<button type="button" onClick="removeUS();">test</button>
 		
 		
 
