@@ -16,6 +16,7 @@
 	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
 	var countyMapPath 	= "json/stateJSON/";
 	var countyValuePath = "json/countyPokes/";
+	var stateCenteringFile = "json/Scrape.txt";
 
 	var getStateValuesFunction = function(data, stateName) {};
 
@@ -32,34 +33,24 @@
 	
 	// default values for the color range
 
-	var start_color = "#FF0000";
-	var end_color = "#00B800";
-
+	var start_color = "#EBF5FF";
+	var end_color = "#002966";
 
 	var svg;
 	
+	var grad_svg;
+	var box;
+	
 	var zoom = d3.behavior.zoom()
-    			.translate([0, 0])
-    			.scale(1)
-    			.scaleExtent([1, 10])
+    			.scaleExtent([1, 8])
     			.on("zoom", zoomer);
-    			
-    function zoomer() {
-  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
-
-	}
 	
-	function reset() {
-	
-		zoom.scale(1);
-		zoom.translate([0, 0]);
-		svg.transition().duration(500).attr('transform', 'translate(' + zoom.translate() + ') scale(' + zoom.scale() + ')');
-	}
-	
-
 	state_abbreviations = {};
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> ccbd9b508f6e14ab8fa0cc174eedc63abdedb430
 	gradientMap.setup = function() {
 
 		d3.select("body")
@@ -73,37 +64,60 @@
 						.attr("id", "mapSVG")
 						.style("width", "800px")
 						.style("margin", "0 auto");
+  				
+  		grad_svg = mapDiv.append("svg")
+  				.attr("x", 5)
+  				.attr("y", 5)
+  				.attr("width",400)
+  				.attr("height",40);
 
 		svg = mapDiv.append("svg")
+				.attr("style", "outline: thin solid gray;")
 				.attr("width", w)
 				.attr("height", h)
-				.call(zoom)
-				.append("g");
-
+    			.call(zoom)
+  				.append("g")
+  				.attr("id", "svg-container");   
+            
 		d3.select("body")
 			.append("div")
 			.attr("id", "tooltip");
 
 		return this;
-
 	}
 	
-	gradientMap.drawMap = function() {
+	function reset() {
+		zoom.scale(1);
+		zoom.translate([0, 0]);
+		svg.transition().duration(0).
+		attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
+	}
+<<<<<<< HEAD
+=======
 
+	function zoomer() {
+  		svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
+  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
+	}
+>>>>>>> ccbd9b508f6e14ab8fa0cc174eedc63abdedb430
+	
+	gradientMap.drawMap = function() {
+		
 		reset();
+		
 		d3.selectAll("path").remove();
 		d3.select("#stateName").remove();
         mouseOut();
-
+		
 		//Define map projection
 		var projection = d3.geo.albersUsa()
-							   .translate([w/2, h/2])
-							   .scale([900]);
-		
+						   .translate([w/2, h/2])
+						   .scale([900]);
+
 		// Path of GeoJSON
 		var path = d3.geo.path()
-						.projection(projection);
-
+					.projection(projection);
+	
 		var color;
 		var continuous = false;
 		//Define quantize scale to sort data values into buckets of color
@@ -119,7 +133,8 @@
 		d3.csv(csvUSValueFile, function(data) {
 
             min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
-            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();            
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
+            
 
 			if (!continuous) {
 				color.domain([min,max]);
@@ -140,7 +155,7 @@
 			       		return d.properties.name;
 			       })
 			       .attr("stroke", "black")
-			       .attr("stroke-width", 1)
+			       .attr("stroke-width", "1")
 			       .style("fill", function(d) {
 	                    //Get data value
 	                    d.properties.value = getStateValuesFunction(data, d.properties.name);
@@ -159,13 +174,14 @@
 			       .on("click", link)
 			       .on("mouseover", mouseOver)
 			       .on("mouseout", mouseOut);
-			       
 			});
+<<<<<<< HEAD
 			
+=======
+>>>>>>> ccbd9b508f6e14ab8fa0cc174eedc63abdedb430
 		});
 	}
 
-	
 	var mouseOver = function(d) {
 		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
 
@@ -194,8 +210,6 @@
 		d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
 	}
 
-
-	
 	var change_gradient = function(val) {
 
 		var inter = false;
@@ -312,7 +326,7 @@
 		var colorArray = makeRange(boxNum, start_color, end_color);
 		d3.selectAll(".rectangle").remove();
 		for(var i = 0; i < boxNum; i++){
-			svg.append("rect")
+			grad_svg.append("rect")
 			   .attr("x", 55 + 25*i)
 			   .attr("y", 10)
 			   .attr("width", 25)
@@ -329,7 +343,7 @@
 
 	var drawMinLabel = function() {
 		d3.select("#minLabel").remove();
-		svg.append("text")
+		grad_svg.append("text")
         	.attr("x", 0)
             .attr("y", 25)
             .text("\00  min = " + Number(min).toFixed(2) + " ")
@@ -342,7 +356,7 @@
 
 	var drawMaxLabel = function(position) {
 		d3.select("#maxLabel").remove();
-		svg.append("text")
+		grad_svg.append("text")
         	.attr("x", 8 + position)
             .attr("y", 25)
             .text("\00  max = " + Number(max).toFixed(2))
@@ -361,7 +375,7 @@
 
 		d3.select("linearGradient").remove();
 
-		var gradient = svg
+		var gradient = grad_svg
 		    .append("linearGradient")
 		    .attr("y1", "0")
 		    .attr("y2", "0")
@@ -380,7 +394,7 @@
 		    .attr("offset", "1")
 		    .attr("stop-color", end_color)
 		    
-		svg
+		grad_svg
 		    .append("rect")
 		    .attr("x", 54)
 		    .attr("y", 10)
@@ -388,7 +402,6 @@
 		    .attr("height", 25)
 		    .attr("fill", "url(#gradient)")
 		    .attr("class", "rectangle");
-		    
 
 		drawMinLabel();
 		drawMaxLabel(298);
@@ -446,7 +459,6 @@
 			}
 			feat = feat + feat_words[i];
 		}
-		
 		return "<h4>"+n+"</h4><table>"+
 			"<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
 			"</table>";
@@ -495,9 +507,8 @@
     	var smallLat = 500
     	var bigLong = 0
     	var smallLong = -500
+		// return the center
 		
-		
-		//Dive down and grab all the coordinates store in nums
 		for (x = 0; x < data.features.length; x+=1) {
 			for (y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
 				for(z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
@@ -506,15 +517,14 @@
 				}
 			}
 		}
-		
-		//store the coordinates in pairs
+
 		for(i = 0; i< nums.length; i++) {
 			for(j = 0; j< nums[i].length; j++) {
 				allNums.push(nums[i][j]);
 			}
 		}
 			
-		//Loop through collection and find the big/small long and lats
+			
 		for (val in allNums) {
 
 			var save = allNums[val]	
@@ -545,9 +555,10 @@
 	return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
 		
 	}
-	
 	var drawCounties = function(stateFile, csvFile) {
-    	reset();
+		
+		reset();
+		
     	d3.selectAll("path").remove();
         mouseOut();
 
@@ -568,11 +579,10 @@
 
         d3.csv(countyValuePath+csvFile, function(data) {
 
-      	 	min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
             max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
             //test edit
             //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
-
             
            	if (!continuous) {
 				color.domain([min,max]);
@@ -588,11 +598,11 @@
                 var center = d3.geo.centroid(json)                
                 var scale  = 10;
                 var offset = [w/2, h/2];
-                var projection = d3.geo.mercator().scale(scale).center(center)
-                    .translate(offset);
+                var countyProjection = d3.geo.mercator().scale(scale)
+                .center(center).translate(offset);
 
                 // create the path
-                var path = d3.geo.path().projection(projection);
+                var path = d3.geo.path().projection(countyProjection);
 
                 // using the path determine the bounds of the current map and use 
                 // these to determine better values for the scale and translation
@@ -605,7 +615,7 @@
                     vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
                 	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
-                                  h - (bounds[0][1] + bounds[1][1])/2];
+                                  h - (bounds[0][1] + bounds[1][1])/2.5];
                 }
                 else {
       				hscale  = scale*w*.75  /(bounds[1][0] - bounds[0][0]);
@@ -617,9 +627,10 @@
                 }
 
                 // new projection
-                projection = d3.geo.mercator().scale(scale)
+                countyProjection = d3.geo.mercator().scale(scale)
                 .center(center).translate(offset);
-                path = path.projection(projection);
+                
+                path = path.projection(countyProjection);
 
                 svg.selectAll("path")
                     .data(json.features)
@@ -653,10 +664,7 @@
                     .style("stroke", "black")
                     .on("click", click)
                     .on("mouseover", mouseOver)
-                    .on("mouseout", mouseOut)
-                    .on("click", drawMap);
-                    
-                    
+                    .on("mouseout", mouseOut);
 
             });
 			d3.select("#floatingBarsG")
