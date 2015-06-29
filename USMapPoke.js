@@ -1,4 +1,5 @@
-function drawTheMap(){
+var thisMap;
+function drawTheUSMap(){
 	
 	
 	
@@ -130,9 +131,24 @@ function drawTheMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
+	thisMap = map;
+				
 	//Draw map
-	map.drawMap();
+	thisMap.drawMap();
+	
+	//map.removeMap();
+	
+	
+	
+	//removeUSMap();
 };
+function removeUSMap(){
+	
+	thisMap.removeMap();
+	
+}
 
 
-drawTheMap();
+
+
+//drawTheUSMap();

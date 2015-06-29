@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
-	<body onload="makeMap('USMapPoke.js'); drawBottom();">
+	<body onload="drawTheUSMap(); drawBottom();">
 		
 		<div id="pageTitle">
 			<h1 style="text-align:center">HA1C Tests Per Patient</h1>
@@ -66,44 +66,44 @@
 			</div>
 		</div>
 
-		<div id="comboDiv">
-		</div>
+		<!--<div id="comboDiv">
+		</div>-->
 
 		<div style="background-color: black"></div>
 		
 		<script>
   			
-  			function takeFile() {
+  			//function takeFile() {
   				
-  				var x = document.getElementById("fileUpload");
+  				//var x = document.getElementById("fileUpload");
   				
-  				var txt = "";
+  				//var txt = "";
   				
-  				if ('files' in x) {
+  				//if ('files' in x) {
   					
-  					if (x.files.length == 0) {
+  					//if (x.files.length == 0) {
   						
-  						txt = "Select one or more files.";
+  						//txt = "Select one or more files.";
   						
-  					} else {
+  					//} else {
   						
-  						for (var i = 0; i < x.files.length; i++) {
+  						//for (var i = 0; i < x.files.length; i++) {
   							
-  							var file = x.files[i];
+  							//var file = x.files[i];
   							
-  							console.log(file.name);
+  							//console.log(file.name);
   							
-  							console.log(file.size);
+  							//console.log(file.size);
   							
-  							console.log(file.value);
+  							//console.log(file.value);
   							
-  						}
+  						//}
   						
-  					}
+  					//}
   					
-  				}
+  				//}
   				
-  			}
+  			//}
   			
   		</script>
 		
@@ -121,7 +121,10 @@
 		
 		
 		<!--USMapPoke.js builds map-->
-		<!--<script src="USMapPoke.js" id="scriptSrc"></script>-->
+		<script src="USMapPoke.js" id="scriptSrc"></script>
+		
+		<script src="testingGeneralization.js"></script>
+		
 		<script>
 			
 			function makeMap(source) {
@@ -166,7 +169,9 @@
 				
 				if (document.getElementById("pokeRatio").checked == true) {
 					
-					makeMap("USMapPoke.js");
+					removeTestMap();
+					
+					drawTheUSMap();
 					
 				}
 				
@@ -174,13 +179,9 @@
 					
 					//makeMap("testingGeneralization.js");
 					
-					var newScript2 = document.createElement("script");
+					removeUSMap();
 					
-					newScript2.setAttribute('src', 'testingGeneralization.js');
-					
-					console.log(1);
-					
-					document.body.appendChild(newScript2);
+					drawTheTestMap();
 					
 				}
 				
@@ -188,8 +189,15 @@
 				
 			}
 			
+			function removeUS(){
+				
+				removeUSMap();
+				
+			}
+			
 		</script>
 		
+		<button type="button" onClick="removeUS();">test</button>
 		
 		
 

@@ -269,6 +269,15 @@
 		drawBoxes(numOfBoxes);
 	}
 	
+	gradientMap.removeMap = function(){
+		//var mapDiv = d3.select("body")
+						//.append("div")
+						//.attr("id", "mapSVG")
+						//.style("width", "0px");
+		mapSVG.remove();
+		return this;
+	}
+	
 	var rest_of_filename = "poke.csv";
 
 	var link = function(d) {
