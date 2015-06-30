@@ -270,7 +270,7 @@
 		d3.select("#stateName").remove();
 		//This is where the SVG generates the state name with x and y coordinates
 		svg.append("text")
-        	.attr("x", 650)
+        	.attr("x", 625)
             .attr("y", 30)
             .text(d.properties.name)
             .attr("fill", "black")
