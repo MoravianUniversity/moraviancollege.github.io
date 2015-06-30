@@ -1,4 +1,5 @@
-function drawTheUSPokeRatioMap(){
+var thisMap;
+function drawTheUSMap(){
 	
 	
 	
@@ -67,8 +68,8 @@ function drawTheUSPokeRatioMap(){
 	state_abbreviations["California"] = "CA";
 	state_abbreviations["Colorado"] = "CO";
 	state_abbreviations["Connecticut"] = "CT";
-	state_abbreviations["District of Columbia"] = "DC";
 	state_abbreviations["Delaware"] = "DE";
+	state_abbreviations["District of Columbia"] = "DC";
 	state_abbreviations["Florida"] = "FL";
 	state_abbreviations["Georgia"] = "GA";
 	state_abbreviations["Hawaii"] = "HI";
@@ -130,9 +131,13 @@ function drawTheUSPokeRatioMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
+	thisMap = map;
+				
 	//Draw map
-	map.drawMap();
+	thisMap.drawMap();
 };
-
-
-drawTheUSPokeRatioMap();
+function removeUSMap(){
+	
+	thisMap.removeMap();
+	
+}

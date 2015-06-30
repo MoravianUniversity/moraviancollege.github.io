@@ -1,4 +1,5 @@
 (function() {
+	var comboExists = false;
 	var gradientMap = {};
 
 	// Width and Height of the svg
@@ -263,6 +264,12 @@
 		drawBoxes(numOfBoxes);
 	}
 	
+	gradientMap.removeMap = function(){
+		
+		mapSVG.remove();
+		return this;
+	}
+	
 	var rest_of_filename = "poke.csv";
 
 	var link = function(d) {
@@ -270,7 +277,7 @@
 		d3.select("#stateName").remove();
 		//This is where the SVG generates the state name with x and y coordinates
 		svg.append("text")
-        	.attr("x", 650)
+        	.attr("x", 625)
             .attr("y", 30)
             .text(d.properties.name)
             .attr("fill", "black")
@@ -433,6 +440,11 @@
 	}
 
 	var makeCombo = function() {
+		
+		if(comboExists){
+			return;
+		}
+		comboExists = true;
 		// this function creates the drop down menu for changing the grid scale
 		// color selector is how many colors you want displayed
 		var combo = d3.select("#comboDiv")
@@ -531,7 +543,7 @@
         reset();
 
         d3.select("#floatingBarsG")
-        	.style("visibility", "hidden");
+        	.style("visibility", "visible");
 
     	var color;
 		var continuous = false;
@@ -616,6 +628,10 @@
                             
                             d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
+                            
+                             if (max == min) {
+				            	return end_color;
+				            }
 
                             if (!continuous && value) {//If value exists…
 				                return color(value);
@@ -626,6 +642,7 @@
 				            else {//If value is undefined…
 				                return "#ccc";
 				            }
+				           
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
