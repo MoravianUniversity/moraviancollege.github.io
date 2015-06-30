@@ -1,15 +1,16 @@
 (function() {
+	var comboExists = false;
 	var gradientMap = {};
 
 	// Width and Height of the svg
 	var w = 800;
 	var h = 600;
+	
 	var min = "0";
 	var max = "0";
 	var current_gradient = 2;
 	var feature_desired = "poke_ratio";
 	
-
 	// defualt path names for the files
 	var usMapFile 		= "json/us-states.json";
 	var csvUSValueFile 	= "json/poke_ratio_correct2.csv";
@@ -18,8 +19,6 @@
 	var stateCenteringFile = "json/Scrape.txt";
 
 	var getStateValuesFunction = function(data, stateName) {};
-
-
 	var getCountyValuesFunction = function(data, countyName) {};
 	
 	// default values for the color range
@@ -27,14 +26,15 @@
 	var start_color = "#EBF5FF";
 	var end_color = "#002966";
 
-	var svg;
-	
+	var svg;	
 	var grad_svg;
-	var box;
+	
+	var projection;
+	var path;
 	
 	var zoom = d3.behavior.zoom()
-    			.scaleExtent([1, 8])
-    			.on("zoom", zoomer);
+    			.scaleExtent([1, 10])
+    			.on("zoom", zoomed);
 	
 	state_abbreviations = {};
 	
@@ -45,16 +45,14 @@
 			.attr("id", "comboDiv");
 
 		makeCombo();
-
-		var mapDiv = d3.select("body")
+		
+		var mapDiv = d3.select(".theMap")
 						.append("div")
 						.attr("id", "mapSVG")
 						.style("width", "800px")
 						.style("margin", "0 auto");
-  				
+  		
   		grad_svg = mapDiv.append("svg")
-  				.attr("x", 5)
-  				.attr("y", 5)
   				.attr("width",400)
   				.attr("height",40);
 
@@ -62,44 +60,70 @@
 				.attr("style", "outline: thin solid gray;")
 				.attr("width", w)
 				.attr("height", h)
-    			.call(zoom)
-  				.append("g")
-  				.attr("id", "svg-container");   
-            
+  				.call(zoom)
+  				.append("g");
+
 		d3.select("body")
 			.append("div")
 			.attr("id", "tooltip");
-
+		
 		return this;
 	}
 	
+	// re-centers the map and brings it back to the original scale
 	function reset() {
 		zoom.scale(1);
 		zoom.translate([0, 0]);
 		svg.transition().duration(0).
 		attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
 	}
-
-	function zoomer() {
+	
+	function zoomed() {
   		svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
-  		g.style("stroke-width", 1.5 / d3.event.scale + "px");
+  		slider.property("value",  d3.event.scale);
+	}
+	
+	var mouseOut = function() {
+		d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
+	}
+	
+	var mouseOver = function(d) {
+		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
+
+		// state
+		if (d.properties.name) {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))  
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY - 28) + "px");
+		}
+		// county
+		else if (d.properties.value) {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))  
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY - 28) + "px");
+		}
+		// county without a poke ratio
+		else {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))  
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY - 28) + "px");
+		}
 	}
 	
 	gradientMap.drawMap = function() {
 		
-		reset();
-		
 		d3.selectAll("path").remove();
 		d3.select("#stateName").remove();
         mouseOut();
+        reset();
 		
 		//Define map projection
-		var projection = d3.geo.albersUsa()
+		projection = d3.geo.albersUsa()
 						   .translate([w/2, h/2])
 						   .scale([900]);
 
 		// Path of GeoJSON
-		var path = d3.geo.path()
+		path = d3.geo.path()
 					.projection(projection);
 	
 		var color;
@@ -161,35 +185,7 @@
 			});
 		});
 	}
-
-	var mouseOver = function(d) {
-		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
-
-		// state
-		if (d.properties.name) {
-			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY - 28) + "px");
-		}
-		// county
-		else if (d.properties.value) {
-			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY - 28) + "px");
-		}
-		// county without a poke ratio
-		else {
-			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY - 28) + "px");
-		}
-		
-	}
 	
-	var mouseOut = function() {
-		d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
-	}
-
 	var change_gradient = function(val) {
 
 		var inter = false;
@@ -221,7 +217,6 @@
                     return "#ccc";
                 }
             });
-
 	}
 
 	gradientMap.setFunctions = function(function1, function2) {
@@ -269,6 +264,12 @@
 		drawBoxes(numOfBoxes);
 	}
 	
+	gradientMap.removeMap = function(){
+		
+		mapSVG.remove();
+		return this;
+	}
+	
 	var rest_of_filename = "poke.csv";
 
 	var link = function(d) {
@@ -276,14 +277,12 @@
 		d3.select("#stateName").remove();
 		//This is where the SVG generates the state name with x and y coordinates
 		svg.append("text")
-        	.attr("x", 650)
+        	.attr("x", 625)
             .attr("y", 30)
             .text(d.properties.name)
             .attr("fill", "black")
             .attr("class", "text")
             .attr("id", "stateName");
-			
-		
 
 		var abbreviation = state_abbreviations[d.properties.name];
 		var path = abbreviation + "Counties.json";
@@ -300,7 +299,6 @@
 		
 		rest_of_filename = new_name;
 		return this;
-		
 	}
 
 	var drawBoxes = function(boxNum) {
@@ -319,7 +317,6 @@
 		var maxText = max.substring(0,4);
 
         drawMaxLabel(50 + 25*boxNum);
-
 	}
 
 	var drawMinLabel = function() {
@@ -346,8 +343,6 @@
             .attr("fill", "black")
             .attr("class", "text")
             .attr("id", "maxLabel");
-        
-        
 	}
 
 	var drawContinuousGrad = function(){
@@ -386,7 +381,6 @@
 
 		drawMinLabel();
 		drawMaxLabel(298);
-
 	}
 
 	var makeRange = function(step, startColor, endColor) {
@@ -446,6 +440,11 @@
 	}
 
 	var makeCombo = function() {
+		
+		if(comboExists){
+			return;
+		}
+		comboExists = true;
 		// this function creates the drop down menu for changing the grid scale
 		// color selector is how many colors you want displayed
 		var combo = d3.select("#comboDiv")
@@ -479,7 +478,8 @@
 			current_gradient = value;
 		});
 	}
-		function computeCenter(data){
+	
+	function computeCenter(data){
 	
 		var nums = []
 		var allNums =[]
@@ -504,8 +504,7 @@
 				allNums.push(nums[i][j]);
 			}
 		}
-			
-			
+		
 		for (val in allNums) {
 
 			var save = allNums[val]	
@@ -533,18 +532,18 @@
 				}
 			}
 		}
+		
 	return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
-		
 	}
+	
 	var drawCounties = function(stateFile, csvFile) {
-		
-		reset();
 		
     	d3.selectAll("path").remove();
         mouseOut();
+        reset();
 
         d3.select("#floatingBarsG")
-        	.style("visibility", "hidden");
+        	.style("visibility", "visible");
 
     	var color;
 		var continuous = false;
@@ -579,11 +578,11 @@
                 var center = computeCenter(json);              
                 var scale  = 10;
                 var offset = [w/2, h/2];
-                var countyProjection = d3.geo.mercator().scale(scale)
+                projection = d3.geo.mercator().scale(scale)
                 .center(center).translate(offset);
 
                 // create the path
-                var path = d3.geo.path().projection(countyProjection);
+                path = d3.geo.path().projection(projection);
 
                 // using the path determine the bounds of the current map and use 
                 // these to determine better values for the scale and translation
@@ -596,7 +595,11 @@
                     vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
                 	offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
+<<<<<<< HEAD
                                   h - (bounds[0][1] + bounds[1][1])/2];
+=======
+                                  h - (bounds[0][1] + bounds[1][1])/2.1];
+>>>>>>> b8000457a19b31fe48a45a651e3b5eb1554b10c6
                 }
                 else {
       				hscale  = scale*w*.75  /(bounds[1][0] - bounds[0][0]);
@@ -604,14 +607,13 @@
                 	scale   = (hscale < vscale) ? hscale : vscale;
                 	offset  = [ w-(bounds[0][0] + bounds[1][0])/2,	
                                   h-(bounds[0][1] + bounds[1][1])/2.1];
-                    
                 }
 
                 // new projection
-                countyProjection = d3.geo.mercator().scale(scale)
+                projection = d3.geo.mercator().scale(scale)
                 .center(center).translate(offset);
                 
-                path = path.projection(countyProjection);
+                path = path.projection(projection);
 
                 svg.selectAll("path")
                     .data(json.features)
@@ -630,6 +632,10 @@
                             
                             d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
+                            
+                             if (max == min) {
+				            	return end_color;
+				            }
 
                             if (!continuous && value) {//If value exists…
 				                return color(value);
@@ -640,6 +646,7 @@
 				            else {//If value is undefined…
 				                return "#ccc";
 				            }
+				           
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
@@ -659,7 +666,6 @@
 
         gradientMap.drawMap(map_json_file, poke_data);
     }
-	
 
 	this.gradientMap = gradientMap;
 })();
