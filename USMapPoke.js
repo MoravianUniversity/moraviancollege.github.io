@@ -135,12 +135,6 @@ function drawTheUSMap(){
 				
 	//Draw map
 	thisMap.drawMap();
-	
-	//map.removeMap();
-	
-	
-	
-	//removeUSMap();
 };
 function removeUSMap(){
 	
@@ -148,7 +142,3 @@ function removeUSMap(){
 	
 }
 
-
-
-
-//drawTheUSMap();

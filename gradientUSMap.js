@@ -265,10 +265,7 @@
 	}
 	
 	gradientMap.removeMap = function(){
-		//var mapDiv = d3.select("body")
-						//.append("div")
-						//.attr("id", "mapSVG")
-						//.style("width", "0px");
+		
 		mapSVG.remove();
 		return this;
 	}
