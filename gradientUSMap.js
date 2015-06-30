@@ -1,4 +1,5 @@
 (function() {
+	var comboExists = false;
 	var gradientMap = {};
 
 	// Width and Height of the svg
@@ -263,6 +264,12 @@
 		drawBoxes(numOfBoxes);
 	}
 	
+	gradientMap.removeMap = function(){
+		
+		mapSVG.remove();
+		return this;
+	}
+	
 	var rest_of_filename = "poke.csv";
 
 	var link = function(d) {
@@ -433,6 +440,11 @@
 	}
 
 	var makeCombo = function() {
+		
+		if(comboExists){
+			return;
+		}
+		comboExists = true;
 		// this function creates the drop down menu for changing the grid scale
 		// color selector is how many colors you want displayed
 		var combo = d3.select("#comboDiv")

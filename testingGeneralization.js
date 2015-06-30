@@ -1,4 +1,5 @@
-function drawTheUSPokeRatioMap(){
+var thisMap;
+function drawTheTestMap(){
 
 	var getStateValuesFunction = function(data, stateName) {
 
@@ -126,9 +127,17 @@ function drawTheUSPokeRatioMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
+	thisMap = map
+				
 	//Draw map
-	map.drawMap();
+	thisMap.drawMap();
 };
 
+function removeTestMap(){
+	
+	thisMap.removeMap();
+	
+}
 
-drawTheUSPokeRatioMap();
+
+//drawTheMap();

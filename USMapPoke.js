@@ -1,4 +1,5 @@
-function drawTheUSPokeRatioMap(){
+var thisMap;
+function drawTheUSMap(){
 	
 	
 	
@@ -130,9 +131,14 @@ function drawTheUSPokeRatioMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
+	thisMap = map;
+				
 	//Draw map
-	map.drawMap();
+	thisMap.drawMap();
 };
+function removeUSMap(){
+	
+	thisMap.removeMap();
+	
+}
 
-
-drawTheUSPokeRatioMap();
