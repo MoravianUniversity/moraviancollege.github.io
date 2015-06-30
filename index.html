@@ -1,7 +1,6 @@
 <!DOCTYPE html>
  <html>
 	<head>
-
 		<meta charset="utf-8">
 		<title>HA1C Test Data</title>
 		<script type="text/javascript" src="d3/d3.v3.js"></script>
@@ -10,7 +9,6 @@
 	</head>
 
 	<body onload="drawTheUSMap(); drawBottom();">
-		
 		<div id="pageTitle">
 			<h1 style="text-align:center">HA1C Tests Per Patient</h1>
 
@@ -35,15 +33,7 @@
             </p>
             <p> 
 
-		
-        <script>
-    	function visitPage(){
-        window.location='http://moraviancollege.github.io/';
-    	}
-		</script>
-		<button onclick="visitPage();">Country View</button>
-        
-
+			<button onclick="removeUSMap(); drawTheUSMap();">Reset Map</button>
 		</div>
 		
 
@@ -81,9 +71,7 @@
 		
 		<!--USMapPoke.js builds map-->
 		<script src="USMapPoke.js" id="scriptSrc"></script>
-		
-		<script src="testingGeneralization.js"></script>
-		
+				
 		<script>
 			
 			function makeMap(source) {
@@ -154,13 +142,6 @@
 				removeUSMap();
 				
 			}
-			
 		</script>
-		
-		
-
-
 	</body>	
-
  </html>
-
