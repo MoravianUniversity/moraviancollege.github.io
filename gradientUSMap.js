@@ -1,4 +1,5 @@
 (function() {
+	var comboExists = false;
 	var gradientMap = {};
 
 	// Width and Height of the svg
@@ -59,10 +60,7 @@
 				.attr("style", "outline: thin solid gray;")
 				.attr("width", w)
 				.attr("height", h)
-
-
-    			.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
-
+  				.call(zoom)
   				.append("g");
 
 		d3.select("body")
@@ -79,13 +77,37 @@
 		svg.transition().duration(0).
 		attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
 	}
+	
+	function zoomed() {
+  		svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
+  		slider.property("value",  d3.event.scale);
+	}
+	
+	var mouseOut = function() {
+		d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
+	}
+	
+	var mouseOver = function(d) {
+		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
 
-
-	function zoom() {
-  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-  		
-
-
+		// state
+		if (d.properties.name) {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))  
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY - 28) + "px");
+		}
+		// county
+		else if (d.properties.value) {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))  
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY - 28) + "px");
+		}
+		// county without a poke ratio
+		else {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))  
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY - 28) + "px");
+		}
 	}
 	
 	gradientMap.drawMap = function() {
@@ -161,20 +183,6 @@
 			       .on("mouseover", mouseOver)
 			       .on("mouseout", mouseOut);
 			});
-
-			
-			var zoom = d3.behavior.zoom()
-    			.on("zoom",function() {
-        		g.attr("transform","translate("+ 
-            	d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-        		g.selectAll("path")  
-            	.attr("d", path.projection(projection)); 
-  			});
-  			
-  			var g = svg.append("g");
-
-			svg.call(zoom)
-
 		});
 	}
 	
@@ -256,6 +264,12 @@
 		drawBoxes(numOfBoxes);
 	}
 	
+	gradientMap.removeMap = function(){
+		
+		mapSVG.remove();
+		return this;
+	}
+	
 	var rest_of_filename = "poke.csv";
 
 	var link = function(d) {
@@ -263,7 +277,7 @@
 		d3.select("#stateName").remove();
 		//This is where the SVG generates the state name with x and y coordinates
 		svg.append("text")
-        	.attr("x", 650)
+        	.attr("x", 625)
             .attr("y", 30)
             .text(d.properties.name)
             .attr("fill", "black")
@@ -426,6 +440,11 @@
 	}
 
 	var makeCombo = function() {
+		
+		if(comboExists){
+			return;
+		}
+		comboExists = true;
 		// this function creates the drop down menu for changing the grid scale
 		// color selector is how many colors you want displayed
 		var combo = d3.select("#comboDiv")
@@ -592,12 +611,6 @@
                 
                 path = path.projection(projection);
 
-
-                // add a rectangle to see the bound of the svg
-          //      svg.append("rect").attr('width', w).attr('height', h)
-          //        .style('stroke', 'black').style('fill', 'none');
-
-
                 svg.selectAll("path")
                     .data(json.features)
                     .enter()
@@ -638,17 +651,6 @@
                     .on("mouseout", mouseOut);
 
             });
-            var zoom = d3.behavior.zoom()
-    			.on("zoom",function() {
-        		g.attr("transform","translate("+ 
-            	d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-        		g.selectAll("path")
-            	.attr("d", path.projection(projection)); 
-  			});
-  			
-  			var g = svg.append("g");
-
-			svg.call(zoom)
 			d3.select("#floatingBarsG")
         		.style("visibility", "hidden");
         });
