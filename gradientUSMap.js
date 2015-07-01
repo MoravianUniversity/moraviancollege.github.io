@@ -53,11 +53,11 @@
 						.style("margin", "0 auto");
   		
   		grad_svg = mapDiv.append("svg")
-  				.attr("width",400)
+  				.attr("width",800)
   				.attr("height",40);
 
 		svg = mapDiv.append("svg")
-				.attr("style", "outline: thin solid gray;")
+				.attr("style", "border: thin solid gray; border-radius: 5px;")
 				.attr("width", w)
 				.attr("height", h)
   				.call(zoom)
@@ -279,7 +279,7 @@
 
 		d3.select("#stateName").remove();
 		//This is where the SVG generates the state name with x and y coordinates
-		svg.append("text")
+		grad_svg.append("text")
         	.attr("x", 625)
             .attr("y", 30)
             .text(d.properties.name)
