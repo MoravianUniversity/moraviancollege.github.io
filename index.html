@@ -159,90 +159,6 @@ Design by <a href="http://www.opendesigns.org">OD</a>
 </div>
 </div>
 
-<<<<<<< HEAD
-		<div class="row theMap">
-		
-		</div>
-		
-		<button onClick="canZoom()">Click here if you are using Internet Explorer or Firefox</button>
-		
-		<!--USMapPoke.js builds map-->
-		<script src="USMapPoke.js" id="scriptSrc"></script>
-				
-		<script>
-			
-			function makeMap(source) {
-				
-				var newScript = document.createElement("script");
-				
-				newScript.setAttribute('id', 'scriptSrc');
-				
-				newScript.setAttribute('type','text/javascript');
-				
-				newScript.setAttribute('src', source);
-				
-				document.getElementsByTagName("head")[0].appendChild(newScript);
-				
-				//drawTheMap();
-				
-				
-			}
-			
-			function drawBottom() {
-				
-				var h31 = document.createElement("h3");
-				h31.innerHTML = "Moravian College Summer Team 2015";
-				var ul1 = document.createElement("ul");
-				ul1.style = "list-style-type:none";
-				ul1.innerHTML = "<li>Megan Biernat</li><li>William Collins</li><li>Alec Gerhart</li><li>Anna Lamoureux</li><li>Steve MacDonald</li><li>Charles McDonald</li> <li>Martin Nesbitt</li><li>Andrew Reed</li> <li>Josh Russett</li> <li>Michael Turnbach</li><li>John Vonelli</li>";
-				
-				var h32 = document.createElement("h3");
-				h32.innerHTML = "Senior Capstone Contributors Spring 2015";
-				var ul2 = document.createElement("ul");
-				ul2.style = "list-style-type:none";
-				ul2.innerHTML = "<li>Michael Vitone</li><li>Jason Boccuti</li><li>Hansen Huang</li><li>Steve Chakif</li><li>Jon Diehl</li><li>Lewis Cooper</li>";
-				
-				document.body.appendChild(h31);
-				document.body.appendChild(ul1);
-				document.body.appendChild(h32);
-				document.body.appendChild(ul2);
-				
-			}
-			
-			function selectData() {
-				
-				if (document.getElementById("pokeRatio").checked == true) {
-					
-					removeTestMap();
-					
-					drawTheUSMap();
-					
-				}
-				
-				if (document.getElementById("testData").checked == true) {
-					
-					//makeMap("testingGeneralization.js");
-					
-					removeUSMap();
-					
-					drawTheTestMap();
-					
-				}
-				
-				
-				//makeMap();
-				
-			}
-			
-			function removeUS(){
-				
-				removeUSMap();
-				
-			}
-		</script>
-	</body>	
- </html>
-=======
 </footer>
 
 <!-- End Document
@@ -251,5 +167,3 @@ Design by <a href="http://www.opendesigns.org">OD</a>
 <script src="js/jquery.prettyPhoto.js"></script>
 </body>
 </html>
-
->>>>>>> 51af1e3db5a16ffc9dd6e501e6eeb7538457dda6
