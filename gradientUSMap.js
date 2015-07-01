@@ -19,7 +19,6 @@
 
     var getStateValuesFunction = function(data, stateName) {return undefined;};
 
-
     var getCountyValuesFunction = function(data, countyName) {return undefined;};
 
     // default values for the color range
@@ -31,7 +30,6 @@
     var svg;
 
     state_abbreviations = {};
-
 
     gradientMap.setup = function() {
 
@@ -57,6 +55,7 @@
 
         return this;
     };
+    
     gradientMap.drawMap = function() {
 
         d3.selectAll("path").remove();
@@ -271,8 +270,8 @@
     var drawBoxes = function(boxNum) {
         var colorArray = makeRange(boxNum, start_color, end_color);
         d3.selectAll(".rectangle").remove();
-        var i;
-        for (i = 0; i < boxNum; i+=1){
+        var i = 0;
+        while (i < boxNum){
             svg.append("rect")
                .attr("x", 55 + 25*i)
                .attr("y", 10)
@@ -280,6 +279,7 @@
                .attr("height", 25)
                .attr("class", "rectangle")
                .style("fill", colorArray[i]);
+               i += 1;
         }
 
         var maxText = max.substring(0,4);
@@ -379,13 +379,14 @@
 
         rang = [];
 
-        var i;
-        for (i = 0; i < step; i++) {
-            var newR, newG, newB;
+        var i = 0;
+        var newR, newG, newB;
+        while(i < step) {
             newR = (Rstart + i*Rstep).toFixed(0);
             newG = (Gstart + i*Gstep).toFixed(0);
             newB = (Bstart + i*Bstep).toFixed(0);
             rang.push("rgb(" + newR + "," + newG + "," + newB + ")");
+            i += 1
         }
 
         return rang;
@@ -407,11 +408,13 @@
                         .attr("id", "color-selector")
                         .style("right-margin", "50%");
 
-        for (var i = 2; i <= 10; i++) {
+        var i = 2;
+        while (i <= 10) {
             combo.append("option")
                     .attr("id", "option" + i.toString())
                     .attr("value", i)
                     .text(i);
+            i+=1;
         }
         combo.append("option")
                 .attr("id", "optionc")
