@@ -1,4 +1,5 @@
 (function() {
+	
 	var comboExists = false;
 	var gradientMap = {};
 
@@ -32,6 +33,18 @@
 	var projection;
 	var path;
 	
+	var canZoom = true;
+	
+	gradientMap.zoomChange = function(){
+		
+		if(canZoom){
+			canZoom = false;
+		}else{
+			canZoom = true;
+		}
+		
+	}
+	
 	var zoom = d3.behavior.zoom()
     			.scaleExtent([1, 10])
     			.on("zoom", zoomed);
@@ -55,13 +68,22 @@
   		grad_svg = mapDiv.append("svg")
   				.attr("width",400)
   				.attr("height",40);
-
-		svg = mapDiv.append("svg")
-				.attr("style", "outline: thin solid gray;")
-				.attr("width", w)
-				.attr("height", h)
-  				.call(zoom)
-  				.append("g");
+		
+		
+		if(canZoom){
+			svg = mapDiv.append("svg")
+					.attr("style", "outline: thin solid gray;")
+					.attr("width", w)
+					.attr("height", h)
+  					.call(zoom)
+  					.append("g");
+  		}else {
+  			svg = mapDiv.append("svg")
+					.attr("style", "outline: thin solid gray;")
+					.attr("width", w)
+					.attr("height", h)
+  					.append("g");
+  		}
 
 		d3.select("body")
 			.append("div")
