@@ -53,13 +53,13 @@
 	
 	gradientMap.setup = function() {
 
-		d3.select("body")
+		d3.select("#mapContainer")
 			.append("div")
 			.attr("id", "comboDiv");
 
 		makeCombo();
 		
-		var mapDiv = d3.select(".theMap")
+		var mapDiv = d3.select("#mapContainer")
 						.append("div")
 						.attr("id", "mapSVG")
 						.style("width", "800px")
@@ -85,7 +85,7 @@
   					.append("g");
   		}
 
-		d3.select("body")
+		d3.select("#mapContainer")
 			.append("div")
 			.attr("id", "tooltip");
 		
@@ -111,24 +111,27 @@
 	
 	var mouseOver = function(d) {
 		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
-
+		var coord = d3.mouse(this);
+		var c_x	= (coord[0] + 100) +"px";
+		var c_y = (coord[1] + 750) + "px";
+		
 		// state
 		if (d.properties.name) {
 			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY - 28) + "px");
+				.style("left", c_x)
+				.style("top", c_y);
 		}
 		// county
 		else if (d.properties.value) {
 			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY - 28) + "px");
+				.style("left", c_x)
+				.style("top", c_y);
 		}
 		// county without a poke ratio
 		else {
 			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY - 28) + "px");
+				.style("left", c_x)
+				.style("top", c_y);
 		}
 	}
 	

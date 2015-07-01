@@ -1,6 +1,10 @@
 var thisMap;
+
 function drawTheUSMap(){
 	
+
+	
+
 	var getStateValuesFunction = function(data, stateName) {
 
 		var stateAbbr = state_abbreviations[stateName];
@@ -133,6 +137,8 @@ function drawTheUSMap(){
 	//Draw map
 	thisMap.drawMap();
 };
+
+
 function removeUSMap(){
 	
 	thisMap.removeMap();
