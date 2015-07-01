@@ -1,41 +1,40 @@
 <!DOCTYPE html>
  <html>
 	<head>
-
 		<meta charset="utf-8">
-		<title>Map</title>
+		<title>HA1C Test Data</title>
 		<script type="text/javascript" src="d3/d3.v3.js"></script>
 		<script type="text/javascript" src="gradientUSMap.js"></script>		
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
-	<body>
-		
+	<body onload="drawTheUSMap(); drawBottom();">
 		<div id="pageTitle">
 			<h1 style="text-align:center">HA1C Tests Per Patient</h1>
 
-			<p style="text-indent:50px">The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.78. 
+			<p style="text-indent:50px">The Hemoglobin A1c (HA1c) test is a blood test 
+			measuring the average blood sugar level over the past 2 to 3 months, and is 
+			used to see how well a person's diabetes is being controlled. Poke ratio is a 
+			ratio represented by the average number of tests done per patient over the 
+			number of tests, with an ideal number of 4 tests per year per patient. The 
+			Medicare billing data used in this project is collected in 2013. The average 
+			poke ratio across the United States is 1.63; State ratio ranges from a minimum 
+			of 1.39 to a maximum of 1.79. 
 			</p>
-			<p style="text-indent:50px">The map below shows poke ratio per state (including Puerto Rico) by Light-Blue to Dark-Blue Scale, while states without any data available is in Grey. You may change the gradient level for more details.
+			<p style="text-indent:50px">The map below shows poke ratio per state 
+			(including Puerto Rico) by White-Blue Scale, while areas without 
+			any data available are in grey. You may change the gradient level for more 
+			details.
 
 			</p>
-			<p style="text-indent:50px">Directions: to navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Country Map Button.
+			<p style="text-indent:50px">Directions: to navigate the map simply click on 
+			any state to enter the state and view county data. To return to the Country 
+			Map, click on the state again or click on Country Map Button.
             </p>
             <p> 
 
-		
-        <script>
-    	function visitPage(){
-        window.location='http://csci334s15.github.io/';
-    	}
-		</script>
-		<button onclick="visitPage();">Country View</button>
-        
-
-
+			<button onclick="removeUSMap(); drawTheUSMap();">Reset Map</button>
 		</div>
-		
-
 		
 
 		<div id="floatingBarsG" style="visibility: hidden">
@@ -59,41 +58,90 @@
 
 		<div id="comboDiv">
 		</div>
+  		
+  		
+
 
 		<div style="background-color: black"></div>
 
+		<div class="row theMap">
+		
+		</div>
 
+		
 		<!--USMapPoke.js builds map-->
-		<script src="USMapPoke.js"></script>
-		
-		
-		
-		<h3>Moravian College Summer Team 2015</h3>
-		 	<ul style="list-style-type:none">
-		 		<li>Megan Biernat</li>
-		 		<li>William Collins</li>
-		 		<li>Alec Gerhart</li>
-		 		<li>Anna Lamoureux</li>
-		 		<li>Steve MacDonald</li>
-		 		<li>Charles McDonald</li> 
-		 		<li>Martin Nesbitt</li>
-		 		<li>Andrew Reed</li> 
-		 		<li>Josh Russett</li> 
-		 		<li>Michael Turnbach</li>
-		 		<li>John Vonelli</li>
-		 	</ul>	
-		 	</p>
-		<h3> Senior Capstone Contributors Spring 2015 </h3>
-			<ul style="list-style-type:none">
-				<li>Michael Vitone</li>
-				<li>Jason Boccuti</li>
-				<li>Hansen Huang</li>
-				<li>Steve Chakif</li>
-				<li>Jon Diehl</li>
-				<li>Lewis Cooper</li>
-			</ul>
-
-
+		<script src="USMapPoke.js" id="scriptSrc"></script>
+				
+		<script>
+			
+			function makeMap(source) {
+				
+				var newScript = document.createElement("script");
+				
+				newScript.setAttribute('id', 'scriptSrc');
+				
+				newScript.setAttribute('type','text/javascript');
+				
+				newScript.setAttribute('src', source);
+				
+				document.getElementsByTagName("head")[0].appendChild(newScript);
+				
+				//drawTheMap();
+				
+				
+			}
+			
+			function drawBottom() {
+				
+				var h31 = document.createElement("h3");
+				h31.innerHTML = "Moravian College Summer Team 2015";
+				var ul1 = document.createElement("ul");
+				ul1.style = "list-style-type:none";
+				ul1.innerHTML = "<li>Megan Biernat</li><li>William Collins</li><li>Alec Gerhart</li><li>Anna Lamoureux</li><li>Steve MacDonald</li><li>Charles McDonald</li> <li>Martin Nesbitt</li><li>Andrew Reed</li> <li>Josh Russett</li> <li>Michael Turnbach</li><li>John Vonelli</li>";
+				
+				var h32 = document.createElement("h3");
+				h32.innerHTML = "Senior Capstone Contributors Spring 2015";
+				var ul2 = document.createElement("ul");
+				ul2.style = "list-style-type:none";
+				ul2.innerHTML = "<li>Michael Vitone</li><li>Jason Boccuti</li><li>Hansen Huang</li><li>Steve Chakif</li><li>Jon Diehl</li><li>Lewis Cooper</li>";
+				
+				document.body.appendChild(h31);
+				document.body.appendChild(ul1);
+				document.body.appendChild(h32);
+				document.body.appendChild(ul2);
+				
+			}
+			
+			function selectData() {
+				
+				if (document.getElementById("pokeRatio").checked == true) {
+					
+					removeTestMap();
+					
+					drawTheUSMap();
+					
+				}
+				
+				if (document.getElementById("testData").checked == true) {
+					
+					//makeMap("testingGeneralization.js");
+					
+					removeUSMap();
+					
+					drawTheTestMap();
+					
+				}
+				
+				
+				//makeMap();
+				
+			}
+			
+			function removeUS(){
+				
+				removeUSMap();
+				
+			}
+		</script>
 	</body>	
-
  </html>

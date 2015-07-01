@@ -1,5 +1,4 @@
-var thisMap;
-function drawTheUSMap(){
+function drawTheMap(){
 	
 	
 	
@@ -14,7 +13,7 @@ function drawTheUSMap(){
 
             //Grab data value, and convert from string to float
             if (dataState == stateAbbr) {
-            	return parseFloat(data[i].poke_ratio);
+            	return parseFloat(data[i].number);
         	}
 
 		}
@@ -54,7 +53,7 @@ function drawTheUSMap(){
 
             if (dataCounty.toLowerCase() == countyName.toLowerCase()) {
             	//Grab data value, and convert from string to float
-            	return parseFloat(data[i].poke_ratio);
+            	return parseFloat(data[i].number);
             }
            
         }
@@ -121,9 +120,9 @@ function drawTheUSMap(){
 	var county_poke_data_file = "json/countyPokes/";
 	
 	//Build map
-	var map = gradientMap.setColors("#EBF5FF","#002966")
-				.setFeature("poke_ratio")
-				.setRestFileName("poke.csv")
+	var map = gradientMap.setColors("#002966","#B2D1FF")
+				.setFeature("number")
+				.setRestFileName("data.csv")
 				//.setDrawCounties(drawCounties)
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 				.setStateAbbreviations(state_abbreviations)
@@ -131,13 +130,9 @@ function drawTheUSMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
-	thisMap = map;
-				
 	//Draw map
-	thisMap.drawMap();
+	map.drawMap();
 };
-function removeUSMap(){
-	
-	thisMap.removeMap();
-	
-}
+
+
+drawTheMap();
