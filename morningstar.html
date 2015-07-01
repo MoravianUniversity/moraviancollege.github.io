@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Moravian Computer Science Programs: MorningStar</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/flexslider.css">
+    <link rel="stylesheet" href="stylesheets/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <!-- CSS
+  ================================================== -->
+ 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="d3/d3.v3.js"></script>
+	<script type="text/javascript" src="gradientUSMap.js"></script>
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/mocostar_icon.png">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body onload="drawTheUSMap();">
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<header id="header" class="site-header" role="banner">
+    <div class="container sixteen columns over">
+    <h1 id="site-title" class="site-title">
+    <a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+    </h1>
+    </div>
+    </header>
+
+	<div class="container">
+    
+        <article class="sixteen columns main-content">
+        <script> function visitPage(){
+        window.location='index.html'; 
+        }
+		</script>
+		<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
+		
+        <h1>MorningStar</h1>  
+        
+        <h4>Student Developers:</h4>
+		 		<p>Megan Biernat, Jason Boccuti, Steve Chakif, Lewis Cooper, William Collins, Jon Diehl, Alec Gerhart, Hansen Huang, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, Michael Vitone, John Vonelli</p>
+      
+     <div id="pageTitle">
+            <h3 style="text-align:center">About the Project</h3>
+			
+			<p>MorningStar is a collaboration of Merck Co, DocGraph, and Moravian College to provide students an opportunity to work directly with data, specifically in this case, that of diabetes and HA1c test poke ratios. We want to be able to develop a good way to visualize the analyzed data in a map. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a>, the HA1c test data was supplied by <a href="http://www.docgraph.org" style="font-size:14px;color:SkyBlue">DocGraph</a>, and the developing teams of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p> 
+			<p>If you'd like to check out the blog that the group has written about the progress of the project, you can click <a href="http://morningstar.moravian.edu/" style="font-size:14px;color:SkyBlue">here</a>, or for the Github repository for the project is located <a href="https://github.com/MoravianCollege/moraviancollege.github.io" style="font-size:14px;color:SkyBlue">here</a>.</p>
+			
+			
+			<h3 style="text-align:center">Map Description</h3>
+			
+			<p>The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood 
+			sugar level over the past 2 to 3 months, and is used to see how well a 
+			person's diabetes is being controlled. Poke ratio is a ratio represented by 
+			the average number of tests done per patient over the number of tests, with an 
+			ideal number of 4 tests per year per patient. The Medicare billing data used 
+			in this project is collected in 2013. The average poke ratio across the United 
+			States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.79.</p>
+			
+			<p>The map below shows poke ratio per state (including Puerto Rico) by 
+			Blue-White Scale, while areas without any data available are in grey. You may 
+			change the gradient level for more details.</p>
+			
+			<p>Directions: to navigate the map simply click on any state to enter the 
+			state and view county data. To return to the Country Map, click on the state 
+			again or click on Country Map Button.</p>
+            <p> 
+            
+            <hr>
+	</div>
+		
+		<div id="mapContainer">
+			<button onclick="removeUSMap(); drawTheUSMap();">Original View</button>
+		
+			<!-- Drop-down Menu -->
+			<div id="comboDiv"><h4>Gradient Level</h4>
+			</div>
+		
+			<!-- Spinner Animation -->
+			<div id="floatingBarsG" style="visibility: hidden">
+				<div class="blockG" id="rotateG_01">
+				</div>
+				<div class="blockG" id="rotateG_02">
+				</div>
+				<div class="blockG" id="rotateG_03">
+				</div>
+				<div class="blockG" id="rotateG_04">
+				</div>
+				<div class="blockG" id="rotateG_05">
+				</div>
+				<div class="blockG" id="rotateG_06">
+				</div>
+				<div class="blockG" id="rotateG_07">
+				</div>
+				<div class="blockG" id="rotateG_08">
+				</div>
+			</div>
+
+			
+			<div style="background-color: black"></div>
+				
+   		</div>
+   
+   
+        </article>
+        <!-- End main Content -->
+</div>
+		<footer>
+
+		<div id="footer-base">
+		<div class="container">
+		<div class="eight columns">
+		<a href="http://www.opendesigns.org/design/icebrrrg/">Moravian College CS Department</a> &copy; 2015
+		</div>
+
+		<div class="eight columns far-edge">
+		Design by <a href="http://www.opendesigns.org">OD</a>
+		</div>
+		</div>
+		</div>
+
+		</footer>
+      
+
+	
+		<!-- USMapPoke.js builds map -->
+		<script src="USMapPoke.js">drawTheUSMap();</script>
+
+	<script>
+			
+			function makeMap(source) {
+				
+				var newScript = document.createElement("script");
+				
+				newScript.setAttribute('id', 'scriptSrc');
+				
+				newScript.setAttribute('type','text/javascript');
+				
+				newScript.setAttribute('src', source);
+				
+				document.getElementsByTagName("head")[0].appendChild(newScript);
+				
+				//drawTheMap();
+				
+				
+			}
+			
+			function drawBottom() {
+				
+				var h31 = document.createElement("h3");
+				h31.innerHTML = "Moravian College Summer Team 2015";
+				var ul1 = document.createElement("ul");
+				ul1.style = "list-style-type:none";
+				ul1.innerHTML = "<li>Megan Biernat</li><li>William Collins</li><li>Alec Gerhart</li><li>Anna Lamoureux</li><li>Steve MacDonald</li><li>Charles McDonald</li> <li>Martin Nesbitt</li><li>Andrew Reed</li> <li>Josh Russett</li> <li>Michael Turnbach</li><li>John Vonelli</li>";
+				
+				var h32 = document.createElement("h3");
+				h32.innerHTML = "Senior Capstone Contributors Spring 2015";
+				var ul2 = document.createElement("ul");
+				ul2.style = "list-style-type:none";
+				ul2.innerHTML = "<li>Michael Vitone</li><li>Jason Boccuti</li><li>Hansen Huang</li><li>Steve Chakif</li><li>Jon Diehl</li><li>Lewis Cooper</li>";
+				
+				document.body.appendChild(h31);
+				document.body.appendChild(ul1);
+				document.body.appendChild(h32);
+				document.body.appendChild(ul2);
+				
+			}
+			
+			function selectData() {
+				
+				if (document.getElementById("pokeRatio").checked == true) {
+					
+					removeTestMap();
+					
+					drawTheUSMap();
+					
+				}
+				
+				if (document.getElementById("testData").checked == true) {
+					
+					//makeMap("testingGeneralization.js");
+					
+					removeUSMap();
+					
+					drawTheTestMap();
+					
+				}
+				
+				
+				//makeMap();
+				
+			}
+			
+			function removeUS(){
+				
+				removeUSMap();
+				
+			}
+		</script>
+
+
+<!-- End Document
+================================================== -->
+
+</body>
+</html>
+
