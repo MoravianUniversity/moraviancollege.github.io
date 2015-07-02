@@ -144,8 +144,3 @@ function removeUSMap(){
 	thisMap.removeMap();
 	
 }
-function canZoom(){
-	
-	thisMap.zoomChange();
-	
-}
