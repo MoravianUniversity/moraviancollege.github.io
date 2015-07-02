@@ -1,7 +1,8 @@
 var thisMap;
+
 function drawTheUSMap(){
 	
-	
+
 	
 
 	var getStateValuesFunction = function(data, stateName) {
@@ -136,6 +137,8 @@ function drawTheUSMap(){
 	//Draw map
 	thisMap.drawMap();
 };
+
+
 function removeUSMap(){
 	
 	thisMap.removeMap();

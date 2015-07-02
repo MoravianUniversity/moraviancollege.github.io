@@ -1,147 +1,169 @@
 <!DOCTYPE html>
- <html>
-	<head>
-		<meta charset="utf-8">
-		<title>HA1C Test Data</title>
-		<script type="text/javascript" src="d3/d3.v3.js"></script>
-		<script type="text/javascript" src="gradientUSMap.js"></script>		
-		<link rel="stylesheet" type="text/css" href="style.css">
-	</head>
+<head>
 
-	<body onload="drawTheUSMap(); drawBottom();">
-		<div id="pageTitle">
-			<h1 style="text-align:center">HA1C Tests Per Patient</h1>
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>CS Projects</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-			<p style="text-indent:50px">The Hemoglobin A1c (HA1c) test is a blood test 
-			measuring the average blood sugar level over the past 2 to 3 months, and is 
-			used to see how well a person's diabetes is being controlled. Poke ratio is a 
-			ratio represented by the average number of tests done per patient over the 
-			number of tests, with an ideal number of 4 tests per year per patient. The 
-			Medicare billing data used in this project is collected in 2013. The average 
-			poke ratio across the United States is 1.63; State ratio ranges from a minimum 
-			of 1.39 to a maximum of 1.79. 
-			</p>
-			<p style="text-indent:50px">The map below shows poke ratio per state 
-			(including Puerto Rico) by White-Blue Scale, while areas without 
-			any data available are in grey. You may change the gradient level for more 
-			details.
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-			</p>
-			<p style="text-indent:50px">Directions: to navigate the map simply click on 
-			any state to enter the state and view county data. To return to the Country 
-			Map, click on the state again or click on Country Map Button.
-            </p>
-            <p> 
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/flexslider.css">
+    <link rel="stylesheet" href="stylesheets/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <!-- CSS
+  ================================================== -->
+ 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="d3/d3.v3.js"></script>
+	<script type="text/javascript" src="gradientUSMap.js"></script>		
 
-			<button onclick="removeUSMap(); drawTheUSMap();">Reset Map</button>
-		</div>
-		
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/mocostar_icon.png">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
 
-		<div id="floatingBarsG" style="visibility: hidden">
-			<div class="blockG" id="rotateG_01">
+</head>
+<body>
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<header id="header" class="site-header" role="banner">
+    <div class="container sixteen columns over">
+    <h1 id="site-title" class="site-title">
+    <a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+    </h1>
+    </div>
+    </header>
+
+	<div class="container">
+    
+        <article class="sixteen columns main-content">
+        
+        <h1 style="text-align:center;color:#3F3F3F">Department Projects</h1>
+        <br>
+        <hr>
+        
+        <section class="container">
+        
+		<div class="one-third column">
+			<h3><i class="icon-desktop rounded"></i> Sharing Major CS Projects</h3>
+			<p> The Moravian CS Program site is where we show off all of the major computer science projects that our students have developed and collaborated on. Some of the projects are completed, while others are still being worked on and improved!</p>
 			</div>
-			<div class="blockG" id="rotateG_02">
+		<div class="one-third column">
+			<h3><i class="icon-large-code rounded"></i> Student Experience</h3>
+			<p>All of our projects give our students experience with real problems and for some of the projects, the students get to work with businesses and clients to produce a usable product. This allows our students to get a more practical education than other computer science programs, making our students more competitive candidates for post-graduation jobs.</p>
 			</div>
-			<div class="blockG" id="rotateG_03">
+		<div class="one-third column">
+			<h3><i class="icon-large-github rounded"></i> Projects on Github</h3>
+			<p>We use Github as we develop our programs because it makes it easier for groups and individuals to cooperate while it also gives us the option of making our projects open for the public to see.</p>
 			</div>
-			<div class="blockG" id="rotateG_04">
-			</div>
-			<div class="blockG" id="rotateG_05">
-			</div>
-			<div class="blockG" id="rotateG_06">
-			</div>
-			<div class="blockG" id="rotateG_07">
-			</div>
-			<div class="blockG" id="rotateG_08">
-			</div>
-		</div>
+        </section>
+        
+        <hr>
+        
+        <a href="morningstar.html"><img src="images/MS_thumb.jpg" height="336" width="450" style="float:left;margin-right:20px;"></a>
+        
+        <h3><a href="morningstar.html">MorningStar</a></h3>
+        
+        <p>MorningStar is a project intended to introduce CS students to health data 
+        visualization. It was originally assigned to a senior capstone class in the spring
+        of 2015 where the students would use d3 and diabetic poke data to show poke ratios
+        on the state and county level. The tool is now being developed so that users may
+        upload their own data files and access web APIs such as the Census Bureau, Google, 
+        and the CDC.</p>
+        
+        <h4 style="margin-left:220px;">Moravian College Summer Team 2015:</h4>
+		 		<p style="margin-left:220px;">Megan Biernat, William Collins, Alec 
+		 		Gerhart, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin 
+		 		Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, John Vonelli</p>
+		<h4 style="margin-left:220px;"> Senior Capstone Contributors Spring 2015:</h4>
+				<p style="margin-left:220px;">Jason Boccuti, Steve Chakif, Lewis Cooper, 
+				Jon Diehl, Hansen Huang, Michael Vitone</p>
+				
+				<br>
+				<hr>
+				
+				
+		<a href="#"><img src="images/overlay-bg.png" height="336" width="450" style="float:left;margin-right:20px;"></a>
+        
+        <h3><a href="#">Title of Project</a></h3>
+        
+        <p>A brief description of the project goes here</p>
+        <p>In porta velit quis mauris luctus, eget luctus neque gravida. Nullam 
+        pellentesque pretium rhoncus. Nulla pretium scelerisque sem nec tincidunt. 
+        Praesent cursus, nulla vel ultricies venenatis, urna ligula pharetra metus, et 
+        mattis elit nunc sed lacus. Sed at elit fringilla, pellentesque eros vel, luctus 
+        diam. Donec egestas nisi semper odio dignissim egestas. Etiam vitae lacus a nibh 
+        mattis sodales eu sit amet ex. Ut suscipit auctor lacus nec finibus. Vestibulum 
+        venenatis imperdiet facilisis. Vivamus in condimentum turpis, in euismod mauris. 
+        Nulla facilisi. Ut at nulla aliquam, sodales dui sit amet, tristique lacus.</p>
+        
+        <h4 style="margin-left:220px;">Developing Team:</h4>
+		 		<p style="margin-left:220px;">List of names</p>
+		 		
+		 		<br>
+				<hr>
+				
+				
+		<a href="#"><img src="images/overlay-bg.png" height="336" width="450" style="float:left;margin-right:20px;"></a>
+        
+        <h3><a href="#">Title of Project</a></h3>
+        
+        <p>A brief description of the project goes here</p>
+        <p>In porta velit quis mauris luctus, eget luctus neque gravida. Nullam 
+        pellentesque pretium rhoncus. Nulla pretium scelerisque sem nec tincidunt. 
+        Praesent cursus, nulla vel ultricies venenatis, urna ligula pharetra metus, et 
+        mattis elit nunc sed lacus. Sed at elit fringilla, pellentesque eros vel, luctus 
+        diam. Donec egestas nisi semper odio dignissim egestas. Etiam vitae lacus a nibh 
+        mattis sodales eu sit amet ex. Ut suscipit auctor lacus nec finibus. Vestibulum 
+        venenatis imperdiet facilisis. Vivamus in condimentum turpis, in euismod mauris. 
+        Nulla facilisi. Ut at nulla aliquam, sodales dui sit amet, tristique lacus.</p>
+        
+        <h4 style="margin-left:220px;">Developing Team:</h4>
+		 		<p style="margin-left:220px;">List of names</p>
+		 		<br>
+        </article>
+        <!-- End main Content -->
+      
+    
+    </div>
 
-		<div id="comboDiv">
-		</div>
-  		
-  		
+<footer>
 
+<div id="footer-base">
+<div class="container">
+<div class="eight columns">
+<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+</div>
 
-		<div style="background-color: black"></div>
+<div class="eight columns far-edge">
+Design by <a href="http://www.opendesigns.org">OD</a>
+</div>
+</div>
+</div>
 
-		<div class="row theMap">
-		
-		</div>
+</footer>
 
-		
-		<!--USMapPoke.js builds map-->
-		<script src="USMapPoke.js" id="scriptSrc"></script>
-				
-		<script>
-			
-			function makeMap(source) {
-				
-				var newScript = document.createElement("script");
-				
-				newScript.setAttribute('id', 'scriptSrc');
-				
-				newScript.setAttribute('type','text/javascript');
-				
-				newScript.setAttribute('src', source);
-				
-				document.getElementsByTagName("head")[0].appendChild(newScript);
-				
-				//drawTheMap();
-				
-				
-			}
-			
-			function drawBottom() {
-				
-				var h31 = document.createElement("h3");
-				h31.innerHTML = "Moravian College Summer Team 2015";
-				var ul1 = document.createElement("ul");
-				ul1.style = "list-style-type:none";
-				ul1.innerHTML = "<li>Megan Biernat</li><li>William Collins</li><li>Alec Gerhart</li><li>Anna Lamoureux</li><li>Steve MacDonald</li><li>Charles McDonald</li> <li>Martin Nesbitt</li><li>Andrew Reed</li> <li>Josh Russett</li> <li>Michael Turnbach</li><li>John Vonelli</li>";
-				
-				var h32 = document.createElement("h3");
-				h32.innerHTML = "Senior Capstone Contributors Spring 2015";
-				var ul2 = document.createElement("ul");
-				ul2.style = "list-style-type:none";
-				ul2.innerHTML = "<li>Michael Vitone</li><li>Jason Boccuti</li><li>Hansen Huang</li><li>Steve Chakif</li><li>Jon Diehl</li><li>Lewis Cooper</li>";
-				
-				document.body.appendChild(h31);
-				document.body.appendChild(ul1);
-				document.body.appendChild(h32);
-				document.body.appendChild(ul2);
-				
-			}
-			
-			function selectData() {
-				
-				if (document.getElementById("pokeRatio").checked == true) {
-					
-					removeTestMap();
-					
-					drawTheUSMap();
-					
-				}
-				
-				if (document.getElementById("testData").checked == true) {
-					
-					//makeMap("testingGeneralization.js");
-					
-					removeUSMap();
-					
-					drawTheTestMap();
-					
-				}
-				
-				
-				//makeMap();
-				
-			}
-			
-			function removeUS(){
-				
-				removeUSMap();
-				
-			}
-		</script>
-	</body>	
- </html>
+<!-- End Document
+================================================== -->
+
+<script src="js/jquery.prettyPhoto.js"></script>
+</body>
+</html>

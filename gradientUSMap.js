@@ -1,4 +1,5 @@
 (function() {
+
 	
     var gradientMap = {};
 
@@ -10,13 +11,13 @@
     var current_gradient = 2;
     var feature_desired = "poke_ratio";
 
-
     // defualt path names for the files
     var usMapFile       = "json/us-states.json";
     var csvUSValueFile  = "json/poke_ratio_correct2.csv";
     var countyMapPath   = "json/stateJSON/";
     var countyValuePath = "json/countyPokes/";
     var stateCenteringFile = "json/Scrape.txt";
+
 
     var getStateValuesFunction = function(data, stateName) {return undefined;};
 
@@ -35,16 +36,19 @@
     gradientMap.setup = function() {
 
         d3.select("body")
+
             .append("div")
             .attr("id", "comboDiv");
 
         makeCombo();
+
 
         var mapDiv = d3.select("body")
                         .append("div")
                         .attr("id", "mapSVG")
                         .style("width", "800px")
                         .style("margin", "0 auto");
+
 
         svg = mapDiv.append("svg")
                 .attr("width", w)
@@ -56,11 +60,13 @@
 
         return this;
     };
+
     gradientMap.drawMap = function() {
 
         d3.selectAll("path").remove();
         d3.select("#stateName").remove();
         mouseOut();
+
 
         //Define map projection
         var projection = d3.geo.albersUsa()
@@ -68,8 +74,10 @@
                                .scale([900]);
 
         // Path of GeoJSON
+
         var path = d3.geo.path()
                                .projection(projection);
+
 
         var color;
         var continuous = false;
@@ -87,6 +95,7 @@
 
             min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
             max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+
 
             if (!continuous) {
                 color.domain([min,max]);
@@ -108,6 +117,7 @@
                     })
                     .attr("stroke", "black")
                     .attr("stroke-width", 1)
+
                     .style("fill", function(d) {
                         //Get data value
                         d.properties.value = getStateValuesFunction(data, d.properties.name);
@@ -127,6 +137,7 @@
                    .on("mouseover", mouseOver)
                    .on("mouseout", mouseOut);
             });
+
 
         });
     };
@@ -156,6 +167,7 @@
     var mouseOut = function() {
         d3.select("#tooltip").transition().duration(500).style("opacity", 0);
     };
+
 
     var change_gradient = function(val) {
 
@@ -187,25 +199,33 @@
                 else {//If value is undefined…
                     return "#ccc";
                 }
+
         });
     };
+
 
     gradientMap.setFunctions = function(function1, function2) {
         getStateValuesFunction = function1;
         getCountyValuesFunction = function2;
         return this;
+
     };
+
 
     gradientMap.setColors = function(start, end) {
         start_color = start;
         end_color = end;
         return this;
+
     };
+
 
     gradientMap.setFeature = function(feature) {
         feature_desired = feature;
         return this;
+
     };
+
 
     gradientMap.setPaths = function(usPath, uscsvPath, countyPath, countycsvPath) {
         usMapFile       = usPath;
@@ -213,7 +233,9 @@
         countyMapPath   = countyPath;
         countyValuePath = countycsvPath;
         return this;
+
     };
+
 
     gradientMap.setStartingGradient = function(number) {
         if (number == -1) {
@@ -221,19 +243,24 @@
         }
         current_gradient = number;
         return this;
+
     };
+
 
     gradientMap.setStateAbbreviations = function(st_abbr) {
 
         state_abbreviations = st_abbr;
         return this;
 
+
     };
+
 
     gradientMap.rangeBoxes = function(numOfBoxes) {
         drawMinLabel();
         drawBoxes(numOfBoxes);
     };
+
 
     var rest_of_filename = "poke.csv";
 
@@ -241,6 +268,7 @@
 
         d3.select("#stateName").remove();
         //This is where the SVG generates the state name with x and y coordinates
+
         svg.append("text")
             .attr("x", 650)
             .attr("y", 30)
@@ -258,32 +286,40 @@
         mouseOut();
 
         drawCounties(path, csvPath);
+
     };
+
 
     gradientMap.setRestFileName = function(new_name) {
 
         rest_of_filename = new_name;
         return this;
 
+
     };
+
 
     var drawBoxes = function(boxNum) {
         var colorArray = makeRange(boxNum, start_color, end_color);
         d3.selectAll(".rectangle").remove();
+
         var i;
         for (i = 0; i < boxNum; i+=1){
             svg.append("rect")
+
                .attr("x", 55 + 25*i)
                .attr("y", 10)
                .attr("width", 25)
                .attr("height", 25)
                .attr("class", "rectangle")
                .style("fill", colorArray[i]);
+
         }
 
         var maxText = max.substring(0,4);
 
         drawMaxLabel(50 + 25*boxNum);
+
 
     };
 
@@ -303,6 +339,7 @@
     var drawMaxLabel = function(position) {
         d3.select("#maxLabel").remove();
         svg.append("text")
+
             .attr("x", 8 + position)
             .attr("y", 25)
             .text("\00  max = " + Number(max).toFixed(2))
@@ -319,6 +356,7 @@
         var maxY = 300;
 
         d3.select("linearGradient").remove();
+
 
         var gradient = svg
             .append("linearGradient")
@@ -378,6 +416,7 @@
 
         rang = [];
 
+
         var i;
         for (i = 0; i < step; i++) {
             var newR, newG, newB;
@@ -399,6 +438,7 @@
     };
 
     var makeCombo = function() {
+
         // this function creates the drop down menu for changing the grid scale
         // color selector is how many colors you want displayed
         var combo = d3.select("#comboDiv")
@@ -406,6 +446,7 @@
                         .attr("id", "color-selector")
                         .style("right-margin", "50%");
 
+<<<<<<< HEAD
         for (var i = 2; i <= 10; i++) {
             combo.append("option")
                     .attr("id", "option" + i.toString())
@@ -432,6 +473,7 @@
             current_gradient = value;
         });
     };
+
 
     var drawCounties = function(stateFile, csvFile) {
         d3.selectAll("path").remove();
@@ -490,13 +532,16 @@
                     vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
                     offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
+
                                  h - (bounds[0][1] + bounds[1][1])/2.5];
+
                 }
                 else {
                     hscale  = scale*w*0.75  /(bounds[1][0] - bounds[0][0]);
                     vscale  = scale*h*0.75 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
                     offset  = [ w-(bounds[0][0] + bounds[1][0])/2,
+
                                  h-(bounds[0][1] + bounds[1][1])/2];
 
                 }
@@ -560,3 +605,4 @@
 
     this.gradientMap = gradientMap;
 })();
+
