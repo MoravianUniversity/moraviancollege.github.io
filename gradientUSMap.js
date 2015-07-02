@@ -58,7 +58,7 @@
             .attr("id", "tooltip");
 
         return this;
-    }
+    };
 
     gradientMap.drawMap = function() {
 
@@ -259,7 +259,6 @@
         drawMinLabel();
         drawBoxes(numOfBoxes);
     };
-
 
     var rest_of_filename = "poke.csv";
 
@@ -472,6 +471,7 @@
         });
     };
 
+
     var drawCounties = function(stateFile, csvFile) {
         d3.selectAll("path").remove();
         mouseOut();
@@ -602,4 +602,3 @@
 
     this.gradientMap = gradientMap;
 })();
-
