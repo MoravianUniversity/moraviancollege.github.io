@@ -53,7 +53,7 @@
                         .style("margin", "0 auto");
 
         grad_svg = mapDiv.append("svg")
-                .attr("width", 400)
+                .attr("width", 800)
                 .attr("height", 40);
 
         svg = mapDiv.append("svg")
