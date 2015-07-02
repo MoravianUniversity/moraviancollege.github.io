@@ -18,8 +18,8 @@
     var countyValuePath = "json/countyPokes/";
     var stateCenteringFile = "json/Scrape.txt";
 
-    var getStateValuesFunction = function(data, stateName) {};
-    var getCountyValuesFunction = function(data, countyName) {};
+    var getStateValuesFunction = function(data, stateName) {return undefined;};
+    var getCountyValuesFunction = function(data, countyName) {return undefined;};
 
     // default values for the color range
 
