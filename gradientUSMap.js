@@ -446,7 +446,6 @@
                         .attr("id", "color-selector")
                         .style("right-margin", "50%");
 
-<<<<<<< HEAD
         for (var i = 2; i <= 10; i++) {
             combo.append("option")
                     .attr("id", "option" + i.toString())
@@ -473,7 +472,6 @@
             current_gradient = value;
         });
     };
-
 
     var drawCounties = function(stateFile, csvFile) {
         d3.selectAll("path").remove();
