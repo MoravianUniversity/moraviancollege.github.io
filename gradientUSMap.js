@@ -18,8 +18,8 @@
     var countyValuePath = "json/countyPokes/";
     var stateCenteringFile = "json/Scrape.txt";
 
-    var getStateValuesFunction = function(data, stateName) {return undefined;};
-    var getCountyValuesFunction = function(data, countyName) {return undefined;};
+    var getStateValuesFunction = function(data, stateName) {};
+    var getCountyValuesFunction = function(data, countyName) {};
 
     // default values for the color range
 
@@ -62,13 +62,13 @@
                 .attr("height", h)
                 .call(zoom)
                 .append("g");
-
+  				
         d3.select("#mapContainer")
             .append("div")
             .attr("id", "tooltip");
 
         return this;
-    };
+    }
 
     // re-centers the map and brings it back to the original scale
     function reset() {
@@ -77,41 +77,41 @@
         svg.transition().duration(0).
         attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
     }
-
+	
     function zoomed() {
         svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
         slider.property("value",  d3.event.scale);
     }
-
+	
     var mouseOut = function() {
-        d3.select("#tooltip").transition().duration(500).style("opacity", 0);
-    };
-
-    var mouseOver = function(d) {
-        d3.select("#tooltip").transition().duration(200).style("opacity", 0.9);
-        var coord = d3.mouse(this);
-        var c_x	= (coord[0] + 100) +"px";
-        var c_y = (coord[1] + 750) + "px";
-
-        // state
-        if (d.properties.name) {
-            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))
-                .style("left", c_x)
-                .style("top", c_y);
-        }
-        // county
-        else if (d.properties.value) {
-            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))
-                .style("left", c_x)
-                .style("top", c_y);
-        }
-        // county without a poke ratio
-        else {
-            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))
-                .style("left", c_x)
-                .style("top", c_y);
-        }
+        d3.select("#tooltip").transition().duration(500).style("opacity", 0);      
     }
+
+	var mouseOver = function(d) {
+		d3.select("#tooltip").transition().duration(200).style("opacity", .9);
+		var coord = d3.mouse(this);
+		var c_x	= (coord[0] + 100) +"px";
+		var c_y = (coord[1] + 750) + "px";
+		
+		// state
+		if (d.properties.name) {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))  
+				.style("left", c_x)
+				.style("top", c_y);
+		}
+		// county
+		else if (d.properties.value) {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))  
+				.style("left", c_x)
+				.style("top", c_y);
+		}
+		// county without a poke ratio
+		else {
+			d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))  
+				.style("left", c_x)
+				.style("top", c_y);
+		}
+	}
 
     gradientMap.drawMap = function() {
 
@@ -268,7 +268,7 @@
     }
 
     gradientMap.removeMap = function(){
-
+		
         mapSVG.remove();
         return this;
     }
@@ -434,15 +434,13 @@
         var feat_words = feat.split("&nbsp");
         //console.log(feat_words);
         feat = "";
-        var i = 0;
-        while(feat_words.length) {
+        for(var i = 0; i < feat_words.length; i += 1) {
 
             feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
             if(i != feat_words.length){
                 feat_words[i] = feat_words[i] + "&nbsp"
             }
             feat = feat + feat_words[i];
-            i += 1;
         }
         return "<h4>"+n+"</h4><table>"+
             "<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
@@ -490,9 +488,9 @@
             current_gradient = value;
         });
     };
-
+    
     function computeCenter(data){
-
+	
         var nums = []
         var allNums =[]
 
@@ -519,16 +517,16 @@
 
         for (val in allNums) {
 
-            var save = allNums[val]
+            var save = allNums[val]	
             if(save < 0) {
                 if (save < bigLong) {
-                    bigLong = save;
+                    bigLong = save;				
                 }
             }
 
             if(save > 0) {
                 if (save > bigLat) {
-                    bigLat = save;
+                    bigLat = save;				
                 }
             }
 
@@ -544,7 +542,7 @@
                 }
             }
     }
-
+		
     return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
     }
 
@@ -587,7 +585,7 @@
             d3.json(countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
-                var center = computeCenter(json);
+                var center = computeCenter(json);              
                 var scale  = 10;
                 var offset = [w/2, h/2];
                 projection = d3.geo.mercator().scale(scale)
@@ -620,7 +618,7 @@
                 // new projection
                 projection = d3.geo.mercator().scale(scale)
                 .center(center).translate(offset);
-
+                
                 path = path.projection(projection);
 
                 svg.selectAll("path")
@@ -640,10 +638,10 @@
 
                             d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                             var value = d.properties.value;
-
-                            if (max == min) {
-                                return end_color;
-                            }
+                            
+                             if (max == min) {
+				            	return end_color;
+				            }
 
                             if (!continuous && value) {//If value exists…
                                 return color(value);
