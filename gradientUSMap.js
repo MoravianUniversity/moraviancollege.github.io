@@ -375,7 +375,7 @@
             .attr("offset", "1")
             .attr("stop-color", end_color);
 
-        svg
+        grad_svg
             .append("rect")
             .attr("x", 54)
             .attr("y", 10)
