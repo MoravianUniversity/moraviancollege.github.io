@@ -1,6 +1,4 @@
-(function() {
-
-	
+(function () {
     var gradientMap = {};
 
     // Width and Height of the svg
@@ -11,16 +9,16 @@
     var current_gradient = 2;
     var feature_desired = "poke_ratio";
 
-    // defualt path names for the files
+    // default path names for the files
     var usMapFile       = "json/us-states.json";
     var csvUSValueFile  = "json/poke_ratio_correct2.csv";
     var countyMapPath   = "json/stateJSON/";
     var countyValuePath = "json/countyPokes/";
     var stateCenteringFile = "json/Scrape.txt";
 
-    var getStateValuesFunction = function(data, stateName) {return undefined;};
+    var getStateValuesFunction = function (data, stateName) {return undefined; };
 
-    var getCountyValuesFunction = function(data, countyName) {return undefined;};
+    var getCountyValuesFunction = function (data, countyName) {return undefined; };
 
     // default values for the color range
 
@@ -32,7 +30,7 @@
 
     var state_abbreviations = {};
 
-    gradientMap.setup = function() {
+    gradientMap.setup = function () {
 
         d3.select("body")
 
