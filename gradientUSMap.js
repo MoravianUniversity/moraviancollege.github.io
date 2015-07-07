@@ -161,8 +161,8 @@
 
         d3.csv(csvUSValueFile, function(data) {
 
-            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
-            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
 
 
             if (!continuous) {
@@ -571,7 +571,7 @@
         reset();
 
         d3.select("#floatingBarsG")
-            .style("visibility", "hidden");
+            .style("visibility", "visible");
 
         var color;
         var continuous = false;
