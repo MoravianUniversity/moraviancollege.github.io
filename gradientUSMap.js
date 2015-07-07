@@ -7,7 +7,8 @@
     // Width and Height of the svg
     var w = 800;
     var h = 600;
-
+    /*jslint browser: true*/
+    /*global $, d3, slider, makeCombo*/
     var min = "0";
     var max = "0";
     var current_gradient = 2;
@@ -30,19 +31,19 @@
 
     var projection;
     var path;
-<<<<<<< HEAD
-    var zoomed;
-
-=======
     var canZoom = true;
     var x = "User-agent header sent: " + navigator.userAgent;
     var s = x.split(" ");
     var y = s[11];
     var q = y.split("/");
-    if(q[0] == "Gecko")
+    if(q[0] === "Gecko")
     {canZoom=false;}
-    
->>>>>>> a05a7124c70ec53373b6dc56f88d52719d51deaf
+
+    function zoomed() {
+        svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
+        slider.property("value",  d3.event.scale);
+    }
+
     var zoom = d3.behavior.zoom()
                 .scaleExtent([1, 10])
                 .on("zoom", zoomed);
@@ -83,8 +84,7 @@
                 .attr("width", w)
                 .attr("height", h)
                 .append("g");
-        };
-
+        }
         d3.select("#mapContainer")
             .append("div")
             .attr("id", "tooltip");
@@ -98,11 +98,6 @@
         zoom.translate([0, 0]);
         svg.transition().duration(0).
         attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
-    }
-
-    function zoomed() {
-        svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
-        slider.property("value",  d3.event.scale);
     }
 
     var mouseOut = function() {
