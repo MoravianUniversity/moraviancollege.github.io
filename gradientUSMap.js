@@ -1,4 +1,7 @@
 (function() {
+    /*jslint browser: true*/
+    /*global $, d3, slider, makeCombo*/
+
     var comboExists = false;
     var gradientMap = {};
 
@@ -17,8 +20,8 @@
     var countyMapPath   = "json/stateJSON/";
     var countyValuePath = "json/countyPokes/";
 
-    var getStateValuesFunction = function(data, stateName) {};
-    var getCountyValuesFunction = function(data, countyName) {};
+    var getStateValuesFunction = function(data, stateName) {return undefined;};
+    var getCountyValuesFunction = function(data, countyName) {return undefined;};
 
     // default values for the color range
 
@@ -31,18 +34,18 @@
     var projection;
     var path;
     var canZoom = true;
-    var x = "User-agent header sent: " + navigator.userAgent;
+    var x = "User-agent header sent: " + navigator.userAgent;  //ignore in jslint
     var s = x.split(" ");
     var y = s[11];
     var q = y.split("/");
-    if(q[0] == "Gecko")
+    if(q[0] === "Gecko")
     {canZoom=false;}
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
         .on("zoom", zoomed);
 
-    state_abbreviations = {};
+    var state_abbreviations = {};
 
     gradientMap.setup = function() {
 
@@ -78,7 +81,7 @@
                 .attr("width", w)
                 .attr("height", h)
                 .append("g");
-        };
+        }
 
         d3.select("#mapContainer")
             .append("div")
