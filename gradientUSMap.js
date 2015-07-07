@@ -31,7 +31,14 @@
 
     var projection;
     var path;
-
+    var canZoom = true;
+    var x = "User-agent header sent: " + navigator.userAgent;
+    var s = x.split(" ");
+    var y = s[11];
+    var q = y.split("/");
+    if(q[0] == "Gecko")
+    {canZoom=false;}
+    
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
         .on("zoom", zoomed);
@@ -56,12 +63,31 @@
             .attr("width", 800)
             .attr("height", 40);
 
+         if(canZoom)
+        {
         svg = mapDiv.append("svg")
+
             .attr("style", "border: thin solid gray; border-radius: 5px;")
             .attr("width", w)
             .attr("height", h)
             .call(zoom)
             .append("g");
+
+gray; border-radius: 5px;")
+
+
+
+
+
+
+
+
+gray; border-radius: 5px;")
+
+
+
+
+
 
         d3.select("#mapContainer")
             .append("div")
