@@ -103,6 +103,8 @@
 			<h3>Contents of the file:</h3>
 			<pre id="file-content"></pre>
 			
+			<script id="uploadCode"></script>
+			
 			<script>
 			
 				function readSingleFile(e) {
@@ -113,15 +115,11 @@
 					var reader = new FileReader();
 					reader.onload = function(e) {
 						var contents = e.target.result;
-						displayContents(contents);
+						console.log(contents);
+						document.getElementById('uploadCode').innerHTML = contents;
+						//displayContents(contents);
 					};
 					reader.readAsText(file);
-				}
-
-
-				function displayContents(contents) {
-					var element = document.getElementById('file-content');
-					element.innerHTML = contents;
 				}
 
 			document.getElementById('file-input')
