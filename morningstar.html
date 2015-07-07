@@ -124,6 +124,19 @@
         
         <script>
             
+            function upload(text){
+            	var element = document.createElement('a');
+            	
+            	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            	
+            	//console.log(element.href);
+            	
+            	changeUSDataFile(encodeURIComponent(text));
+            	removeUSMap();
+            	drawTheUSMap();
+            
+            }
+            
             function readSingleFile(e) {
             	var file = e.target.files[0];
             	if (!file) {
@@ -132,10 +145,11 @@
             	var reader = new FileReader();
             	reader.onload = function(e) {
             	    var contents = e.target.result;
+            	    upload(contents);
             	    //displayContents(contents);
-            	    changeUSDataFile(contents);
-            	    removeUSMap();
-            	    drawTheUSMap();
+            	    //changeUSDataFile(contents);
+            	    //removeUSMap();
+            	    //drawTheUSMap();
                 };
                 reader.readAsText(file);
             }
