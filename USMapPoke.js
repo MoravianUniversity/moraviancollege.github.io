@@ -1,8 +1,8 @@
-function drawTheUSPokeRatioMap(){
-	
-	
-	
+var thisMap;
 
+function drawTheUSMap(){
+	
+	
 	var getStateValuesFunction = function(data, stateName) {
 
 		var stateAbbr = state_abbreviations[stateName];
@@ -68,6 +68,7 @@ function drawTheUSPokeRatioMap(){
 	state_abbreviations["Colorado"] = "CO";
 	state_abbreviations["Connecticut"] = "CT";
 	state_abbreviations["Delaware"] = "DE";
+	state_abbreviations["District of Columbia"] = "DC";
 	state_abbreviations["Florida"] = "FL";
 	state_abbreviations["Georgia"] = "GA";
 	state_abbreviations["Hawaii"] = "HI";
@@ -119,8 +120,8 @@ function drawTheUSPokeRatioMap(){
 	var county_poke_data_file = "json/countyPokes/";
 	
 	//Build map
-	var map = gradientMap.setColors("#002966","#B2D1FF")
-				.setFeature("Poke Ratio")
+	var map = gradientMap.setColors("#EBF5FF","#002966")
+				.setFeature("poke_ratio")
 				.setRestFileName("poke.csv")
 				//.setDrawCounties(drawCounties)
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
@@ -129,9 +130,15 @@ function drawTheUSPokeRatioMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
+	thisMap = map;
+				
 	//Draw map
-	map.drawMap();
+	thisMap.drawMap();
 };
 
 
-drawTheUSPokeRatioMap();
+function removeUSMap(){
+	
+	thisMap.removeMap();
+	
+}

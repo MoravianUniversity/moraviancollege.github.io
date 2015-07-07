@@ -32,6 +32,7 @@ svg {
 	pointer-events: none;         
 }
 #tooltip h4{
+	color: skyblue;
 	margin:0;
 	font-size:14px;
 	text-align: center;
@@ -64,7 +65,6 @@ svg {
 	margin-left: 45%;
 	margin-right: 50%;
 	margin-top: 278px;
-	margin-bottom: 49%;
 	width:62px;
 	height:77px
 }
