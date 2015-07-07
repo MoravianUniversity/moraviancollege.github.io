@@ -30,8 +30,19 @@
 
     var projection;
     var path;
+<<<<<<< HEAD
     var zoomed;
 
+=======
+    var canZoom = true;
+    var x = "User-agent header sent: " + navigator.userAgent;
+    var s = x.split(" ");
+    var y = s[11];
+    var q = y.split("/");
+    if(q[0] == "Gecko")
+    {canZoom=false;}
+    
+>>>>>>> a05a7124c70ec53373b6dc56f88d52719d51deaf
     var zoom = d3.behavior.zoom()
                 .scaleExtent([1, 10])
                 .on("zoom", zoomed);
@@ -56,12 +67,23 @@
                 .attr("width", 800)
                 .attr("height", 40);
 
+         if(canZoom)
+        {
         svg = mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", w)
                 .attr("height", h)
                 .call(zoom)
                 .append("g");
+        }
+        else
+        {
+        svg = mapDiv.append("svg")
+                .attr("style", "border: thin solid gray; border-radius: 5px;")
+                .attr("width", w)
+                .attr("height", h)
+                .append("g");
+        };
 
         d3.select("#mapContainer")
             .append("div")
@@ -143,8 +165,8 @@
 
         d3.csv(csvUSValueFile, function(data) {
 
-            min = d3.min(data, function(d) { return +d.poke_ratio; }).toString();
-            max = d3.max(data, function(d) { return +d.poke_ratio; }).toString();
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
 
 
             if (!continuous) {
@@ -553,7 +575,7 @@
         reset();
 
         d3.select("#floatingBarsG")
-            .style("visibility", "hidden");
+            .style("visibility", "visible");
 
         var color;
         var continuous = false;
