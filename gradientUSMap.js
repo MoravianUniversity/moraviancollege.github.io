@@ -16,9 +16,8 @@
     var csvUSValueFile  = "json/poke_ratio_correct2.csv";
     var countyMapPath   = "json/stateJSON/";
     var countyValuePath = "json/countyPokes/";
-    var stateCenteringFile = "json/Scrape.txt";
 
-    var getStateValuesFunction = function(data, stateName){};
+    var getStateValuesFunction = function(data, stateName) {};
     var getCountyValuesFunction = function(data, countyName) {};
 
     // default values for the color range
@@ -38,7 +37,7 @@
     var q = y.split("/");
     if(q[0] == "Gecko")
     {canZoom=false;}
-    
+
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
         .on("zoom", zoomed);
@@ -63,31 +62,23 @@
             .attr("width", 800)
             .attr("height", 40);
 
-         if(canZoom)
+        if(canZoom)
         {
-        svg = mapDiv.append("svg")
-
-            .attr("style", "border: thin solid gray; border-radius: 5px;")
-            .attr("width", w)
-            .attr("height", h)
-            .call(zoom)
-            .append("g");
-
-gray; border-radius: 5px;")
-
-
-
-
-
-
-
-
-gray; border-radius: 5px;")
-
-
-
-
-
+            svg = mapDiv.append("svg")
+                .attr("style", "border: thin solid gray; border-radius: 5px;")
+                .attr("width", w)
+                .attr("height", h)
+                .call(zoom)
+                .append("g");
+        }
+        else
+        {
+            svg = mapDiv.append("svg")
+                .attr("style", "border: thin solid gray; border-radius: 5px;")
+                .attr("width", w)
+                .attr("height", h)
+                .append("g");
+        };
 
         d3.select("#mapContainer")
             .append("div")
