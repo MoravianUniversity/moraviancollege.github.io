@@ -1,5 +1,10 @@
 var thisMap;
 
+var us_poke_data_file = " json/poke_ratio_correct2.csv";
+var map_json_file = "json/us-states.json";
+var county_path_file = "json/stateJSON/";
+var county_poke_data_file = "json/countyPokes/";
+
 function drawTheUSMap(){
 	
 	
@@ -114,10 +119,10 @@ function drawTheUSMap(){
     state_abbreviations["Puerto Rico"] = "PR";
 
     //Create file paths. Used in setPaths function
-    var us_poke_data_file = " json/poke_ratio_correct2.csv";
-    var map_json_file = "json/us-states.json";
-    var county_path_file = "json/stateJSON/";
-    var county_poke_data_file = "json/countyPokes/";
+    //var us_poke_data_file = " json/poke_ratio_correct2.csv";
+    //var map_json_file = "json/us-states.json";
+    //var county_path_file = "json/stateJSON/";
+    //var county_poke_data_file = "json/countyPokes/";
 
     //Build map
     var map = gradientMap.setColors("#EBF5FF","#002966")
@@ -138,4 +143,10 @@ function drawTheUSMap(){
 
 function removeUSMap(){
     thisMap.removeMap();
+}
+
+function changeUSDataFile(data) {
+    
+    us_poke_data_file = data;
+    
 }

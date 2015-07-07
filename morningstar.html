@@ -118,6 +118,33 @@
 		   </ul>
 		</div>
 		
+		<input type="file" id="file-input" />
+        <!--<h3>Contents of the file:</h3>-->
+        <pre id="file-content"></pre>
+        
+        <script>
+            
+            function readSingleFile(e) {
+            	var file = e.target.files[0];
+            	if (!file) {
+            	    return;
+            	}
+            	var reader = new FileReader();
+            	reader.onload = function(e) {
+            	    var contents = e.target.result;
+            	    //displayContents(contents);
+            	    changeUSDataFile(contents);
+            	    removeUSMap();
+            	    drawTheUSMap();
+                };
+                reader.readAsText(file);
+            }
+            
+            document.getElementById('file-input')
+              .addEventListener('change', readSingleFile, false);
+            
+        </script>
+		
 		<div id="mapContainer">
 		
 			<!-- Spinner Animation -->

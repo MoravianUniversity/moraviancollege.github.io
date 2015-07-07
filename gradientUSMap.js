@@ -290,6 +290,13 @@
         mapSVG.remove();
         return this;
     }
+    
+    gradientMap.setNationalData = function(data) {
+        
+        csvUSValueFile = data;
+        return this;
+        
+    }
 
     var rest_of_filename = "poke.csv";
 
