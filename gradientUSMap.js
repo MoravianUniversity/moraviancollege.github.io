@@ -1,4 +1,7 @@
 (function() {
+    /*jslint browser: true*/
+    /*global $, d3, slider, makeCombo*/
+
     var comboExists = false;
     var gradientMap = {};
 
@@ -11,15 +14,14 @@
     var current_gradient = 2;
     var feature_desired = "poke_ratio";
 
-    // defualt path names for the files
+    // default path names for the files
     var usMapFile       = "json/us-states.json";
     var csvUSValueFile  = "json/poke_ratio_correct2.csv";
     var countyMapPath   = "json/stateJSON/";
     var countyValuePath = "json/countyPokes/";
-    var stateCenteringFile = "json/Scrape.txt";
 
-    var getStateValuesFunction = function(data, stateName) {};
-    var getCountyValuesFunction = function(data, countyName) {};
+    var getStateValuesFunction = function(data, stateName) {return undefined;};
+    var getCountyValuesFunction = function(data, countyName) {return undefined;};
 
     // default values for the color range
 
@@ -32,18 +34,18 @@
     var projection;
     var path;
     var canZoom = true;
-    var x = "User-agent header sent: " + navigator.userAgent;
+    var x = "User-agent header sent: " + navigator.userAgent;  //ignore in jslint
     var s = x.split(" ");
     var y = s[11];
     var q = y.split("/");
-    if(q[0] == "Gecko")
+    if(q[0] === "Gecko")
     {canZoom=false;}
-    
-    var zoom = d3.behavior.zoom()
-                .scaleExtent([1, 10])
-                .on("zoom", zoomed);
 
-    state_abbreviations = {};
+    var zoom = d3.behavior.zoom()
+        .scaleExtent([1, 10])
+        .on("zoom", zoomed);
+
+    var state_abbreviations = {};
 
     gradientMap.setup = function() {
 
@@ -54,18 +56,18 @@
         makeCombo();
 
         var mapDiv = d3.select("#mapContainer")
-                        .append("div")
-                        .attr("id", "mapSVG")
-                        .style("width", "800px")
-                        .style("margin", "0 auto");
+            .append("div")
+            .attr("id", "mapSVG")
+            .style("width", "800px")
+            .style("margin", "0 auto");
 
         grad_svg = mapDiv.append("svg")
-                .attr("width", 800)
-                .attr("height", 40);
+            .attr("width", 800)
+            .attr("height", 40);
 
-         if(canZoom)
+        if(canZoom)
         {
-        svg = mapDiv.append("svg")
+            svg = mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", w)
                 .attr("height", h)
@@ -74,12 +76,12 @@
         }
         else
         {
-        svg = mapDiv.append("svg")
+            svg = mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", w)
                 .attr("height", h)
                 .append("g");
-        };
+        }
 
         d3.select("#mapContainer")
             .append("div")
@@ -93,7 +95,7 @@
         zoom.scale(1);
         zoom.translate([0, 0]);
         svg.transition().duration(0).
-        attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
+            attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
     }
 
     function zoomed() {
@@ -140,19 +142,19 @@
 
         //Define map projection
         projection = d3.geo.albersUsa()
-                               .translate([w/2, h/2])
-                               .scale([900]);
+            .translate([w/2, h/2])
+            .scale([900]);
 
         // Path of GeoJSON
         path = d3.geo.path()
-                    .projection(projection);
+            .projection(projection);
 
         var color;
         var continuous = false;
         //Define quantize scale to sort data values into buckets of color
         if (current_gradient != -1) {
             color = d3.scale.quantize()
-                            .range(makeRange(current_gradient, start_color, end_color));
+                .range(makeRange(current_gradient, start_color, end_color));
         }
         // this means they want a continuous gradient
         else {
@@ -199,10 +201,10 @@
                         else {//If value is undefined…
                             return "#ccc";
                         }
-                   })
-                   .on("click", link)
-                   .on("mouseover", mouseOver)
-                   .on("mouseout", mouseOut);
+                    })
+                    .on("click", link)
+                    .on("mouseover", mouseOver)
+                    .on("mouseout", mouseOut);
             });
         });
     }
@@ -217,7 +219,7 @@
 
         else {
             var newcolor = d3.scale.quantize()
-                               .range(makeRange(val, start_color, end_color));
+                .range(makeRange(val, start_color, end_color));
             newcolor.domain([
                 min,max
             ]);
@@ -328,13 +330,13 @@
         var i = 0;
         while (i < boxNum){
             grad_svg.append("rect")
-               .attr("x", 55 + 25*i)
-               .attr("y", 10)
-               .attr("width", 25)
-               .attr("height", 25)
-               .attr("class", "rectangle")
-               .style("fill", colorArray[i]);
-               i += 1;
+                .attr("x", 55 + 25*i)
+                .attr("y", 10)
+                .attr("width", 25)
+                .attr("height", 25)
+                .attr("class", "rectangle")
+                .style("fill", colorArray[i]);
+            i += 1;
         }
 
         var maxText = max.substring(0,4);
@@ -474,22 +476,22 @@
         // this function creates the drop down menu for changing the grid scale
         // color selector is how many colors you want displayed
         var combo = d3.select("#comboDiv")
-                        .append("select")
-                        .attr("id", "color-selector")
-                        .style("right-margin", "50%");
+            .append("select")
+            .attr("id", "color-selector")
+            .style("right-margin", "50%");
 
         var i = 2;
         while (i <= 10) {
             combo.append("option")
-                    .attr("id", "option" + i.toString())
-                    .attr("value", i)
-                    .text(i);
+                .attr("id", "option" + i.toString())
+                .attr("value", i)
+                .text(i);
             i+=1;
         }
         combo.append("option")
-                .attr("id", "optionc")
-                .attr("value", -1)
-                .text("continuous");
+            .attr("id", "optionc")
+            .attr("value", -1)
+            .text("continuous");
 
         if (current_gradient == -1) {
             d3.select("#optionc")
@@ -535,7 +537,7 @@
 
         for (val in allNums) {
 
-            var save = allNums[val]	
+            var save = allNums[val]
             if(save < 0) {
                 if (save < bigLong) {
                     bigLong = save;
@@ -559,9 +561,9 @@
                     smallLat = save;
                 }
             }
-    }
+        }
 
-    return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
+        return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
     }
 
     var drawCounties = function(stateFile, csvFile) {
@@ -578,7 +580,7 @@
         //Define quantize scale to sort data values into buckets of color
         if (current_gradient != -1) {
             color = d3.scale.quantize()
-                            .range(makeRange(current_gradient, start_color, end_color));
+                .range(makeRange(current_gradient, start_color, end_color));
         }
         // this means they want a continuous gradient
         else {
@@ -607,7 +609,7 @@
                 var scale  = 10;
                 var offset = [w/2, h/2];
                 projection = d3.geo.mercator().scale(scale)
-                .center(center).translate(offset);
+                    .center(center).translate(offset);
 
                 // create the path
                 path = d3.geo.path().projection(projection);
@@ -623,19 +625,19 @@
                     vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
                     offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
-                                 h - (bounds[0][1] + bounds[1][1])/2.1];
+                        h - (bounds[0][1] + bounds[1][1])/2.1];
                 }
                 else {
                     hscale  = scale*w*0.75  /(bounds[1][0] - bounds[0][0]);
                     vscale  = scale*h*0.75 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
                     offset  = [ w-(bounds[0][0] + bounds[1][0])/2,
-                                 h-(bounds[0][1] + bounds[1][1])/2.1];
+                        h-(bounds[0][1] + bounds[1][1])/2.1];
                 }
 
                 // new projection
                 projection = d3.geo.mercator().scale(scale)
-                .center(center).translate(offset);
+                    .center(center).translate(offset);
 
                 path = path.projection(projection);
 
@@ -648,28 +650,28 @@
                         return d.properties.NAME;
                     })
                     .style("fill", function(d) {
-                            //Get data value
-                            if ( d.properties.LSAD == "city")
-                            {
-                                d.properties.NAME += " City";
-                            }
+                        //Get data value
+                        if ( d.properties.LSAD == "city")
+                        {
+                            d.properties.NAME += " City";
+                        }
 
-                            d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
-                            var value = d.properties.value;
+                        d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
+                        var value = d.properties.value;
 
-                            if (max == min) {
-                                return end_color;
-                            }
+                        if (max == min) {
+                            return end_color;
+                        }
 
-                            if (!continuous && value) {//If value exists…
-                                return color(value);
-                            }
-                            else if (continuous && value) {
-                                return d3.interpolate(start_color, end_color)((value - min)/(max-min));
-                            }
-                            else {//If value is undefined…
-                                return "#ccc";
-                            }
+                        if (!continuous && value) {//If value exists…
+                            return color(value);
+                        }
+                        else if (continuous && value) {
+                            return d3.interpolate(start_color, end_color)((value - min)/(max-min));
+                        }
+                        else {//If value is undefined…
+                            return "#ccc";
+                        }
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
