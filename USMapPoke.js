@@ -2,7 +2,7 @@ var thisMap;
 /*jslint browser: true*/
 /*global $, state_abbreviations, gradientMap*/
 
-function drawTheUSMap(){
+function drawTheUSMap(min_color, max_color){
 
 	var getStateValuesFunction = function(data, stateName) {
         var i = 0;
@@ -130,7 +130,7 @@ function drawTheUSMap(){
 	var county_poke_data_file = "json/countyPokes/";
 	
 	//Build map
-	var map = gradientMap.setColors("#EBF5FF","#002966")
+	var map = gradientMap.setColors(min_color, max_color)
 				.setFeature("poke_ratio")
 				.setRestFileName("poke.csv")
 				//.setDrawCounties(drawCounties)
