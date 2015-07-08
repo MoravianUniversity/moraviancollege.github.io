@@ -20,8 +20,8 @@
     var countyMapPath   = "json/stateJSON/";
     var countyValuePath = "json/countyPokes/";
 
-    var getStateValuesFunction = function(data, stateName) {return undefined;};
-    var getCountyValuesFunction = function(data, countyName) {return undefined;};
+    var getStateValuesFunction = function() {return undefined;};
+    var getCountyValuesFunction = function() {return undefined;};
 
     // default values for the color range
 
@@ -40,6 +40,10 @@
     var q = y.split("/");
     if(q[0] === "Gecko")
     {canZoom=false;}
+    function zoomed() {
+        svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
+        slider.property("value",  d3.event.scale);
+    }
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
@@ -96,11 +100,6 @@
         zoom.translate([0, 0]);
         svg.transition().duration(0).
             attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
-    }
-
-    function zoomed() {
-        svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
-        slider.property("value",  d3.event.scale);
     }
 
     var mouseOut = function() {
@@ -207,7 +206,7 @@
                     .on("mouseout", mouseOut);
             });
         });
-    }
+    };
 
     var change_gradient = function(val) {
 
@@ -240,24 +239,24 @@
                     return "#ccc";
                 }
             });
-    }
+    };
 
     gradientMap.setFunctions = function(function1, function2) {
         getStateValuesFunction = function1;
         getCountyValuesFunction = function2;
         return this;
-    }
+    };
 
     gradientMap.setColors = function(start, end) {
         start_color = start;
         end_color = end;
         return this;
-    }
+    };
 
     gradientMap.setFeature = function(feature) {
         feature_desired = feature;
         return this;
-    }
+    };
 
     gradientMap.setPaths = function(usPath, uscsvPath, countyPath, countycsvPath) {
         usMapFile       = usPath;
@@ -265,7 +264,7 @@
         countyMapPath   = countyPath;
         countyValuePath = countycsvPath;
         return this;
-    }
+    };
 
     gradientMap.setStartingGradient = function(number) {
         if (number == -1) {
@@ -273,25 +272,25 @@
         }
         current_gradient = number;
         return this;
-    }
+    };
 
     gradientMap.setStateAbbreviations = function(st_abbr) {
 
         state_abbreviations = st_abbr;
         return this;
 
-    }
+    };
 
     gradientMap.rangeBoxes = function(numOfBoxes) {
         drawMinLabel();
         drawBoxes(numOfBoxes);
-    }
+    };
 
     gradientMap.removeMap = function(){
 
         mapSVG.remove();
         return this;
-    }
+    };
 
     var rest_of_filename = "poke.csv";
 
@@ -316,13 +315,13 @@
         mouseOut();
 
         drawCounties(path, csvPath);
-    }
+    };
 
     gradientMap.setRestFileName = function(new_name) {
 
         rest_of_filename = new_name;
         return this;
-    }
+    };
 
     var drawBoxes = function(boxNum) {
         var colorArray = makeRange(boxNum, start_color, end_color);
@@ -338,11 +337,8 @@
                 .style("fill", colorArray[i]);
             i += 1;
         }
-
-        var maxText = max.substring(0,4);
-
         drawMaxLabel(50 + 25*boxNum);
-    }
+    };
 
     var drawMinLabel = function() {
         d3.select("#minLabel").remove();
@@ -511,13 +507,13 @@
 
     function computeCenter(data){
 
-        var nums = []
-        var allNums =[]
+        var nums = [];
+        var allNums =[];
 
-        var bigLat = 0
-        var smallLat = 500
-        var bigLong = 0
-        var smallLong = -500
+        var bigLat = 0;
+        var smallLat = 500;
+        var bigLong = 0;
+        var smallLong = -500;
         // return the center
 
         for (x = 0; x < data.features.length; x+=1) {
