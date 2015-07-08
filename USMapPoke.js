@@ -1,18 +1,20 @@
 var thisMap;
+/*jslint browser: true*/
+/*global $, state_abbreviations*/
 
 function drawTheUSMap(){
-	
-	
-	var getStateValuesFunction = function(data, stateName) {
 
+	var getStateValuesFunction = function(data, stateName) {
+        var i = 0;
+		var dataState;
 		var stateAbbr = state_abbreviations[stateName];
 
-		for (var i = 0; i < data.length; i++) {
+		for (i = 0; i < data.length; i++) {
             //Grab state name
-            var dataState = data[i].state;
+            dataState = data[i].state;
 
             //Grab data value, and convert from string to float
-            if (dataState == stateAbbr) {
+            if (dataState === stateAbbr) {
             	return parseFloat(data[i].poke_ratio);
         	}
 
@@ -22,95 +24,103 @@ function drawTheUSMap(){
 	var getCountyValuesFunction = function(data, countyName) {
 		//Merge the ag. data and GeoJSON
         //Loop through once for each ag. data value
-        for (var i = 0; i < data.length; i++) {
-            //Grab state name
-            var dataCounty = data[i].county;
+        var i = 0;
+        var dataCounty;
+        var part;
+        var len;
+        var str;
+        var k;
 
-            var part = dataCounty.split(" ");
+        for (i = 0; i < data.length; i++) {
+            //Grab state name
+            dataCounty = data[i].county;
+
+            part = dataCounty.split(" ");
 
             // if the last thing is county/borough get rid of it
-            var len = part.length;
-            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish") {
-                var str = "";
-                for (var k = 0; k < len-1; k++) {
+            len = part.length;
+            if (part[len-1] === "County" || part[len-1] === "Borough" || part[len-1] === "Parish") {
+                str = "";
+                for (k = 0; k < len-1; k++) {
                     str += part[k];
-                    if (k != len-2) {
+                    if (k !== len-2) {
                         str += " ";
                     }
                 }
                 dataCounty = str;
             }
-            else if (part[len-2] == "Census") {
-            	var str = "";
-                for (var k = 0; k < len-2; k++) {
+            else if (part[len-2] === "Census") {
+                str = "";
+                for (k = 0; k < len-2; k++) {
                     str += part[k];
-                    if (k != len-3) {
+                    if (k !== len-3) {
                         str += " ";
                     }
                 }
                 dataCounty = str;
             }
 
-            if (dataCounty.toLowerCase() == countyName.toLowerCase()) {
+            if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
             	//Grab data value, and convert from string to float
             	return parseFloat(data[i].poke_ratio);
             }
            
         }
 	};
-	
+
+    // Ignore jslint for state names with multiple words
 	var state_abbreviations = {};
-	state_abbreviations["Alabama"] = "AL";
-	state_abbreviations["Alaska"] = "AK";
-	state_abbreviations["Arizona"] = "AZ";
-	state_abbreviations["Arkansas"] = "AR";
-	state_abbreviations["California"] = "CA";
-	state_abbreviations["Colorado"] = "CO";
-	state_abbreviations["Connecticut"] = "CT";
-	state_abbreviations["Delaware"] = "DE";
+	state_abbreviations.Alabama = "AL";
+	state_abbreviations.Alaska = "AK";
+	state_abbreviations.Arizona = "AZ";
+	state_abbreviations.Arkansas = "AR";
+	state_abbreviations.California = "CA";
+	state_abbreviations.Colorado = "CO";
+	state_abbreviations.Connecticut = "CT";
+	state_abbreviations.Delaware = "DE";
 	state_abbreviations["District of Columbia"] = "DC";
-	state_abbreviations["Florida"] = "FL";
-	state_abbreviations["Georgia"] = "GA";
-	state_abbreviations["Hawaii"] = "HI";
-	state_abbreviations["Idaho"] = "ID";
-	state_abbreviations["Illinois"] = "IL";
-	state_abbreviations["Indiana"] = "IN";
-	state_abbreviations["Iowa"] = "IA";
-	state_abbreviations["Kansas"] = "KS";
-	state_abbreviations["Kentucky"] = "KY";
-	state_abbreviations["Louisiana"] = "LA";
-	state_abbreviations["Maine"] = "ME";
-	state_abbreviations["Maryland"] = "MD";
-	state_abbreviations["Massachusetts"] = "MA";
-	state_abbreviations["Michigan"] = "MI";
-	state_abbreviations["Minnesota"] = "MN";
-	state_abbreviations["Mississippi"] = "MS";
-	state_abbreviations["Missouri"] = "MO";
-	state_abbreviations["Montana"] = "MT";
-	state_abbreviations["Nebraska"] = "NE";
-	state_abbreviations["Nevada"] = "NV";
+	state_abbreviations.Florida = "FL";
+	state_abbreviations.Georgia = "GA";
+	state_abbreviations.Hawaii = "HI";
+	state_abbreviations.Idaho = "ID";
+	state_abbreviations.Illinois = "IL";
+	state_abbreviations.Indiana = "IN";
+	state_abbreviations.Iowa = "IA";
+	state_abbreviations.Kansas = "KS";
+	state_abbreviations.Kentucky = "KY";
+	state_abbreviations.Louisiana = "LA";
+	state_abbreviations.Maine = "ME";
+	state_abbreviations.Maryland = "MD";
+	state_abbreviations.Massachusetts = "MA";
+	state_abbreviations.Michigan = "MI";
+	state_abbreviations.Minnesota = "MN";
+	state_abbreviations.Mississippi = "MS";
+	state_abbreviations.Missouri = "MO";
+	state_abbreviations.Montana = "MT";
+	state_abbreviations.Nebraska = "NE";
+	state_abbreviations.Nevada = "NV";
 	state_abbreviations["New Hampshire"] = "NH";
 	state_abbreviations["New Jersey"] = "NJ";
 	state_abbreviations["New Mexico"] = "NM";
 	state_abbreviations["New York"] = "NY";
 	state_abbreviations["North Carolina"] = "NC";
 	state_abbreviations["North Dakota"] = "ND";
-	state_abbreviations["Ohio"] = "OH";
-	state_abbreviations["Oklahoma"] = "OK";
-	state_abbreviations["Oregon"] = "OR";
-	state_abbreviations["Pennsylvania"] = "PA";
+	state_abbreviations.Ohio = "OH";
+	state_abbreviations.Oklahoma = "OK";
+	state_abbreviations.Oregon = "OR";
+	state_abbreviations.Pennsylvania = "PA";
 	state_abbreviations["Rhode Island"] = "RI";
 	state_abbreviations["South Carolina"] = "SC";
 	state_abbreviations["South Dakota"] = "SD";
-	state_abbreviations["Tennessee"] = "TN";
-	state_abbreviations["Texas"] = "TX";
-	state_abbreviations["Utah"] = "UT";
-	state_abbreviations["Vermont"] = "VT";
-	state_abbreviations["Virginia"] = "VA";
-	state_abbreviations["Washington"] = "WA";
+	state_abbreviations.Tennessee = "TN";
+	state_abbreviations.Texas = "TX";
+	state_abbreviations.Utah = "UT";
+	state_abbreviations.Vermont = "VT";
+	state_abbreviations.Virginia = "VA";
+	state_abbreviations.Washington = "WA";
 	state_abbreviations["West Virginia"] = "WV";
-	state_abbreviations["Wisconsin"] = "WI";
-	state_abbreviations["Wyoming"] = "WY";
+	state_abbreviations.Wisconsin = "WI";
+	state_abbreviations.Wyoming = "WY";
 	state_abbreviations["Puerto Rico"] = "PR";
 	
 	//Create file paths. Used in setPaths function
@@ -134,7 +144,7 @@ function drawTheUSMap(){
 				
 	//Draw map
 	thisMap.drawMap();
-};
+}
 
 
 function removeUSMap(){
