@@ -21,13 +21,14 @@
     <link rel="stylesheet" href="stylesheets/prettyPhoto.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     
-    <!-- CSS
+    <!-- JS
   ================================================== -->
  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script src="js/jquery.flexslider-min.js"></script>
     <script src="js/scripts.js"></script>
     <script type="text/javascript" src="d3/d3.v3.js"></script>
 	<script type="text/javascript" src="gradientUSMap.js"></script>
+	<script type="text/javascript" src="jscolor/jscolor.js"></script>
 
 	<!-- Favicons
 	================================================== -->
@@ -106,14 +107,25 @@
 	</article>
 	<article class="sixteen columns main-content">
 	
+		    	            	 <!-- Reload Map Button -->
+	<button onclick="removeUSMap(); drawTheUSMap();">Reload Map</button>
+	
 	    <div class="optionsContainer">
 	        <ul>
-	            <li class="sameLine" style="margin-top:10px;">
-	            <button onclick="removeUSMap(); drawTheUSMap();">Reload Map</button>
-	            </li>
+	            	              <!-- Gradient Level Selector -->
 	            <li class="sameLine">
-	              <!-- Drop-down Menu -->
 		        <div id="comboDiv"><h4>Gradient Level</h4></div>
+		        </li>
+		        	              <!-- Gradient Color Selector -->
+		        <li class="sameLine" style="margin-top:23px;">
+		        Minimum Color <input id="minColor" class="color {pickerFaceColor:'transparent', pickerFace:3, pickerBorder:0, pickerInsetColor:'black', onImmediateChange:'updateInfo(this);'}" value="EBF5FF">
+		        R: <input id="infoMn-r" size="2" />,
+                G: <input id="infoMn-g" size="2" />,
+                B: <input id="infoMn-b" size="2" />
+		        Maximum Color <input id="maxColor" class="color {pickerFaceColor:'transparent', pickerFace:3, pickerBorder:0, pickerInsetColor:'black', onImmediateChange:'updateInfo(this);'}" value="002966"> 
+		        R: <input id="infoMx-r" size="2" />,
+                G: <input id="infoMx-g" size="2" />,
+                B: <input id="infoMx-b" size="2" />
 		        </li>
 		   </ul>
 		</div>
@@ -170,7 +182,18 @@
 		<!-- USMapPoke.js builds map -->
 		<script src="USMapPoke.js">drawTheUSMap();</script>
 
-	<script>
+	    <script type="text/javascript">
+            function updateInfo(color) {
+	            document.getElementById('infoMn-r').value = color.rgb[0];
+	            document.getElementById('infoMn-g').value = color.rgb[1];
+	            document.getElementById('infoMn-b').value = color.rgb[2];
+	            document.getElementById('infoMx-r').value = color.rgb[0];
+	            document.getElementById('infoMx-g').value = color.rgb[1];
+	            document.getElementById('infoMx-b').value = color.rgb[2];
+
+             }
+        </script>
+        <script>
 			
 			function makeMap(source) {
 				
