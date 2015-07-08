@@ -1,21 +1,21 @@
 var thisMap;
 function drawTheTestMap(){
+	/*jslint browser: true*/
+	/*global $, state_abbreviations, gradientMap*/
 
 	var getStateValuesFunction = function(data, stateName) {
 
 		var stateAbbr = state_abbreviations[stateName];
+		var i;
+		var dataState;
 
-		for (var i = 0; i < data.length; i++) {
+		for (i = 0; i < data.length; i++) {
             //Grab state name
-            var dataState = data[i].state;
+            dataState = data[i].state;
 
             //Grab data value, and convert from string to float
-            if (dataState == stateAbbr) {
-<<<<<<< HEAD
-            	return parseFloat(data[i].swag);
-=======
+            if (dataState === stateAbbr) {
             	return parseFloat(data[i].test);
->>>>>>> 291a60b929e1e0d09e41674572c547cd5b2351bb
         	}
 
 		}
@@ -24,43 +24,49 @@ function drawTheTestMap(){
 	var getCountyValuesFunction = function(data, countyName) {
 		//Merge the ag. data and GeoJSON
         //Loop through once for each ag. data value
-        for (var i = 0; i < data.length; i++) {
+		var i;
+		var k;
+		var dataCounty;
+		var part;
+		var len;
+		var str;
+        for (i = 0; i < data.length; i++) {
             //Grab state name
-            var dataCounty = data[i].county;
+            dataCounty = data[i].county;
 
-            var part = dataCounty.split(" ");
+            part = dataCounty.split(" ");
 
             // if the last thing is county/borough get rid of it
-            var len = part.length;
-            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish") {
-                var str = "";
-                for (var k = 0; k < len-1; k++) {
+            len = part.length;
+            if (part[len-1] === "County" || part[len-1] === "Borough" || part[len-1] === "Parish") {
+                str = "";
+                for (k = 0; k < len-1; k++) {
                     str += part[k];
-                    if (k != len-2) {
+                    if (k !== len-2) {
                         str += " ";
                     }
                 }
                 dataCounty = str;
             }
-            else if (part[len-2] == "Census") {
-            	var str = "";
-                for (var k = 0; k < len-2; k++) {
+            else if (part[len-2] === "Census") {
+            	str = "";
+                for (k = 0; k < len-2; k++) {
                     str += part[k];
-                    if (k != len-3) {
+                    if (k !== len-3) {
                         str += " ";
                     }
                 }
                 dataCounty = str;
             }
 
-            if (dataCounty == countyName) {
+            if (dataCounty === countyName) {
             	//Grab data value, and convert from string to float
             	return parseFloat(data[i].test);
             }
            
         }
 	};
-	
+	var map;
 	var state_abbreviations = {};
 	state_abbreviations["Alabama"] = "AL";
 	state_abbreviations["Alaska"] = "AK";
@@ -122,7 +128,7 @@ function drawTheTestMap(){
 	var county_poke_data_file = "test_files/";
 	
 	//Build map
-	var map = gradientMap.setColors("#002966","#B2D1FF")
+	map = gradientMap.setColors("#002966","#B2D1FF")
 				.setFeature("test")
 				.setRestFileName("2.csv")
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
@@ -131,11 +137,11 @@ function drawTheTestMap(){
 				.setStartingGradient(-1)
 				.setup();
 				
-	thisMap = map
+	thisMap = map;
 				
 	//Draw map
 	thisMap.drawMap();
-};
+}
 
 function removeTestMap(){
 	

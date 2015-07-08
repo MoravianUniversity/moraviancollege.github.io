@@ -1,6 +1,6 @@
 var thisMap;
 /*jslint browser: true*/
-/*global $, state_abbreviations*/
+/*global $, state_abbreviations, gradientMap*/
 
 function drawTheUSMap(){
 
@@ -70,57 +70,57 @@ function drawTheUSMap(){
 
     // Ignore jslint for state names with multiple words
 	var state_abbreviations = {};
-	state_abbreviations.Alabama = "AL";
-	state_abbreviations.Alaska = "AK";
-	state_abbreviations.Arizona = "AZ";
-	state_abbreviations.Arkansas = "AR";
-	state_abbreviations.California = "CA";
-	state_abbreviations.Colorado = "CO";
-	state_abbreviations.Connecticut = "CT";
-	state_abbreviations.Delaware = "DE";
+	state_abbreviations["Alabama"] = "AL";
+	state_abbreviations["Alaska"] = "AK";
+	state_abbreviations["Arizona"] = "AZ";
+	state_abbreviations["Arkansas"] = "AR";
+	state_abbreviations["California"] = "CA";
+	state_abbreviations["Colorado"] = "CO";
+	state_abbreviations["Connecticut"] = "CT";
+	state_abbreviations["Delaware"] = "DE";
 	state_abbreviations["District of Columbia"] = "DC";
-	state_abbreviations.Florida = "FL";
-	state_abbreviations.Georgia = "GA";
-	state_abbreviations.Hawaii = "HI";
-	state_abbreviations.Idaho = "ID";
-	state_abbreviations.Illinois = "IL";
-	state_abbreviations.Indiana = "IN";
-	state_abbreviations.Iowa = "IA";
-	state_abbreviations.Kansas = "KS";
-	state_abbreviations.Kentucky = "KY";
-	state_abbreviations.Louisiana = "LA";
-	state_abbreviations.Maine = "ME";
-	state_abbreviations.Maryland = "MD";
-	state_abbreviations.Massachusetts = "MA";
-	state_abbreviations.Michigan = "MI";
-	state_abbreviations.Minnesota = "MN";
-	state_abbreviations.Mississippi = "MS";
-	state_abbreviations.Missouri = "MO";
-	state_abbreviations.Montana = "MT";
-	state_abbreviations.Nebraska = "NE";
-	state_abbreviations.Nevada = "NV";
+	state_abbreviations["Florida"] = "FL";
+	state_abbreviations["Georgia"] = "GA";
+	state_abbreviations["Hawaii"] = "HI";
+	state_abbreviations["Idaho"] = "ID";
+	state_abbreviations["Illinois"] = "IL";
+	state_abbreviations["Indiana"] = "IN";
+	state_abbreviations["Iowa"] = "IA";
+	state_abbreviations["Kansas"] = "KS";
+	state_abbreviations["Kentucky"] = "KY";
+	state_abbreviations["Louisiana"] = "LA";
+	state_abbreviations["Maine"] = "ME";
+	state_abbreviations["Maryland"] = "MD";
+	state_abbreviations["Massachusetts"] = "MA";
+	state_abbreviations["Michigan"] = "MI";
+	state_abbreviations["Minnesota"] = "MN";
+	state_abbreviations["Mississippi"] = "MS";
+	state_abbreviations["Missouri"] = "MO";
+	state_abbreviations["Montana"] = "MT";
+	state_abbreviations["Nebraska"] = "NE";
+	state_abbreviations["Nevada"] = "NV";
 	state_abbreviations["New Hampshire"] = "NH";
 	state_abbreviations["New Jersey"] = "NJ";
 	state_abbreviations["New Mexico"] = "NM";
 	state_abbreviations["New York"] = "NY";
 	state_abbreviations["North Carolina"] = "NC";
 	state_abbreviations["North Dakota"] = "ND";
-	state_abbreviations.Ohio = "OH";
-	state_abbreviations.Oklahoma = "OK";
-	state_abbreviations.Oregon = "OR";
-	state_abbreviations.Pennsylvania = "PA";
+	state_abbreviations["Ohio"] = "OH";
+	state_abbreviations["Oklahoma"] = "OK";
+	state_abbreviations["Oregon"] = "OR";
+	state_abbreviations["Pennsylvania"] = "PA";
 	state_abbreviations["Rhode Island"] = "RI";
 	state_abbreviations["South Carolina"] = "SC";
 	state_abbreviations["South Dakota"] = "SD";
-	state_abbreviations.Tennessee = "TN";
-	state_abbreviations.Texas = "TX";
-	state_abbreviations.Utah = "UT";
-	state_abbreviations.Vermont = "VT";
-	state_abbreviations.Virginia = "VA";
-	state_abbreviations.Washington = "WA";
+	state_abbreviations["Tennessee"] = "TN";
+	state_abbreviations["Texas"] = "TX";
+	state_abbreviations["Utah"] = "UT";
+	state_abbreviations["Vermont"] = "VT";
+	state_abbreviations["Virginia"] = "VA";
+	state_abbreviations["Washington"] = "WA";
 	state_abbreviations["West Virginia"] = "WV";
-	state_abbreviations.Wisconsin = "WI";
-	state_abbreviations.Wyoming = "WY";
+	state_abbreviations["Wisconsin"] = "WI";
+	state_abbreviations["Wyoming"] = "WY";
 	state_abbreviations["Puerto Rico"] = "PR";
 	
 	//Create file paths. Used in setPaths function

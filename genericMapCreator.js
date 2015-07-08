@@ -1,18 +1,21 @@
 function drawTheMap(){
-	
+	/*jslint browser: true*/
+	/*global $, state_abbreviations, gradientMap*/
 	
 	
 
 	var getStateValuesFunction = function(data, stateName) {
 
 		var stateAbbr = state_abbreviations[stateName];
+		var i;
+		var dataState;
 
-		for (var i = 0; i < data.length; i++) {
+		for (i = 0; i < data.length; i++) {
             //Grab state name
-            var dataState = data[i].state;
+            dataState = data[i].state;
 
             //Grab data value, and convert from string to float
-            if (dataState == stateAbbr) {
+            if (dataState === stateAbbr) {
             	return parseFloat(data[i].number);
         	}
 
@@ -22,36 +25,42 @@ function drawTheMap(){
 	var getCountyValuesFunction = function(data, countyName) {
 		//Merge the ag. data and GeoJSON
         //Loop through once for each ag. data value
-        for (var i = 0; i < data.length; i++) {
+		var i;
+		var k;
+		var dataCounty;
+		var part;
+		var len;
+		var str;
+        for (i = 0; i < data.length; i++) {
             //Grab state name
-            var dataCounty = data[i].county;
+            dataCounty = data[i].county;
 
-            var part = dataCounty.split(" ");
+            part = dataCounty.split(" ");
 
             // if the last thing is county/borough get rid of it
-            var len = part.length;
-            if (part[len-1] == "County" || part[len-1] == "Borough" || part[len-1] == "Parish") {
-                var str = "";
-                for (var k = 0; k < len-1; k++) {
+            len = part.length;
+            if (part[len-1] === "County" || part[len-1] === "Borough" || part[len-1] === "Parish") {
+                str = "";
+                for (k = 0; k < len-1; k++) {
                     str += part[k];
-                    if (k != len-2) {
+                    if (k !== len-2) {
                         str += " ";
                     }
                 }
                 dataCounty = str;
             }
-            else if (part[len-2] == "Census") {
-            	var str = "";
-                for (var k = 0; k < len-2; k++) {
+            else if (part[len-2] === "Census") {
+            	str = "";
+                for (k = 0; k < len-2; k++) {
                     str += part[k];
-                    if (k != len-3) {
+                    if (k !== len-3) {
                         str += " ";
                     }
                 }
                 dataCounty = str;
             }
 
-            if (dataCounty.toLowerCase() == countyName.toLowerCase()) {
+            if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
             	//Grab data value, and convert from string to float
             	return parseFloat(data[i].number);
             }
@@ -132,7 +141,7 @@ function drawTheMap(){
 				
 	//Draw map
 	map.drawMap();
-};
+}
 
 
 drawTheMap();
