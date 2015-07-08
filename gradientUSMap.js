@@ -12,16 +12,18 @@
     var min = "0";
     var max = "0";
     var current_gradient = 2;
-    var feature_desired = "poke_ratio";
+    var feature_desired = "";
 
     // default path names for the files
-    var usMapFile       = "json/us-states.json";
-    var csvUSValueFile  = "json/poke_ratio_correct2.csv";
-    var countyMapPath   = "json/stateJSON/";
-    var countyValuePath = "json/countyPokes/";
+    var usMapFile       = "";
+    var csvUSValueFile  = "";
+    var countyMapPath   = "";
+    var countyValuePath = "";
 
     var getStateValuesFunction = function(data, stateName) {return undefined;};
     var getCountyValuesFunction = function(data, countyName) {return undefined;};
+    
+    var map_list = [];
 
     // default values for the color range
 
@@ -293,11 +295,49 @@
         return this;
     }
     
-    gradientMap.setNationalData = function(data) {
+    gradientMap.addMap = function(map){
+    	
+    	map_list.push(map);
+    	
+    }
+    
+    gradientMap.getValue = function(n, d) {
         
-        csvUSValueFile = data;
-        return this;
+        var specified_value = d.toFixed(2);
         
+        var feat = feature_desired.replace(" ", "&nbsp");
+        
+        feat = feat.replace("_", "&nbsp");
+        
+        var feat_words = feat.split("&nbsp");
+        
+        feat = "";
+        
+        for(var i = 0; i < feat_words.length; i += 1){
+        	
+        	feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
+        	
+        	if(i != feat_words.length){
+        	    
+        	    feat_words[i] = feat_words[i] + "nbsp"
+        	    
+        	}
+            
+            feat = feat + feat_words[i];
+        	
+        }
+        
+        return "<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>";
+        
+    }
+    
+    var getOtherValue = function(val, n, d) {
+    	
+    	selectedMap = map_list[val]
+    	
+    	return map.getValue(n, d);
+    	
+    	
     }
 
     var rest_of_filename = "poke.csv";
@@ -469,9 +509,24 @@
             }
             feat = feat + feat_words[i];
         }
-        return "<h4>"+n+"</h4><table>"+
+        
+        var retString = "";
+        
+        retString = retString + "<h4>"+n+"</h4><table>"+
             "<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
             "</table>";
+        
+        if(map_list.length > 0){
+            
+            for(var i = 0; i < cars.length; i += 1) {
+        	    
+        	    retString = retString + getOtherValue(i, n, d);
+        	    
+            }
+        
+        }
+        
+        return retString;
     };
 
     var makeCombo = function() {
