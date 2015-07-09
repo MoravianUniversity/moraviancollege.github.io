@@ -295,9 +295,10 @@
 
     }
     
-    gradientMap.addMap = function(map){
+    gradientMap.addMapList = function(mapList){
     	
-    	map_list.push(map);
+    	map_list = mapList;
+    	return this;
     	
     }
     
@@ -319,7 +320,7 @@
         	
         	if(i != feat_words.length){
         	    
-        	    feat_words[i] = feat_words[i] + "nbsp"
+        	    feat_words[i] = feat_words[i] + "&nbsp"
         	    
         	}
             
@@ -335,7 +336,7 @@
     	
     	selectedMap = map_list[val]
     	
-    	return map.getValue(n, d);
+    	return selectedMap.getValue(n, d);
     	
     	
     }
@@ -514,9 +515,10 @@
             "<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
             "</table>";
         
+        console.log(map_list);
         if(map_list.length > 0){
             
-            for(var i = 0; i < cars.length; i += 1) {
+            for(var i = 0; i < map_list.length; i += 1) {
         	    
         	    retString = retString + getOtherValue(i, n, d);
         	    
