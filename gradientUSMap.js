@@ -27,8 +27,8 @@
 
     // default values for the color range
 
-    var start_color = "#EBF5FF";
-    var end_color = "#002966";
+    var start_color;
+    var end_color;
 
     var svg;
     var grad_svg;
