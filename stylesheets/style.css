@@ -8,6 +8,9 @@ svg {
     width: auto;
 }
 
+#color-selector {
+	position: relative;
+}
 .state{
 	fill: none;
 	stroke: #a9a9a9;
