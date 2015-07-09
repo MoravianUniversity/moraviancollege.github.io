@@ -96,7 +96,7 @@
             		
 		    <p>The map below shows poke ratio per state (including Puerto Rico) by Blue-White Scale, while areas without any data available are in gray. You may change the gradient level for more details.</p>
 			
-		    <p>Directions: To navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Country Map Button.</p> 
+		    <p>Directions: To navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Reload Map Button.</p>
             
             <hr>
             
@@ -117,47 +117,6 @@
 		        </li>
 		   </ul>
 		</div>
-		
-		<input type="file" id="file-input" />
-        <!--<h3>Contents of the file:</h3>-->
-        <pre id="file-content"></pre>
-        
-        <script>
-            
-            function upload(text){
-            	var element = document.createElement('a');
-            	
-            	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-            	
-            	console.log(element);
-            	
-            	changeUSDataFile(encodeURIComponent(text));
-            	removeUSMap();
-            	drawTheUSMap();
-            
-            }
-            
-            function readSingleFile(e) {
-            	var file = e.target.files[0];
-            	if (!file) {
-            	    return;
-            	}
-            	var reader = new FileReader();
-            	reader.onload = function(e) {
-            	    var contents = e.target.result;
-            	    upload(contents);
-            	    //displayContents(contents);
-            	    //changeUSDataFile(contents);
-            	    //removeUSMap();
-            	    //drawTheUSMap();
-                };
-                reader.readAsText(file);
-            }
-            
-            document.getElementById('file-input')
-              .addEventListener('change', readSingleFile, false);
-            
-        </script>
 		
 		<div id="mapContainer">
 		
