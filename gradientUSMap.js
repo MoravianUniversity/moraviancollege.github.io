@@ -208,6 +208,7 @@
                     .on("mouseout", mouseOut);
             });
         });
+    	console.log(svg);
     };
 
     var change_gradient = function(val) {
@@ -515,7 +516,6 @@
             "<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
             "</table>";
         
-        console.log(map_list);
         if(map_list.length > 0){
             
             for(var i = 0; i < map_list.length; i += 1) {
@@ -752,6 +752,8 @@
         var map_json_file = usMapFile;
 
         gradientMap.drawMap(map_json_file, poke_data);
+        
+        //console.log(gradientMap);
     };
 
     this.gradientMap = gradientMap;
