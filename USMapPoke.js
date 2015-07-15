@@ -133,7 +133,6 @@ function drawTheUSMap(min_color, max_color){
 	var map = gradientMap.setColors(min_color, max_color)
 				.setFeature("poke_ratio")
 				.setRestFileName("poke.csv")
-				//.setDrawCounties(drawCounties)
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 				.setStateAbbreviations(state_abbreviations)
 				.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
@@ -141,6 +140,8 @@ function drawTheUSMap(min_color, max_color){
 				.setup();
 				
 	thisMap = map;
+	
+	console.log(thisMap);
 				
 	//Draw map
 	thisMap.drawMap();
