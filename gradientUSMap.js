@@ -72,7 +72,7 @@
         if(canZoom)
         {
             svg = mapDiv.append("svg")
-                //.attr("style", "border: thin solid gray; border-radius: 5px;")
+                .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", w)
                 .attr("height", h)
                 .call(zoom)
