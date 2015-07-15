@@ -140,57 +140,57 @@
         }
     }
 
-    gradientMap.drawMap = function() {
+    gradientMap.drawMap = function(mapNum) {
         
 
         d3.selectAll("path").remove();
         d3.select("#stateName").remove();
-        gradientMapList[currMap].mouseOut();
+        gradientMapList[mapNum].mouseOut();
         reset();
 
         //Define map projection
-        gradientMapList[currMap].projection = d3.geo.albersUsa()
+        gradientMapList[mapNum].projection = d3.geo.albersUsa()
             .translate([w/2, h/2])
             .scale([900]);
 
         // Path of GeoJSON
-        gradientMapList[currMap].path = d3.geo.path()
+        gradientMapList[mapNum].path = d3.geo.path()
             .projection(gradientMapList[currMap].projection);
 
         var color;
         var continuous = false;
         //Define quantize scale to sort data values into buckets of color
-        if (gradientMapList[currMap].current_gradient != -1) {
+        if (gradientMapList[mapNum].current_gradient != -1) {
             color = d3.scale.quantize()
-                .range(gradientMapList[currMap].makeRange(gradientMapList[currMap].current_gradient, gradientMapList[currMap].start_color, gradientMapList[currMap].end_color));
+                .range(gradientMapList[mapNum].makeRange(gradientMapList[mapNum].current_gradient, gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color));
         }
         // this means they want a continuous gradient
         else {
             continuous = true;
         }
 
-        d3.csv(gradientMapList[currMap].csvUSValueFile, function(data) {
-            console.log(currMap);
-            console.log(gradientMapList[currMap].feature_desired);
-            gradientMapList[currMap].min = d3.min(data, function(d) { return +d[gradientMapList[currMap].feature_desired]; }).toString();
-            gradientMapList[currMap].max = d3.max(data, function(d) { return +d[gradientMapList[currMap].feature_desired]; }).toString();
+        d3.csv(gradientMapList[mapNum].csvUSValueFile, function(data) {
+            console.log(mapNum);
+            console.log(gradientMapList[mapNum].feature_desired);
+            gradientMapList[mapNum].min = d3.min(data, function(d) { return +d[gradientMapList[mapNum].feature_desired]; }).toString();
+            gradientMapList[mapNum].max = d3.max(data, function(d) { return +d[gradientMapList[mapNum].feature_desired]; }).toString();
 
 
             if (!continuous) {
-                color.domain([gradientMapList[currMap].min,gradientMapList[currMap].max]);
-                gradientMap.rangeBoxes(gradientMapList[currMap].current_gradient);
+                color.domain([gradientMapList[mapNum].min,gradientMapList[mapNum].max]);
+                gradientMap.rangeBoxes(gradientMapList[mapNum].current_gradient);
             }
             else {
-                gradientMapList[currMap].drawContinuousGrad();
+                gradientMapList[mapNum].drawContinuousGrad();
             }
 
-            d3.json(gradientMapList[currMap].usMapFile, function(json) {
+            d3.json(gradientMapList[mapNum].usMapFile, function(json) {
 
-                gradientMapList[currMap].svg.selectAll("path")
+                gradientMapList[mapNum].svg.selectAll("path")
                     .data(json.features)
                     .enter()
                     .append("svg:path")
-                    .attr("d", gradientMapList[currMap].path)
+                    .attr("d", gradientMapList[mapNum].path)
                     .attr("id", function(d) {
                         return d.properties.name;
                     })
@@ -198,23 +198,23 @@
                     .attr("stroke-width", "1")
                     .style("fill", function(d) {
                         //Get data value
-                        d.properties.value = gradientMapList[currMap].getStateValuesFunction(data, d.properties.name);
+                        d.properties.value = gradientMapList[mapNum].getStateValuesFunction(data, d.properties.name);
                         var value = d.properties.value;
 
                         if (!continuous && value) {//If value exists…
                             return color(value);
                         }
                         else if (continuous && value) {
-                            return d3.interpolate(gradientMapList[currMap].start_color, gradientMapList[currMap].end_color)((value - gradientMapList[currMap].min)/(gradientMapList[currMap].max-gradientMapList[currMap].min));
+                            return d3.interpolate(gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color)((value - gradientMapList[mapNum].min)/(gradientMapList[mapNum].max-gradientMapList[mapNum].min));
                         }
                         else {//If value is undefined…
                             return "#ccc";
                         }
                     })
-                    .on("click", gradientMapList[currMap].link)
-                    .on("mouseover", gradientMapList[currMap].mouseOver)
-                    .on("mouseout", gradientMapList[currMap].mouseOut);
-            }); console.log(gradientMapList[currMap].svg); console.log(gradientMapList[currMap].feature_desired);
+                    .on("click", gradientMapList[mapNum].link)
+                    .on("mouseover", gradientMapList[mapNum].mouseOver)
+                    .on("mouseout", gradientMapList[mapNum].mouseOut);
+            }); console.log(gradientMapList[mapNum].svg); console.log(gradientMapList[mapNum].feature_desired);
         });
     console.log(currMap);
     console.log(gradientMapList[currMap].feature_desired);
@@ -366,7 +366,7 @@
     	
     	gradientMapList[gradientMap.mapID].setup(gradientMap.mapID);
     	
-    	gradientMapList[gradientMap.mapID].drawMap(gradientMapList[gradientMap.mapID].usMapFile, gradientMapList[gradientMap.mapID].csvUSValueFile);
+    	gradientMapList[gradientMap.mapID].drawMap(gradientMap.mapID);
     	
     	return this;
     	
