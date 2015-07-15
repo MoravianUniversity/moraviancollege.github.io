@@ -1,13 +1,24 @@
 svg {
-	background-color: white;
+	background: white;
 }
-
+.map {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
 .sameLine {
     float: left;
-    margin: 0 30px 0 0;
+    margin: 0 30px 10px 0;
     width: auto;
 }
-
+.thumb {
+    float: left;
+    margin-right: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+.first {
+    margin-left: 6.5%;
+}
 #color-selector {
 	position: relative;
 }
