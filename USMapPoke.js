@@ -1,7 +1,7 @@
 var thisMap;
 /*jslint browser: true*/
 /*global $, state_abbreviations, gradientMap*/
-
+var pokeDict = {};
 function drawTheUSMap(min_color, max_color){
 
 	var getStateValuesFunction = function(data, stateName) {
@@ -15,6 +15,7 @@ function drawTheUSMap(min_color, max_color){
 
             //Grab data value, and convert from string to float
             if (dataState === stateAbbr) {
+            	pokeDict[stateName] = parseFloat(data[i].poke_ratio);
             	return parseFloat(data[i].poke_ratio);
         	}
 
@@ -135,6 +136,7 @@ function drawTheUSMap(min_color, max_color){
 				.setRestFileName("poke.csv")
 				//.setDrawCounties(drawCounties)
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
+				.setDictionaries(getPokeDictionary)
 				.setStateAbbreviations(state_abbreviations)
 				.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
 				.setStartingGradient(-1)
@@ -150,5 +152,11 @@ function drawTheUSMap(min_color, max_color){
 function removeUSMap(){
 	
 	thisMap.removeMap();
+	
+}
+
+function getPokeDictionary(){
+
+	return pokeDict;
 	
 }
