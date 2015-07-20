@@ -1,6 +1,6 @@
 (function() {
-    /*jslint browser: true*/
-    /*global $, d3, slider, makeCombo*/
+    //jslint browser: true
+    //global $, d3, slider, makeCombo
 
     var comboExists = false;
     var gradientMap = {};

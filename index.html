@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>
+  <head>
 
 	<!-- Basic Page Needs
   ================================================== -->
@@ -14,158 +14,123 @@
 
 	<!-- CSS
   ================================================== -->
-	<link rel="stylesheet" href="stylesheets/base.css">
-	<link rel="stylesheet" href="stylesheets/skeleton.css">
-	<link rel="stylesheet" href="stylesheets/layout.css">
-    <link rel="stylesheet" href="stylesheets/flexslider.css">
-    <link rel="stylesheet" href="stylesheets/prettyPhoto.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/base.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/layout.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css">
     
-    <!-- CSS
+    <!-- Scripts
   ================================================== -->
  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script type="text/javascript" src="d3/d3.v3.js"></script>
-	<script type="text/javascript" src="gradientUSMap.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
-	<!-- Favicons
-	================================================== -->
-	<link rel="shortcut icon" href="images/mocostar_icon.png">
+	<!--Browser Tab Icon-->
+	<link rel="shortcut icon" href="images/mocostar.png">
 
-</head>
-<body>
-
-
+  </head>
+  <body>
 
 	<!-- Primary Page Layout
 	================================================== -->
 
+    <!--Header-->  
+      
 	<header id="header" class="site-header" role="banner">
-    <div class="container sixteen columns over">
-    <h1 id="site-title" class="site-title">
-    <a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
-    </h1>
-    </div>
+      <div class="container sixteen columns over">
+        <h1 id="site-title" class="site-title">
+          <a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+        </h1>
+      </div>
     </header>
 
+    <!--Page Body-->  
+      
 	<div class="container">
-    
-        <article class="sixteen columns main-content">
+      <article class="sixteen columns main-content">
         <div class="row">
-        <h1 style="text-align:center;color:#3F3F3F">Department Projects</h1>
+          <!--Page Title-->
+          <h1 style="text-align:center;color:#3F3F3F">Department Projects</h1>
         </div>
-        <br>
-        <hr>
-        
+          
+        <!--Descriptions of Program-->
+          
         <section class="container">
-        <div class="row">
-        
-		<div class="one-third column">
-			<h3><i class="icon-desktop rounded"></i> Sharing Major CS Projects</h3>
-			<p> The Moravian CS Program site is where we show off all of the major computer science projects that our students have developed and collaborated on. Some of the projects are completed, while others are still being worked on and improved!</p>
+          <div class="row">
+            <div class="one-third column">
+			  <h3 style="text-align:center"><i class="icon-desktop rounded"></i> Sharing Major CS Projects</h3>
+			  <p style="text-align:justify"> The Moravian CS Program site is where we show off all of the major computer science projects that our students have developed and collaborated on. Some of the projects are completed, while others are still being worked on and improved!</p>
 			</div>
-		<div class="one-third column">
-			<h3><i class="icon-large-code rounded"></i> Student Experience</h3>
-			<p>All of our projects give our students experience with real problems and for some of the projects, the students get to work with businesses and clients to produce a usable product. This allows our students to get a more practical education than other computer science programs, making our students more competitive candidates for post-graduation jobs.</p>
+		    <div class="one-third column">
+			  <h3 style="text-align:center"><i class="icon-large-code rounded"></i> Student Experience</h3>
+			  <p style="text-align:justify">All of our projects give our students experience with real problems and for some of the projects, the students get to work with businesses and clients to produce a usable product. This allows our students to get a more practical education than other computer science programs, making our students more competitive candidates for post-graduation jobs.</p>
 			</div>
-		<div class="one-third column">
-			<h3><i class="icon-large-github rounded"></i> Projects on Github</h3>
-			<p>We use Github as we develop our programs because it makes it easier for groups and individuals to cooperate while it also gives us the option of making our projects open for the public to see.</p>
+		    <div class="one-third column">
+			  <h3 style="text-align:center"><i class="icon-large-github rounded"></i> Projects on Github</h3>
+			  <p style="text-align:justify">We use Github as we develop our programs because it makes it easier for groups and individuals to cooperate while it also gives us the option of making our projects open for the public to see.</p>
 			</div>
-	    </div>
+          </div>
         </section>
         
-        <hr>
-        
+        <!--MorningStar Project-->  
+          
         <div class="row">
-        <a href="morningstar.html"><img class="thumb img-responsive" src="images/MS_thumb.jpg" height="336" width="450"></a>
+          <hr>
+          <a href="morningstar.html"><img class="thumb img-responsive" src="images/MS_thumb.jpg" height="336" width="450"></a>
+          <h3><a href="morningstar.html">MorningStar</a></h3>
+          <p>MorningStar is a project intended to introduce CS students to health data visualization. It was originally assigned to a senior capstone class in the spring of 2015 where the students would use d3 and diabetic poke data to show poke ratios on the state and county level. The tool is now being developed so that users may upload their own data files and access web APIs such as the Census Bureau, Google, and the CDC.</p>
         
-        <h3><a href="morningstar.html">MorningStar</a></h3>
-        
-        <p>MorningStar is a project intended to introduce CS students to health data 
-        visualization. It was originally assigned to a senior capstone class in the spring
-        of 2015 where the students would use d3 and diabetic poke data to show poke ratios
-        on the state and county level. The tool is now being developed so that users may
-        upload their own data files and access web APIs such as the Census Bureau, Google, 
-        and the CDC.</p>
-        
-        <h4>Moravian College Summer Team 2015:</h4>
-		<p>Megan Biernat, William Collins, Alec Gerhart, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, John Vonelli</p>
-		<h4> Senior Capstone Contributors Spring 2015:</h4>
-		<p>Jason Boccuti, Steve Chakif, Lewis Cooper, Jon Diehl, Hansen Huang, Michael Vitone</p>
+          <h4>Moravian College Summer Team 2015:</h4>
+		  <p>Megan Biernat, William Collins, Alec Gerhart, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, John Vonelli</p>
+		  <h4> Senior Capstone Contributors Spring 2015:</h4>
+		  <p>Jason Boccuti, Steve Chakif, Lewis Cooper, Jon Diehl, Hansen Huang, Michael Vitone</p>
 		</div>
-		
 	    <hr>
-				
+          
+        <!--Demo Project-->  
+          
 		<div class="row">		
-		<a href="#"><img class="thumb img-responsive" src="images/overlay-bg.png" height="336" width="450"></a>
+		  <a href="#"><img class="thumb img-responsive" src="images/overlay-bg.png" height="336" width="450"></a>
+          <h3><a href="#">Title of Project</a></h3>
+          <p>A brief description of the project goes here. In porta velit quis mauris luctus, eget luctus neque gravida. Nullam pellentesque pretium rhoncus. Nulla pretium scelerisque sem nec tincidunt. Praesent cursus, nulla vel ultricies venenatis, urna ligula pharetra metus, et mattis elit nunc sed lacus. Sed at elit fringilla, pellentesque eros vel, luctus diam. Donec egestas nisi semper odio dignissim egestas. Etiam vitae lacus a nibh mattis sodales eu sit amet ex. Ut suscipit auctor lacus nec finibus. Vestibulum venenatis imperdiet facilisis. Vivamus in condimentum turpis, in euismod mauris. Nulla facilisi. Ut at nulla aliquam, sodales dui sit amet, tristique lacus.</p>
         
-        <h3><a href="#">Title of Project</a></h3>
-        
-        <p>A brief description of the project goes here</p>
-        <p>In porta velit quis mauris luctus, eget luctus neque gravida. Nullam 
-        pellentesque pretium rhoncus. Nulla pretium scelerisque sem nec tincidunt. 
-        Praesent cursus, nulla vel ultricies venenatis, urna ligula pharetra metus, et 
-        mattis elit nunc sed lacus. Sed at elit fringilla, pellentesque eros vel, luctus 
-        diam. Donec egestas nisi semper odio dignissim egestas. Etiam vitae lacus a nibh 
-        mattis sodales eu sit amet ex. Ut suscipit auctor lacus nec finibus. Vestibulum 
-        venenatis imperdiet facilisis. Vivamus in condimentum turpis, in euismod mauris. 
-        Nulla facilisi. Ut at nulla aliquam, sodales dui sit amet, tristique lacus.</p>
-        
-        <h4>Developing Team:</h4>
-		<p>List of names</p>
+          <h4>Developing Team:</h4>
+		  <p>List of names</p>
 		</div>
-		
-	    <hr>
-				
+        <hr>
+          
+        <!--Demo Project-->  
+          
 		<div class="row">		
-		<a href="#"><img class="thumb img-responsive" src="images/overlay-bg.png" height="336" width="450"></a>
+          <a href="#"><img class="thumb img-responsive" src="images/overlay-bg.png" height="336" width="450"></a>
+          <h3><a href="#">Title of Project</a></h3>
+          <p>A brief description of the project goes here. In porta velit quis mauris luctus, eget luctus neque gravida. Nullam pellentesque pretium rhoncus. Nulla pretium scelerisque sem nec tincidunt. Praesent cursus, nulla vel ultricies venenatis, urna ligula pharetra metus, et mattis elit nunc sed lacus. Sed at elit fringilla, pellentesque eros vel, luctus diam. Donec egestas nisi semper odio dignissim egestas. Etiam vitae lacus a nibh mattis sodales eu sit amet ex. Ut suscipit auctor lacus nec finibus. Vestibulum venenatis imperdiet facilisis. Vivamus in condimentum turpis, in euismod mauris. Nulla facilisi. Ut at nulla aliquam, sodales dui sit amet, tristique lacus.</p>
         
-        <h3><a href="#">Title of Project</a></h3>
-        
-        <p>A brief description of the project goes here</p>
-        <p>In porta velit quis mauris luctus, eget luctus neque gravida. Nullam 
-        pellentesque pretium rhoncus. Nulla pretium scelerisque sem nec tincidunt. 
-        Praesent cursus, nulla vel ultricies venenatis, urna ligula pharetra metus, et 
-        mattis elit nunc sed lacus. Sed at elit fringilla, pellentesque eros vel, luctus 
-        diam. Donec egestas nisi semper odio dignissim egestas. Etiam vitae lacus a nibh 
-        mattis sodales eu sit amet ex. Ut suscipit auctor lacus nec finibus. Vestibulum 
-        venenatis imperdiet facilisis. Vivamus in condimentum turpis, in euismod mauris. 
-        Nulla facilisi. Ut at nulla aliquam, sodales dui sit amet, tristique lacus.</p>
-        
-        <h4>Developing Team:</h4>
-		<p>List of names</p>
+          <h4>Developing Team:</h4>
+		  <p>List of names</p>
 		</div>
-		 		
-		 		<br>
-        </article>
-        <!-- End main Content -->
-      
-    
+        <hr>
+        <br>
+      </article>
+        
     </div>
 
-<footer>
-<div class="row">
-<div id="footer-base">
-<div class="container">
-<div class="two columns">
-<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
-</div>
-
-<div class="two columns far-edge">
-Design by <a href="http://www.opendesigns.org">OD</a>
-</div>
-</div>
-</div>
-</div>
-</footer>
-
-<!-- End Document
-================================================== -->
-
-<script src="js/jquery.prettyPhoto.js"></script>
-</body>
+    <!--Footer-->  
+      
+    <footer>
+      <div class="row">
+        <div id="footer-base">
+          <div class="container">
+            <div class="two columns">
+              <a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+            </div>
+            <div class="two columns far-edge">
+              Design by <a href="http://www.opendesigns.org">OD</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+      
+  </body>
 </html>
