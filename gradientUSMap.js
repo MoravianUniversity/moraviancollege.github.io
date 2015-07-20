@@ -4,11 +4,12 @@
 
     var comboExists = false;
     var gradientMap = {};
-
+	var currMap = 0;
+	var list_of_dictionary_functions = []
     // Width and Height of the svg
     var w = 800;
     var h = 600;
-
+    
     var min = "0";
     var max = "0";
     var current_gradient = 2;
@@ -111,10 +112,14 @@
         var coord = d3.mouse(this);
         var c_x	= (coord[0] + 100) +"px";
         var c_y = (coord[1] + 750) + "px";
-
-        // state
+        
+		//for(var i = 0; i < currMap; i++){
+			//data_to_be_shown.push(list_of_data_dictionary_functions[i][d.properties.name]);
+		//}
+			
+		// state
         if (d.properties.name) {
-            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))
+            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, getPokeDictionary()[d.properties.name], currMap))
                 .style("left", c_x)
                 .style("top", c_y);
         }
@@ -246,6 +251,11 @@
         getCountyValuesFunction = function2;
         return this;
     };
+    
+    gradientMap.setDictionaries = function(dictionary_functions) {
+    	list_of_dictionary_functions = dictionary_functions;
+    	return this;
+    }
 
     gradientMap.setColors = function(start, end) {
         start_color = start;
@@ -443,7 +453,7 @@
         return rang;
     };
 
-    gradientMap.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
+    gradientMap.tooltipHtml = function(n, d, mapNum){    /* function to create html content string in tooltip div. */
         var specified_value = d.toFixed(2);
         var feat = feature_desired.replace(" ", "&nbsp");
         feat = feat.replace("_", "&nbsp");
