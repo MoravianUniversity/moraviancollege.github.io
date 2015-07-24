@@ -1,6 +1,6 @@
 (function() {
-    /*jslint browser: true*/
-    /*global $, d3, slider, makeCombo*/
+    //jslint browser: true
+    //global $, d3, slider, makeCombo
 
     var comboExists = false;
     
@@ -15,7 +15,7 @@
     // Width and Height of the svg
     var w = 800;
     var h = 600;
-
+    
     var min = "0";
     var max = "0";
     var current_gradient = 2;
@@ -127,31 +127,34 @@
     };
 
     var mouseOver = function(d) {
-    	for(var i = 0; i < currMap + 1; i = i + 1){
-            d3.select("#tooltip" + i.toString()).transition().duration(200).style("opacity", 0.9);
-            var coord = d3.mouse(this);
-            var c_x	= (coord[0] + 100) +"px";
-            var c_y = (coord[1] + 750) + "px";
-            console.log(d);
 
-            // state
-            if (d.properties.name) {
-                d3.select("#tooltip" + i.toString()).html(gradientMap.tooltipHtml(d.properties.name, d.properties.value, i))
-                    .style("left", c_x)
-                    .style("top", c_y);
-            }
-            // county
-            else if (d.properties.value) {
-                d3.select("#tooltip" + i.toString()).html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value, i))
-                    .style("left", c_x)
-                    .style("top", c_y);
-            }
-            // county without a poke ratio
-            else {
-                d3.select("#tooltip" + i.toString()).html(gradientMap.tooltipHtml(d.properties.NAME, 0, i))
-                    .style("left", c_x)
-                    .style("top", c_y);
-            }
+        d3.select("#tooltip").transition().duration(200).style("opacity", 0.9);
+        var coord = d3.mouse(this);
+        var c_x	= (coord[0] + 100) +"px";
+        var c_y = (coord[1] + 750) + "px";
+        
+		//for(var i = 0; i < currMap; i++){
+			//data_to_be_shown.push(list_of_data_dictionary_functions[i][d.properties.name]);
+		//}
+			
+		// state
+        if (d.properties.name) {
+            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, getPokeDictionary()[d.properties.name], currMap))
+                .style("left", c_x)
+                .style("top", c_y);
+        }
+        // county
+        else if (d.properties.value) {
+            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))
+                .style("left", c_x)
+                .style("top", c_y);
+        }
+        // county without a poke ratio
+        else {
+            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))
+                .style("left", c_x)
+                .style("top", c_y);
+
         }
     }
 
@@ -275,6 +278,11 @@
         getCountyValuesFunction = function2;
         return this;
     };
+    
+    gradientMap.setDictionaries = function(dictionary_functions) {
+    	list_of_dictionary_functions = dictionary_functions;
+    	return this;
+    }
 
     gradientMap.setColors = function(start, end) {
         start_color = start;
