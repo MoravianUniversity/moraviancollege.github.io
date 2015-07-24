@@ -120,14 +120,13 @@ function GradientMap(feature){
     }
     
     this.mouseOver = function(d){
-        //console.log(this.id.toString(), newThis.id);
+        
 
         d3.select("#tooltip" + newThis.id.toString()).transition().duration(200).style("opacity", 0.9);
         
         
         if(newThis.q[0] === "Gecko") {
             var coord = d3.mouse(this);
-            console.log(coord);
             var c_x = (coord[0] + 100) +"px";
             var c_y = (coord[1] + 650 + (newThis.id * 650)) + "px";
 
@@ -200,7 +199,6 @@ function GradientMap(feature){
             
             newThis.min = d3.min(data, function(d) { return +d[newThis.feature_desired]; }).toString();
             newThis.max = d3.max(data, function(d) { return +d[newThis.feature_desired]; }).toString();
-            console.log(data);
             if(!continuous){
                 
                 color.domain([newThis.min, newThis.max]);
@@ -252,10 +250,8 @@ function GradientMap(feature){
     };
     
     this.change_gradient = function(val) {
-        console.log(newThis.start_color);
-        console.log(newThis.end_color);
-        //edit
-        console.log(val);
+
+
         
         var inter = false;
         if(val==-1){
@@ -264,7 +260,7 @@ function GradientMap(feature){
         }
         else{
 
-            console.log(this);
+
             var newcolor = d3.scale.quantize()
                 .range(makeRange(val, newThis.start_color, newThis.end_color));
             newcolor.domain([
@@ -319,7 +315,7 @@ function GradientMap(feature){
         if (number == -1) {
             return this;
         }
-        //console.log(this.current_gradient);
+
         this.current_gradient = number;
         return this;
     };
@@ -332,7 +328,7 @@ function GradientMap(feature){
     };
     
     this.rangeBoxes = function(numOfBoxes) {
-        console.log(this);
+
         this.drawMinLabel();
         this.drawBoxes(numOfBoxes);
     };
@@ -373,10 +369,9 @@ function GradientMap(feature){
     
     this.drawBoxes = function(boxNum){
 
-        console.log(this);
+
         var colorArray = makeRange(boxNum, newThis.start_color, newThis.end_color);
         d3.selectAll(".rectangle").remove();
-        console.log("done");
         var i = 0;
         while(i < boxNum){
             this.grad_svg.append("rect")
@@ -457,7 +452,6 @@ function GradientMap(feature){
     
     var makeRange = function(step, startColor, endColor) {
         
-        console.log(step);
         var Rstart = hexToR(startColor);
         var Gstart = hexToG(startColor);
         var Bstart = hexToB(startColor);
@@ -520,7 +514,6 @@ function GradientMap(feature){
         	var feat = feature_desired.replace(" ", "&nbsp");
         	feat = feat.replace("_", "&nbsp");
         	var feat_words = feat.split("&nbsp");
-        	//console.log(feat_words);
         	feat = "";
         	for(var i = 0; i < feat_words.length; i += 1) {
 
@@ -670,7 +663,7 @@ function GradientMap(feature){
         if (newThis.current_gradient != -1) {
             //edit
             //var newThis = this;
-            console.log(newThis.current_gradient);
+
             color = d3.scale.quantize()
                 .range(makeRange(newThis.current_gradient, newThis.start_color, newThis.end_color));
         }
