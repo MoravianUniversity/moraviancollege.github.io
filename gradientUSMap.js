@@ -45,16 +45,22 @@
     var s = x.split(" ");
     var y = s[11];
     var q = y.split("/");
-    if(q[0] === "Gecko")
-    {canZoom=false;}
+    
+    if(q[0] === "Gecko"){
+        canZoom = false;
+    }
+    
     function zoomed() {
-        gradientMapList[currMap].svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
-        slider.property("value",  d3.event.scale);
+        for(j = 0; j < gradientMapList.length; j+=1){
+            
+            gradientMapList[j].svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
+           
+         }
     }
 
-    var zoom = d3.behavior.zoom()
-        .scaleExtent([1, 10])
-        .on("zoom", zoomed);
+    //var zoom = d3.behavior.zoom()
+        //.scaleExtent([1, 10])
+        //.on("zoom", zoomed);
 
     var state_abbreviations = {};
 
@@ -83,7 +89,7 @@
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", w)
                 .attr("height", h)
-                .call(zoom)
+                .call(gradientMapList[mapNum].zoom)
                 .append("g");
         }
         else
@@ -97,56 +103,65 @@
 
         d3.select("#mapContainer")
             .append("div")
-            .attr("id", "tooltip");
+            .attr("id", "tooltip" + mapNum.toString());
 
         return this;
     };
 
     // re-centers the map and brings it back to the original scale
     function reset() {
-        zoom.scale(1);
-        zoom.translate([0, 0]);
-        gradientMapList[currMap].svg.transition().duration(0).
-            attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
+        for(var i = 0; i < gradientMapList.length; i += 1){
+            gradientMapList[i].zoom.scale(1);
+            gradientMapList[i].zoom.translate([0, 0]);
+            gradientMapList[i].svg.transition().duration(0).
+                attr("transform", "translate(" + gradientMapList[i].zoom.translate() + ") scale(" + gradientMapList[i].zoom.scale() + ")");
+            console.log(gradientMapList[i]);
+        }
+
     }
 
     var mouseOut = function() {
-        d3.select("#tooltip").transition().duration(500).style("opacity", 0);
+        for(var i = 0; i < currMap + 1; i = i + 1){
+            d3.select("#tooltip").transition().duration(500).style("opacity", 0);
+        }
     };
 
     var mouseOver = function(d) {
-        d3.select("#tooltip").transition().duration(200).style("opacity", 0.9);
-        var coord = d3.mouse(this);
-        var c_x	= (coord[0] + 100) +"px";
-        var c_y = (coord[1] + 750) + "px";
+    	for(var i = 0; i < currMap + 1; i = i + 1){
+            d3.select("#tooltip" + i.toString()).transition().duration(200).style("opacity", 0.9);
+            var coord = d3.mouse(this);
+            var c_x	= (coord[0] + 100) +"px";
+            var c_y = (coord[1] + 750) + "px";
+            console.log(d);
 
-        // state
-        if (d.properties.name) {
-            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.name, d.properties.value))
-                .style("left", c_x)
-                .style("top", c_y);
-        }
-        // county
-        else if (d.properties.value) {
-            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value))
-                .style("left", c_x)
-                .style("top", c_y);
-        }
-        // county without a poke ratio
-        else {
-            d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))
-                .style("left", c_x)
-                .style("top", c_y);
+            // state
+            if (d.properties.name) {
+                d3.select("#tooltip" + i.toString()).html(gradientMap.tooltipHtml(d.properties.name, d.properties.value, i))
+                    .style("left", c_x)
+                    .style("top", c_y);
+            }
+            // county
+            else if (d.properties.value) {
+                d3.select("#tooltip" + i.toString()).html(gradientMap.tooltipHtml(d.properties.NAME, d.properties.value, i))
+                    .style("left", c_x)
+                    .style("top", c_y);
+            }
+            // county without a poke ratio
+            else {
+                d3.select("#tooltip" + i.toString()).html(gradientMap.tooltipHtml(d.properties.NAME, 0, i))
+                    .style("left", c_x)
+                    .style("top", c_y);
+            }
         }
     }
 
     gradientMap.drawMap = function(mapNum) {
         
-
         d3.selectAll("path").remove();
         d3.select("#stateName").remove();
         gradientMapList[mapNum].mouseOut();
         reset();
+    
 
         //Define map projection
         gradientMapList[mapNum].projection = d3.geo.albersUsa()
@@ -169,6 +184,7 @@
             continuous = true;
         }
 
+        
         d3.csv(gradientMapList[mapNum].csvUSValueFile, function(data) {
             console.log(mapNum);
             console.log(gradientMapList[mapNum].feature_desired);
@@ -216,8 +232,9 @@
                     .on("mouseout", gradientMapList[mapNum].mouseOut);
             }); console.log(gradientMapList[mapNum].svg); console.log(gradientMapList[mapNum].feature_desired);
         });
-    console.log(currMap);
-    console.log(gradientMapList[currMap].feature_desired);
+    //console.log(currMap);
+    //console.log(gradientMapList[currMap].feature_desired);
+    //console.log(this);
     };
 
     var change_gradient = function(val) {
@@ -304,6 +321,7 @@
         return this;
     };
     
+    
     gradientMap.createNewMap = function(){
     	
     	//console.log(gradientMap);
@@ -353,6 +371,9 @@
     	gradientMap['makeCombo'] = makeCombo;
     	gradientMap['drawCounties'] = drawCounties;
     	gradientMap['click'] = click;
+    	gradientMap['zoom'] = d3.behavior.zoom()
+            .scaleExtent([1, 10])
+            .on("zoom", zoomed);
     	gradientMap['mapID'] = currMap;
     	
     	//if(currMap == 1){
@@ -377,26 +398,34 @@
     var rest_of_filename = "poke.csv";
 
     var link = function(d) {
+    
+        for(var i = 0; i < gradientMapList.length; i += 1){
 
-        d3.select("#stateName").remove();
-        //This is where the SVG generates the state name with x and y coordinates
-        gradientMapList[currMap].grad_svg.append("text")
-            .attr("x", 625)
-            .attr("y", 30)
-            .text(d.properties.name)
-            .attr("fill", "black")
-            .attr("class", "text")
-            .attr("id", "stateName");
+            d3.select("#stateName").remove();
+            //This is where the SVG generates the state name with x and y coordinates
+            gradientMapList[i].grad_svg.append("text")
+                .attr("x", 625)
+                .attr("y", 30)
+                .text(d.properties.name)
+                .attr("fill", "black")
+                .attr("class", "text")
+                .attr("id", "stateName");
 
-        var abbreviation = gradientMapList[currMap].state_abbreviations[d.properties.name];
-        var path = abbreviation + "Counties.json";
+            var abbreviation = gradientMapList[i].state_abbreviations[d.properties.name];
+            var path = abbreviation + "Counties.json";
 
 
-        var csvPath = abbreviation + gradientMapList[currMap].rest_of_filename;
+            var csvPath = abbreviation + gradientMapList[i].rest_of_filename;
 
-        gradientMapList[currMap].mouseOut();
-
-        gradientMapList[currMap].drawCounties(path, csvPath);
+            gradientMapList[i].mouseOut();
+            
+            console.log(d);
+		
+            gradientMapList[i].drawCounties(path, csvPath, i);
+            
+            console.log(i);
+        
+        }
     };
 
     gradientMap.setRestFileName = function(new_name) {
@@ -525,9 +554,10 @@
         return rang;
     };
 
-    gradientMap.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
+    gradientMap.tooltipHtml = function(n, d, mapNum){    /* function to create html content string in tooltip div. */
         var specified_value = d.toFixed(2);
-        var feat = gradientMapList[currMap].feature_desired.replace(" ", "&nbsp");
+        //console.log(mapNum);
+        var feat = gradientMapList[mapNum].feature_desired.replace(" ", "&nbsp");
         feat = feat.replace("_", "&nbsp");
         var feat_words = feat.split("&nbsp");
         //console.log(feat_words);
@@ -598,17 +628,17 @@
         var smallLong = -500;
         // return the center
 
-        for (x = 0; x < data.features.length; x+=1) {
-            for (y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
-                for(z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
+        for (var x = 0; x < data.features.length; x+=1) {
+            for (var y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
+                for(var z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
 
                     nums.push(data.features[x].geometry.coordinates[y][z]);
                 }
             }
         }
 
-        for(i = 0; i< nums.length; i++) {
-            for(j = 0; j< nums[i].length; j++) {
+        for(var i = 0; i< nums.length; i++) {
+            for(var j = 0; j< nums[i].length; j++) {
                 allNums.push(nums[i][j]);
             }
         }
@@ -644,10 +674,10 @@
         return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
     }
 
-    var drawCounties = function(stateFile, csvFile) {
+    var drawCounties = function(stateFile, csvFile, mapNum) {
 
         d3.selectAll("path").remove();
-        gradientMapList[currMap].mouseOut();
+        gradientMapList[mapNum].mouseOut();
         reset();
 
         d3.select("#floatingBarsG")
@@ -656,74 +686,75 @@
         var color;
         var continuous = false;
         //Define quantize scale to sort data values into buckets of color
-        if (gradientMapList[currMap].current_gradient != -1) {
+        if (gradientMapList[mapNum].current_gradient != -1) {
             color = d3.scale.quantize()
-                .range(gradientMapList[currMap].makeRange(gradientMapList[currMap].current_gradient, gradientMapList[currMap].start_color, gradientMapList[currMap].end_color));
+                .range(gradientMapList[mapNum].makeRange(gradientMapList[mapNum].current_gradient, gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color));
         }
         // this means they want a continuous gradient
         else {
             continuous = true;
         }
 
-        d3.csv(gradientMapList[currMap].countyValuePath+csvFile, function(data) {
+        d3.csv(gradientMapList[mapNum].countyValuePath+csvFile, function(data) {
+            console.log(data);
 
-            gradientMapList[currMap].min = d3.min(data, function(d) { return +d[gradientMapList[currMap].feature_desired]; }).toString();
-            gradientMapList[currMap].max = d3.max(data, function(d) { return +d[gradientMapList[currMap].feature_desired]; }).toString();
+            gradientMapList[mapNum].min = d3.min(data, function(d) {return +d[gradientMapList[0].feature_desired]; }).toString();
+            gradientMapList[mapNum].max = d3.max(data, function(d) {return +d[gradientMapList[0].feature_desired]; }).toString();
             //test edit
             //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
 
             if (!continuous) {
-                color.domain([gradientMapList[currMap].min,gradientMapList[currMap].max]);
-                gradientMap.rangeBoxes(gradientMapList[currMap].current_gradient);
+                color.domain([gradientMapList[mapNum].min,gradientMapList[mapNum].max]);
+                gradientMap.rangeBoxes(gradientMapList[mapNum].current_gradient);
             }
             else {
-                gradientMapList[currMap].drawContinuousGrad();
+                gradientMapList[mapNum].drawContinuousGrad();
             }
 
-            d3.json(gradientMapList[currMap].countyMapPath+stateFile, function(json) {
+            d3.json(gradientMapList[mapNum].countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
                 var center = computeCenter(json);
                 var scale  = 10;
-                var offset = [gradientMapList[currMap].w/2, gradientMapList[currMap].h/2];
-                gradientMapList[currMap].projection = d3.geo.mercator().scale(scale)
+                var offset = [gradientMapList[mapNum].w/2, gradientMapList[mapNum].h/2];
+                gradientMapList[mapNum].projection = d3.geo.mercator().scale(scale)
                     .center(center).translate(offset);
 
                 // create the path
-                gradientMapList[currMap].path = d3.geo.path().projection(gradientMapList[currMap].projection);
+                gradientMapList[mapNum].path = d3.geo.path().projection(gradientMapList[mapNum].projection);
 
                 // using the path determine the bounds of the current map and use
                 // these to determine better values for the scale and translation
-                var bounds  = gradientMapList[currMap].path.bounds(json);
+                var bounds  = gradientMapList[mapNum].path.bounds(json);
 
                 var hscale, vscale, scale, offset;
 
                 if (stateFile.substring(0,2) == "AK") {
-                    hscale  = scale*gradientMapList[currMap].w*5 / (bounds[1][0] - bounds[0][0]);
-                    vscale  = scale*gradientMapList[currMap].h*5 / (bounds[1][1] - bounds[0][1]);
+                    hscale  = scale*gradientMapList[mapNum].w*5 / (bounds[1][0] - bounds[0][0]);
+                    vscale  = scale*gradientMapList[mapNum].h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
-                    offset  = [gradientMapList[currMap].w - (bounds[0][0] + bounds[1][0])/2.5,
-                        gradientMapList[currMap].h - (bounds[0][1] + bounds[1][1])/2.1];
+                    offset  = [gradientMapList[mapNum].w - (bounds[0][0] + bounds[1][0])/2.5,
+                        gradientMapList[mapNum].h - (bounds[0][1] + bounds[1][1])/2.1];
                 }
                 else {
                     hscale  = scale*w*0.75  /(bounds[1][0] - bounds[0][0]);
                     vscale  = scale*h*0.75 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
-                    offset  = [ gradientMapList[currMap].w-(bounds[0][0] + bounds[1][0])/2,
-                        gradientMapList[currMap].h-(bounds[0][1] + bounds[1][1])/2.1];
+                    offset  = [ gradientMapList[mapNum].w-(bounds[0][0] + bounds[1][0])/2,
+                        gradientMapList[mapNum].h-(bounds[0][1] + bounds[1][1])/2.1];
                 }
 
                 // new projection
-                gradientMapList[currMap].projection = d3.geo.mercator().scale(scale)
+                gradientMapList[mapNum].projection = d3.geo.mercator().scale(scale)
                     .center(center).translate(offset);
 
-                gradientMapList[currMap].path = gradientMapList[currMap].path.projection(gradientMapList[currMap].projection);
+                gradientMapList[mapNum].path = gradientMapList[mapNum].path.projection(gradientMapList[mapNum].projection);
 
-                gradientMapList[currMap].svg.selectAll("path")
+                gradientMapList[mapNum].svg.selectAll("path")
                     .data(json.features)
                     .enter()
                     .append("path")
-                    .attr("d", gradientMapList[currMap].path)
+                    .attr("d", gradientMapList[mapNum].path)
                     .attr("id", function(d) {
                         return d.properties.NAME;
                     })
@@ -734,18 +765,18 @@
                             d.properties.NAME += " City";
                         }
 
-                        d.properties.value = gradientMapList[currMap].getCountyValuesFunction(data, d.properties.NAME);
+                        d.properties.value = gradientMapList[mapNum].getCountyValuesFunction(data, d.properties.NAME, gradientMapList[0].feature_desired);
                         var value = d.properties.value;
 
-                        if (gradientMapList[currMap].max == gradientMapList[currMap].min) {
-                            return gradientMapList[currMap].end_color;
+                        if (gradientMapList[mapNum].max == gradientMapList[mapNum].min) {
+                            return gradientMapList[mapNum].end_color;
                         }
 
                         if (!continuous && value) {//If value exists…
                             return color(value);
                         }
                         else if (continuous && value) {
-                            return d3.interpolate(gradientMapList[currMap].start_color, gradientMapList[currMap].end_color)((value - gradientMapList[currMap].min)/(gradientMapList[currMap].max-gradientMapList[currMap].min));
+                            return d3.interpolate(gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color)((value - gradientMapList[mapNum].min)/(gradientMapList[mapNum].max-gradientMapList[mapNum].min));
                         }
                         else {//If value is undefined…
                             return "#ccc";
@@ -753,9 +784,9 @@
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
-                    .on("click", gradientMapList[currMap].click)
-                    .on("mouseover", gradientMapList[currMap].mouseOver)
-                    .on("mouseout", gradientMapList[currMap].mouseOut);
+                    .on("click", gradientMapList[mapNum].click)
+                    .on("mouseover", gradientMapList[mapNum].mouseOver)
+                    .on("mouseout", gradientMapList[mapNum].mouseOut);
 
             });
             d3.select("#floatingBarsG")
@@ -768,7 +799,11 @@
         //var map_json_file = gradientMapList[currMap].usMapFile;
 
         //gradientMap.drawMap(map_json_file, poke_data);
-        gradientMap.drawMap()
+        for(var i = 0; i < gradientMapList.length; i += 1){
+        	gradientMapList[i].drawMap(i);
+        }
+        reset();
+        
     };
 
     this.gradientMap = gradientMap;
