@@ -3,15 +3,9 @@
     //global $, d3, slider, makeCombo
 
     var comboExists = false;
-    
-    var currMap = -1;
-    
-    var gradientMapList = [];
-    
     var gradientMap = {};
-    
-    //console.log(gradientMap.comboExists);
-
+	var currMap = 0;
+	var list_of_dictionary_functions = []
     // Width and Height of the svg
     var w = 800;
     var h = 600;
@@ -45,56 +39,49 @@
     var s = x.split(" ");
     var y = s[11];
     var q = y.split("/");
-    
-    if(q[0] === "Gecko"){
-        canZoom = false;
-    }
-    
+    if(q[0] === "Gecko")
+    {canZoom=false;}
     function zoomed() {
-        for(j = 0; j < gradientMapList.length; j+=1){
-            
-            gradientMapList[j].svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
-           
-         }
+        svg.attr("transform", "translate(" + d3.event.translate + 	")scale(" + d3.event.scale + ")");
+        slider.property("value",  d3.event.scale);
     }
 
-    //var zoom = d3.behavior.zoom()
-        //.scaleExtent([1, 10])
-        //.on("zoom", zoomed);
+    var zoom = d3.behavior.zoom()
+        .scaleExtent([1, 10])
+        .on("zoom", zoomed);
 
     var state_abbreviations = {};
 
-    gradientMap.setup = function(mapNum) {
-        console.log(mapNum);
-    
+    gradientMap.setup = function() {
+
         d3.select("#mapContainer")
             .append("div")
             .attr("id", "comboDiv");
 
-        gradientMapList[mapNum].makeCombo();
+        makeCombo();
 
         var mapDiv = d3.select("#mapContainer")
             .append("div")
-            .attr("id", "mapSVG" + mapNum.toString())
+            .attr("id", "mapSVG")
             .style("width", "800px")
             .style("margin", "0 auto");
 
-        gradientMapList[mapNum].grad_svg = mapDiv.append("svg")
+        grad_svg = mapDiv.append("svg")
             .attr("width", 800)
             .attr("height", 40);
 
-        if(gradientMapList[mapNum].canZoom)
+        if(canZoom)
         {
-            gradientMapList[mapNum].svg = mapDiv.append("svg")
+            svg = mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", w)
                 .attr("height", h)
-                .call(gradientMapList[mapNum].zoom)
+                .call(zoom)
                 .append("g");
         }
         else
         {
-            gradientMapList[mapNum].svg = mapDiv.append("svg")
+            svg = mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", w)
                 .attr("height", h)
@@ -103,31 +90,24 @@
 
         d3.select("#mapContainer")
             .append("div")
-            .attr("id", "tooltip" + mapNum.toString());
+            .attr("id", "tooltip");
 
         return this;
     };
 
     // re-centers the map and brings it back to the original scale
     function reset() {
-        for(var i = 0; i < gradientMapList.length; i += 1){
-            gradientMapList[i].zoom.scale(1);
-            gradientMapList[i].zoom.translate([0, 0]);
-            gradientMapList[i].svg.transition().duration(0).
-                attr("transform", "translate(" + gradientMapList[i].zoom.translate() + ") scale(" + gradientMapList[i].zoom.scale() + ")");
-            console.log(gradientMapList[i]);
-        }
-
+        zoom.scale(1);
+        zoom.translate([0, 0]);
+        svg.transition().duration(0).
+            attr("transform", "translate(" + zoom.translate() + ") scale(" + zoom.scale() + ")");
     }
 
     var mouseOut = function() {
-        for(var i = 0; i < currMap + 1; i = i + 1){
-            d3.select("#tooltip").transition().duration(500).style("opacity", 0);
-        }
+        d3.select("#tooltip").transition().duration(500).style("opacity", 0);
     };
 
     var mouseOver = function(d) {
-
         d3.select("#tooltip").transition().duration(200).style("opacity", 0.9);
         var coord = d3.mouse(this);
         var c_x	= (coord[0] + 100) +"px";
@@ -154,62 +134,58 @@
             d3.select("#tooltip").html(gradientMap.tooltipHtml(d.properties.NAME, 0))
                 .style("left", c_x)
                 .style("top", c_y);
-
         }
     }
 
-    gradientMap.drawMap = function(mapNum) {
-        
+    gradientMap.drawMap = function() {
+
         d3.selectAll("path").remove();
         d3.select("#stateName").remove();
-        gradientMapList[mapNum].mouseOut();
+        mouseOut();
         reset();
-    
 
         //Define map projection
-        gradientMapList[mapNum].projection = d3.geo.albersUsa()
+        projection = d3.geo.albersUsa()
             .translate([w/2, h/2])
             .scale([900]);
 
         // Path of GeoJSON
-        gradientMapList[mapNum].path = d3.geo.path()
-            .projection(gradientMapList[currMap].projection);
+        path = d3.geo.path()
+            .projection(projection);
 
         var color;
         var continuous = false;
         //Define quantize scale to sort data values into buckets of color
-        if (gradientMapList[mapNum].current_gradient != -1) {
+        if (current_gradient != -1) {
             color = d3.scale.quantize()
-                .range(gradientMapList[mapNum].makeRange(gradientMapList[mapNum].current_gradient, gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color));
+                .range(makeRange(current_gradient, start_color, end_color));
         }
         // this means they want a continuous gradient
         else {
             continuous = true;
         }
 
-        
-        d3.csv(gradientMapList[mapNum].csvUSValueFile, function(data) {
-            console.log(mapNum);
-            console.log(gradientMapList[mapNum].feature_desired);
-            gradientMapList[mapNum].min = d3.min(data, function(d) { return +d[gradientMapList[mapNum].feature_desired]; }).toString();
-            gradientMapList[mapNum].max = d3.max(data, function(d) { return +d[gradientMapList[mapNum].feature_desired]; }).toString();
+        d3.csv(csvUSValueFile, function(data) {
+
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
 
 
             if (!continuous) {
-                color.domain([gradientMapList[mapNum].min,gradientMapList[mapNum].max]);
-                gradientMap.rangeBoxes(gradientMapList[mapNum].current_gradient);
+                color.domain([min,max]);
+                gradientMap.rangeBoxes(current_gradient);
             }
             else {
-                gradientMapList[mapNum].drawContinuousGrad();
+                drawContinuousGrad();
             }
 
-            d3.json(gradientMapList[mapNum].usMapFile, function(json) {
+            d3.json(usMapFile, function(json) {
 
-                gradientMapList[mapNum].svg.selectAll("path")
+                svg.selectAll("path")
                     .data(json.features)
                     .enter()
                     .append("svg:path")
-                    .attr("d", gradientMapList[mapNum].path)
+                    .attr("d", path)
                     .attr("id", function(d) {
                         return d.properties.name;
                     })
@@ -217,27 +193,24 @@
                     .attr("stroke-width", "1")
                     .style("fill", function(d) {
                         //Get data value
-                        d.properties.value = gradientMapList[mapNum].getStateValuesFunction(data, d.properties.name);
+                        d.properties.value = getStateValuesFunction(data, d.properties.name);
                         var value = d.properties.value;
 
                         if (!continuous && value) {//If value exists…
                             return color(value);
                         }
                         else if (continuous && value) {
-                            return d3.interpolate(gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color)((value - gradientMapList[mapNum].min)/(gradientMapList[mapNum].max-gradientMapList[mapNum].min));
+                            return d3.interpolate(start_color, end_color)((value - min)/(max-min));
                         }
                         else {//If value is undefined…
                             return "#ccc";
                         }
                     })
-                    .on("click", gradientMapList[mapNum].link)
-                    .on("mouseover", gradientMapList[mapNum].mouseOver)
-                    .on("mouseout", gradientMapList[mapNum].mouseOut);
-            }); console.log(gradientMapList[mapNum].svg); console.log(gradientMapList[mapNum].feature_desired);
+                    .on("click", link)
+                    .on("mouseover", mouseOver)
+                    .on("mouseout", mouseOut);
+            });
         });
-    //console.log(currMap);
-    //console.log(gradientMapList[currMap].feature_desired);
-    //console.log(this);
     };
 
     var change_gradient = function(val) {
@@ -245,16 +218,16 @@
         var inter = false;
         if (val == -1) {
             inter = true;
-            gradientMapList[currMap].drawContinuousGrad();
+            drawContinuousGrad();
         }
 
         else {
             var newcolor = d3.scale.quantize()
-                .range(gradientMapList[currMap].makeRange(val, gradientMapList[currMap].start_color, gradientMapList[currMap].end_color));
+                .range(makeRange(val, start_color, end_color));
             newcolor.domain([
-                gradientMapList[currMap].min,gradientMapList[currMap].max
+                min,max
             ]);
-            gradientMapList[currMap].drawBoxes(val, gradientMapList[currMap].max);
+            drawBoxes(val, max);
         }
 
         d3.selectAll("path")
@@ -265,7 +238,7 @@
                     return newcolor(value);
                 }
                 else if (inter && value) {
-                    return d3.interpolate(gradientMapList[currMap].start_color, gradientMapList[currMap].end_color)((value - gradientMapList[currMap].min)/(gradientMapList[currMap].max-gradientMapList[currMap].min));
+                    return d3.interpolate(start_color, end_color)((value - min)/(max-min));
                 }
                 else {//If value is undefined…
                     return "#ccc";
@@ -307,7 +280,7 @@
         if (number == -1) {
             return this;
         }
-        gradientMapList[currMap].current_gradient = number;
+        current_gradient = number;
         return this;
     };
 
@@ -319,8 +292,8 @@
     };
 
     gradientMap.rangeBoxes = function(numOfBoxes) {
-        gradientMapList[currMap].drawMinLabel();
-        gradientMapList[currMap].drawBoxes(numOfBoxes);
+        drawMinLabel();
+        drawBoxes(numOfBoxes);
     };
 
     gradientMap.removeMap = function(){
@@ -328,112 +301,30 @@
         mapSVG.remove();
         return this;
     };
-    
-    
-    gradientMap.createNewMap = function(){
-    	
-    	//console.log(gradientMap);
-    	
-    	currMap += 1;
-    	
-    	console.log(currMap);
-    	
-    	//User-added attributes
-    	gradientMap['start_color'] = start_color;
-    	gradientMap['end_color'] = end_color;
-    	gradientMap['feature_desired'] = feature_desired;
-    	gradientMap['rest_of_filename'] = rest_of_filename;
-    	gradientMap['getStateValuesFunction'] = getStateValuesFunction;
-    	gradientMap['getCountyValuesFunction'] = getCountyValuesFunction;
-    	gradientMap['state_abbreviations'] = state_abbreviations;
-    	gradientMap['usMapFile'] = usMapFile;
-    	gradientMap['csvUSValueFile'] = csvUSValueFile;
-    	gradientMap['countyMapPath'] = countyMapPath;
-    	gradientMap['countyValuePath'] = countyValuePath;
-    	gradientMap['svg'] = svg;
-    	
-    	//other variables
-    	gradientMap['comboExists'] = comboExists;
-    	gradientMap['w'] = w;
-    	gradientMap['h'] = h;
-    	gradientMap['min'] = min;
-    	gradientMap['max'] = max;
-    	gradientMap['current_gradient'] = current_gradient;
-    	gradientMap['grad_svg'] = grad_svg;
-    	gradientMap['projection'] = projection;
-    	gradientMap['path'] = path;
-    	gradientMap['canZoom'] = canZoom;
-    	gradientMap['x'] = x;
-    	gradientMap['s'] = s;
-    	gradientMap['y'] = y;
-    	gradientMap['q'] = q;
-    	gradientMap['mouseOut'] = mouseOut;
-    	gradientMap['mouseOver'] = mouseOver;
-    	gradientMap['change_gradient'] = change_gradient;
-    	gradientMap['link'] = link;
-    	gradientMap['drawBoxes'] = drawBoxes;
-    	gradientMap['drawMinLabel'] = drawMinLabel;
-    	gradientMap['drawMaxLabel'] = drawMaxLabel;
-    	gradientMap['drawContinuousGrad'] = drawContinuousGrad;
-    	gradientMap['makeRange'] = makeRange;
-    	gradientMap['makeCombo'] = makeCombo;
-    	gradientMap['drawCounties'] = drawCounties;
-    	gradientMap['click'] = click;
-    	gradientMap['zoom'] = d3.behavior.zoom()
-            .scaleExtent([1, 10])
-            .on("zoom", zoomed);
-    	gradientMap['mapID'] = currMap;
-    	
-    	//if(currMap == 1){
-    	    //currMap = 0;
-    	//}
-    	
-    	gradientMapList.push(jQuery.extend({}, gradientMap));
-    	
-    	
-    	console.log(gradientMapList[currMap].feature_desired);
-    	
-    	gradientMapList[gradientMap.mapID].setup(gradientMap.mapID);
-    	
-    	gradientMapList[gradientMap.mapID].drawMap(gradientMap.mapID);
-    	
-    	return this;
-    	
-    	
-    	
-    }
 
     var rest_of_filename = "poke.csv";
 
     var link = function(d) {
-    
-        for(var i = 0; i < gradientMapList.length; i += 1){
 
-            d3.select("#stateName").remove();
-            //This is where the SVG generates the state name with x and y coordinates
-            gradientMapList[i].grad_svg.append("text")
-                .attr("x", 625)
-                .attr("y", 30)
-                .text(d.properties.name)
-                .attr("fill", "black")
-                .attr("class", "text")
-                .attr("id", "stateName");
+        d3.select("#stateName").remove();
+        //This is where the SVG generates the state name with x and y coordinates
+        grad_svg.append("text")
+            .attr("x", 625)
+            .attr("y", 30)
+            .text(d.properties.name)
+            .attr("fill", "black")
+            .attr("class", "text")
+            .attr("id", "stateName");
 
-            var abbreviation = gradientMapList[i].state_abbreviations[d.properties.name];
-            var path = abbreviation + "Counties.json";
+        var abbreviation = state_abbreviations[d.properties.name];
+        var path = abbreviation + "Counties.json";
 
 
-            var csvPath = abbreviation + gradientMapList[i].rest_of_filename;
+        var csvPath = abbreviation + rest_of_filename;
 
-            gradientMapList[i].mouseOut();
-            
-            console.log(d);
-		
-            gradientMapList[i].drawCounties(path, csvPath, i);
-            
-            console.log(i);
-        
-        }
+        mouseOut();
+
+        drawCounties(path, csvPath);
     };
 
     gradientMap.setRestFileName = function(new_name) {
@@ -443,11 +334,11 @@
     };
 
     var drawBoxes = function(boxNum) {
-        var colorArray = gradientMapList[currMap].makeRange(boxNum, gradientMapList[currMap].start_color, gradientMapList[currMap].end_color);
+        var colorArray = makeRange(boxNum, start_color, end_color);
         d3.selectAll(".rectangle").remove();
         var i = 0;
         while (i < boxNum){
-            gradientMapList[currMap].grad_svg.append("rect")
+            grad_svg.append("rect")
                 .attr("x", 55 + 25*i)
                 .attr("y", 10)
                 .attr("width", 25)
@@ -456,15 +347,15 @@
                 .style("fill", colorArray[i]);
             i += 1;
         }
-        gradientMapList[currMap].drawMaxLabel(50 + 25*boxNum);
+        drawMaxLabel(50 + 25*boxNum);
     };
 
     var drawMinLabel = function() {
         d3.select("#minLabel").remove();
-        gradientMapList[currMap].grad_svg.append("text")
+        grad_svg.append("text")
             .attr("x", 0)
             .attr("y", 25)
-            .text("\00  min = " + Number(gradientMapList[currMap].min).toFixed(2) + " ")
+            .text("\00  min = " + Number(min).toFixed(2) + " ")
             .attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
@@ -474,10 +365,10 @@
 
     var drawMaxLabel = function(position) {
         d3.select("#maxLabel").remove();
-        gradientMapList[currMap].grad_svg.append("text")
+        grad_svg.append("text")
             .attr("x", 8 + position)
             .attr("y", 25)
-            .text("\00  max = " + Number(gradientMapList[currMap].max).toFixed(2))
+            .text("\00  max = " + Number(max).toFixed(2))
             .attr("font-family", "sans-serif")
             .attr("font-size", "10px")
             .attr("fill", "black")
@@ -491,7 +382,7 @@
 
         d3.select("linearGradient").remove();
 
-        var gradient = gradientMapList[currMap].grad_svg
+        var gradient = grad_svg
             .append("linearGradient")
             .attr("y1", "0")
             .attr("y2", "0")
@@ -503,14 +394,14 @@
         gradient
             .append("stop")
             .attr("offset", "0")
-            .attr("stop-color", gradientMapList[currMap].start_color);
+            .attr("stop-color", start_color);
 
         gradient
             .append("stop")
             .attr("offset", "1")
-            .attr("stop-color", gradientMapList[currMap].end_color);
+            .attr("stop-color", end_color);
 
-        gradientMapList[currMap].grad_svg
+        grad_svg
             .append("rect")
             .attr("x", 54)
             .attr("y", 10)
@@ -519,8 +410,8 @@
             .attr("fill", "url(#gradient)")
             .attr("class", "rectangle");
 
-        gradientMapList[currMap].drawMinLabel();
-        gradientMapList[currMap].drawMaxLabel(298);
+        drawMinLabel();
+        drawMaxLabel(298);
 
     };
 
@@ -564,8 +455,7 @@
 
     gradientMap.tooltipHtml = function(n, d, mapNum){    /* function to create html content string in tooltip div. */
         var specified_value = d.toFixed(2);
-        //console.log(mapNum);
-        var feat = gradientMapList[mapNum].feature_desired.replace(" ", "&nbsp");
+        var feat = feature_desired.replace(" ", "&nbsp");
         feat = feat.replace("_", "&nbsp");
         var feat_words = feat.split("&nbsp");
         //console.log(feat_words);
@@ -585,10 +475,10 @@
 
     var makeCombo = function() {
 
-        if(gradientMapList[currMap].comboExists){
+        if(comboExists){
             return;
         }
-        gradientMapList[currMap].comboExists = true;
+        comboExists = true;
         // this function creates the drop down menu for changing the grid scale
         // color selector is how many colors you want displayed
         var combo = d3.select("#comboDiv")
@@ -609,19 +499,19 @@
             .attr("value", -1)
             .text("continuous");
 
-        if (gradientMapList[currMap].current_gradient == -1) {
+        if (current_gradient == -1) {
             d3.select("#optionc")
                 .attr("selected", "selected");
         }
         else {
-            d3.select("#option"+gradientMapList[currMap].current_gradient.toString())
+            d3.select("#option"+current_gradient.toString())
                 .attr("selected", "selected");
         }
 
         d3.select("select").on("change", function() {
             var value = this.options[this.selectedIndex].value;
-            gradientMapList[currMap].change_gradient(value);
-            gradientMapList[currMap].current_gradient = value;
+            change_gradient(value);
+            current_gradient = value;
         });
     };
 
@@ -636,17 +526,17 @@
         var smallLong = -500;
         // return the center
 
-        for (var x = 0; x < data.features.length; x+=1) {
-            for (var y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
-                for(var z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
+        for (x = 0; x < data.features.length; x+=1) {
+            for (y = 0; y < data.features[x].geometry.coordinates.length; y +=1) {
+                for(z = 0; z < data.features[x].geometry.coordinates[y].length; z+=1) {
 
                     nums.push(data.features[x].geometry.coordinates[y][z]);
                 }
             }
         }
 
-        for(var i = 0; i< nums.length; i++) {
-            for(var j = 0; j< nums[i].length; j++) {
+        for(i = 0; i< nums.length; i++) {
+            for(j = 0; j< nums[i].length; j++) {
                 allNums.push(nums[i][j]);
             }
         }
@@ -682,10 +572,10 @@
         return [(bigLong+smallLong)/2, (bigLat+smallLat)/2];
     }
 
-    var drawCounties = function(stateFile, csvFile, mapNum) {
+    var drawCounties = function(stateFile, csvFile) {
 
         d3.selectAll("path").remove();
-        gradientMapList[mapNum].mouseOut();
+        mouseOut();
         reset();
 
         d3.select("#floatingBarsG")
@@ -694,75 +584,74 @@
         var color;
         var continuous = false;
         //Define quantize scale to sort data values into buckets of color
-        if (gradientMapList[mapNum].current_gradient != -1) {
+        if (current_gradient != -1) {
             color = d3.scale.quantize()
-                .range(gradientMapList[mapNum].makeRange(gradientMapList[mapNum].current_gradient, gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color));
+                .range(makeRange(current_gradient, start_color, end_color));
         }
         // this means they want a continuous gradient
         else {
             continuous = true;
         }
 
-        d3.csv(gradientMapList[mapNum].countyValuePath+csvFile, function(data) {
-            console.log(data);
+        d3.csv(countyValuePath+csvFile, function(data) {
 
-            gradientMapList[mapNum].min = d3.min(data, function(d) {return +d[gradientMapList[0].feature_desired]; }).toString();
-            gradientMapList[mapNum].max = d3.max(data, function(d) {return +d[gradientMapList[0].feature_desired]; }).toString();
+            min = d3.min(data, function(d) { return +d[feature_desired]; }).toString();
+            max = d3.max(data, function(d) { return +d[feature_desired]; }).toString();
             //test edit
             //document.write(d3.min(data, function(d) { return +d.poke_ratio; }));
 
             if (!continuous) {
-                color.domain([gradientMapList[mapNum].min,gradientMapList[mapNum].max]);
-                gradientMap.rangeBoxes(gradientMapList[mapNum].current_gradient);
+                color.domain([min,max]);
+                gradientMap.rangeBoxes(current_gradient);
             }
             else {
-                gradientMapList[mapNum].drawContinuousGrad();
+                drawContinuousGrad();
             }
 
-            d3.json(gradientMapList[mapNum].countyMapPath+stateFile, function(json) {
+            d3.json(countyMapPath+stateFile, function(json) {
 
                 // create a first guess for the projection
                 var center = computeCenter(json);
                 var scale  = 10;
-                var offset = [gradientMapList[mapNum].w/2, gradientMapList[mapNum].h/2];
-                gradientMapList[mapNum].projection = d3.geo.mercator().scale(scale)
+                var offset = [w/2, h/2];
+                projection = d3.geo.mercator().scale(scale)
                     .center(center).translate(offset);
 
                 // create the path
-                gradientMapList[mapNum].path = d3.geo.path().projection(gradientMapList[mapNum].projection);
+                path = d3.geo.path().projection(projection);
 
                 // using the path determine the bounds of the current map and use
                 // these to determine better values for the scale and translation
-                var bounds  = gradientMapList[mapNum].path.bounds(json);
+                var bounds  = path.bounds(json);
 
                 var hscale, vscale, scale, offset;
 
                 if (stateFile.substring(0,2) == "AK") {
-                    hscale  = scale*gradientMapList[mapNum].w*5 / (bounds[1][0] - bounds[0][0]);
-                    vscale  = scale*gradientMapList[mapNum].h*5 / (bounds[1][1] - bounds[0][1]);
+                    hscale  = scale*w*5 / (bounds[1][0] - bounds[0][0]);
+                    vscale  = scale*h*5 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
-                    offset  = [gradientMapList[mapNum].w - (bounds[0][0] + bounds[1][0])/2.5,
-                        gradientMapList[mapNum].h - (bounds[0][1] + bounds[1][1])/2.1];
+                    offset  = [w - (bounds[0][0] + bounds[1][0])/2.5,
+                        h - (bounds[0][1] + bounds[1][1])/2.1];
                 }
                 else {
                     hscale  = scale*w*0.75  /(bounds[1][0] - bounds[0][0]);
                     vscale  = scale*h*0.75 / (bounds[1][1] - bounds[0][1]);
                     scale   = (hscale < vscale) ? hscale : vscale;
-                    offset  = [ gradientMapList[mapNum].w-(bounds[0][0] + bounds[1][0])/2,
-                        gradientMapList[mapNum].h-(bounds[0][1] + bounds[1][1])/2.1];
+                    offset  = [ w-(bounds[0][0] + bounds[1][0])/2,
+                        h-(bounds[0][1] + bounds[1][1])/2.1];
                 }
 
                 // new projection
-                gradientMapList[mapNum].projection = d3.geo.mercator().scale(scale)
+                projection = d3.geo.mercator().scale(scale)
                     .center(center).translate(offset);
 
-                gradientMapList[mapNum].path = gradientMapList[mapNum].path.projection(gradientMapList[mapNum].projection);
+                path = path.projection(projection);
 
-                gradientMapList[mapNum].svg.selectAll("path")
+                svg.selectAll("path")
                     .data(json.features)
                     .enter()
                     .append("path")
-                    .attr("d", gradientMapList[mapNum].path)
+                    .attr("d", path)
                     .attr("id", function(d) {
                         return d.properties.NAME;
                     })
@@ -773,18 +662,18 @@
                             d.properties.NAME += " City";
                         }
 
-                        d.properties.value = gradientMapList[mapNum].getCountyValuesFunction(data, d.properties.NAME, gradientMapList[0].feature_desired);
+                        d.properties.value = getCountyValuesFunction(data, d.properties.NAME);
                         var value = d.properties.value;
 
-                        if (gradientMapList[mapNum].max == gradientMapList[mapNum].min) {
-                            return gradientMapList[mapNum].end_color;
+                        if (max == min) {
+                            return end_color;
                         }
 
                         if (!continuous && value) {//If value exists…
                             return color(value);
                         }
                         else if (continuous && value) {
-                            return d3.interpolate(gradientMapList[mapNum].start_color, gradientMapList[mapNum].end_color)((value - gradientMapList[mapNum].min)/(gradientMapList[mapNum].max-gradientMapList[mapNum].min));
+                            return d3.interpolate(start_color, end_color)((value - min)/(max-min));
                         }
                         else {//If value is undefined…
                             return "#ccc";
@@ -792,9 +681,9 @@
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
-                    .on("click", gradientMapList[mapNum].click)
-                    .on("mouseover", gradientMapList[mapNum].mouseOver)
-                    .on("mouseout", gradientMapList[mapNum].mouseOut);
+                    .on("click", click)
+                    .on("mouseover", mouseOver)
+                    .on("mouseout", mouseOut);
 
             });
             d3.select("#floatingBarsG")
@@ -803,17 +692,11 @@
     };
 
     var click = function() {
-        //var poke_data = gradientMapList[currMap].csvUSValueFile;
-        //var map_json_file = gradientMapList[currMap].usMapFile;
+        var poke_data = csvUSValueFile;
+        var map_json_file = usMapFile;
 
-        //gradientMap.drawMap(map_json_file, poke_data);
-        for(var i = 0; i < gradientMapList.length; i += 1){
-        	gradientMapList[i].drawMap(i);
-        }
-        reset();
-        
+        gradientMap.drawMap(map_json_file, poke_data);
     };
 
     this.gradientMap = gradientMap;
 })();
-

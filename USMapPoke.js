@@ -134,6 +134,7 @@ function drawTheUSMap(min_color, max_color){
 	var map = gradientMap.setColors(min_color, max_color)
 				.setFeature("poke_ratio")
 				.setRestFileName("poke.csv")
+				//.setDrawCounties(drawCounties)
 				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 				.setDictionaries(getPokeDictionary)
 				.setStateAbbreviations(state_abbreviations)
@@ -142,8 +143,6 @@ function drawTheUSMap(min_color, max_color){
 				.setup();
 				
 	thisMap = map;
-	
-	console.log(thisMap);
 				
 	//Draw map
 	thisMap.drawMap();
@@ -154,9 +153,6 @@ function removeUSMap(){
 	
 	thisMap.removeMap();
 	
-
-}
-
 }
 
 function getPokeDictionary(){
@@ -164,4 +160,3 @@ function getPokeDictionary(){
 	return pokeDict;
 	
 }
-
