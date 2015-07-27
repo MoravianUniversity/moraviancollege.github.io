@@ -95,7 +95,7 @@
 	    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1"><!--Bootstrap class to adjust for smaller screens-->
 	      <ul>
 	        <li class="sameLine first" style="margin-top:10px;">
-	          <button onclick="redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
+	          <button onclick="manager.redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
 	        </li>
 	        <li class="sameLine">
 	          <!--Gradient Level Menu-->
@@ -328,6 +328,7 @@
 		        .setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
 		    
 		    var manager = new mapManager();
+			manager.makeCombo();
 		    manager.addMap(map);
 		    manager.addMap(map2);
 		    manager.drawMaps();

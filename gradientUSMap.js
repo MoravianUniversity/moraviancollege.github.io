@@ -61,7 +61,7 @@ function GradientMap(feature){
             .append("div")
             .attr("id", "comboDiv" + this.id.toString());
         
-        this.makeCombo();
+        //this.makeCombo();
         
         this.mapDiv = d3.select("#mapContainer")
             .append("div")
@@ -84,7 +84,7 @@ function GradientMap(feature){
                 .call(this.zoom)
                 .append("g");
             
-        }else{
+        } else {
             
             this.svg = this.mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
