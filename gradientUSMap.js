@@ -106,7 +106,8 @@
     var mouseOut = function() {
         d3.select("#tooltip").transition().duration(500).style("opacity", 0);
     };
-
+    
+    //when state is hovered over, the tooltip will display based on the location of the mouse
     var mouseOver = function(d) {
         d3.select("#tooltip").transition().duration(200).style("opacity", 0.9);
         var coord = d3.mouse(this);

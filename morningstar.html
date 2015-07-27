@@ -1,45 +1,45 @@
 <!DOCTYPE html>
   <head>
 
-	<!-- Basic Page Needs
+    <!-- Basic Page Needs
   ================================================== -->
-	<meta charset="utf-8">
-	<title>CS Projects: MorningStar</title>
-	<meta name="description" content="">
-	<meta name="author" content="">
+    <meta charset="utf-8">
+    <title>CS Projects: MorningStar</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<!-- Mobile Specific Metas
+    <!-- Mobile Specific Metas
   ================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-	<!-- CSS
+    <!-- CSS
   ================================================== -->
-	<link rel="stylesheet" type="text/css" href="stylesheets/base.css"><!--Web Page-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/skeleton.css"><!--Web Page-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/layout.css"><!--Web Page-->
+    <link rel="stylesheet" type="text/css" href="stylesheets/base.css"><!--Web Page-->
+    <link rel="stylesheet" type="text/css" href="stylesheets/skeleton.css"><!--Web Page-->
+    <link rel="stylesheet" type="text/css" href="stylesheets/layout.css"><!--Web Page-->
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css"><!--Map-->
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css"> <!--Bootstrap-->
-    
+
     <!-- Scripts
   ================================================== -->
- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> <!--Bootstrap-->
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> <!--Bootstrap-->
     <script type="text/javascript" src="d3/d3.v3.js"></script> <!--d3 Map Drawing-->
-	<script type="text/javascript" src="gradientUSMap.js"></script> <!--Map Drawing-->
+    <script type="text/javascript" src="gradientUSMap.js"></script> <!--Map Drawing-->
     <script type="text/javascript" src="jscolor/jscolor.js"></script> <!--Color Picker-->
     <script type="text/javascript" src="js/bootstrap.min.js"></script> <!--Bootstrap-->
 
     <!--Browser Tab Icon-->
-	<link rel="shortcut icon" href="images/mocostar.png">
+    <link rel="shortcut icon" href="images/mocostar.png">
 
   </head>
   <body onload="drawTheUSMap('#EBF5FF','#002966');"><!--When the page loads, draw the map with gradient colors ('Start','End')-->
 
-	<!-- Primary Page Layout
-	================================================== -->
+    <!-- Primary Page Layout
+    ================================================== -->
 
-	<!--Header-->
+    <!--Header-->
 
-	<header id="header" class="site-header" role="banner">
+    <header id="header" class="site-header" role="banner">
       <div class="container sixteen columns over">
         <h1 id="site-title" class="site-title">
           <a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
@@ -49,143 +49,147 @@
 
     <!--Page Body-->
 
-	<div class="container">
-	  <div class="sixteen columns main-content">
-	    <!--Back Button-->
-	    <script> function visitPage(){
-          window.location='index.html'; 
+    <div class="container">
+      <div class="sixteen columns main-content">
+        <!--Back Button-->
+        <script> function visitPage(){
+          window.location='index.html';
           }
-	    </script>
-	    <button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
-	    <!--Page Title-->
-	    <h1 style="text-align:center;">MorningStar</h1>
-	  </div>
-	
-	  <!--Left-Hand Side Bar-->
-	
-	  <aside class="six columns right-sidebar">
+        </script>
+        <button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
+        <!--Page Title-->
+        <h1 style="text-align:center;">MorningStar</h1>
+      </div>
+
+      <!--Left-Hand Side Bar-->
+
+      <aside class="six columns right-sidebar">
         <div class="sidebar-widget social">
-		  <h4 style="text-align:center">Student Developers:</h4>
-		  <p>Megan Biernat, Jason Boccuti, Steve Chakif, Lewis Cooper, William Collins, Jon Diehl, Alec Gerhart, Hansen Huang, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, Michael Vitone, John Vonelli</p>
-		
-		  <h4 style="text-align:center">About the Project</h4>
-	      <p>MorningStar is a collaboration of Merck Co, DocGraph, and Moravian College to provide students an opportunity to work directly with data, specifically in this case, that of diabetes and HA1c test poke ratios. We want to be able to develop a good way to visualize the analyzed data in a map. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a>, the HA1c test data was supplied by <a href="http://www.docgraph.org" style="font-size:14px;color:SkyBlue">DocGraph</a>, and the developing teams of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p> 
+          <h4 style="text-align:center">Student Developers:</h4>
+          <p>Megan Biernat, Jason Boccuti, Steve Chakif, Lewis Cooper, William Collins, Jon Diehl, Alec Gerhart, Hansen Huang, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, Michael Vitone, John Vonelli</p>
+
+          <h4 style="text-align:center">About the Project</h4>
+          <p>MorningStar is a collaboration of Merck Co, DocGraph, and Moravian College to provide students an opportunity to work directly with data, specifically in this case, that of diabetes and HA1c test poke ratios. We want to be able to develop a good way to visualize the analyzed data in a map. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a>, the HA1c test data was supplied by <a href="http://www.docgraph.org" style="font-size:14px;color:SkyBlue">DocGraph</a>, and the developing teams of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p>
         </div>
       </aside>
-    
+
       <!--Main Content-->
-    
-      <article class="ten columns main-content">  
+
+      <article class="ten columns main-content">
         <div id="pageTitle">
           <br>
-	      <p>If you'd like to check out the blog that the group has written about the progress of the project, you can click <a href="http://morningstar.moravian.edu/" style="font-size:14px;color:SkyBlue">here</a>, or for the Github repository for the project is located <a href="https://github.com/MoravianCollege/moraviancollege.github.io" style="font-size:14px;color:SkyBlue">here</a>.</p>
-		  
-		  <h3 style="text-align:center">Map Description</h3>
-		  <p>The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.79. The map below shows poke ratio per state (including Puerto Rico) by Blue-White Scale, while areas without any data available are in grey. You may change the gradient level and colors for more details.</p>
-			
-		  <p>Directions: To navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Reload Map Button.</p>
-		  <p>* Note - The zoom function is not compatible with Mozilla Firefox.</p>
-	    </div>
-	  </article>
-	  
-	  <!--Map Tools-->
-	  
-	  <article class="sixteen columns main-content">
-	    <hr>
-	    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1"><!--Bootstrap class to adjust for smaller screens-->
-	      <ul>
-	        <li class="sameLine first" style="margin-top:10px;">
-	          <button onclick="redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
-	        </li>
-	        <li class="sameLine">
-	          <!--Gradient Level Menu-->
-		      <div id="comboDiv"><h4>Gradient Level</h4></div>
-		    </li>
+          <p>If you'd like to check out the blog that the group has written about the progress of the project, you can click <a href="http://morningstar.moravian.edu/" style="font-size:14px;color:SkyBlue">here</a>, or for the Github repository for the project is located <a href="https://github.com/MoravianCollege/moraviancollege.github.io" style="font-size:14px;color:SkyBlue">here</a>.</p>
+
+          <h3 style="text-align:center">Map Description</h3>
+          <p>The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.79. The map below shows poke ratio per state (including Puerto Rico) by Blue-White Scale, while areas without any data available are in grey. You may change the gradient level and colors for more details.</p>
+
+          <p>Directions: To navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Reload Map Button.</p>
+          <p>* Note - The zoom function is not compatible with Mozilla Firefox.</p>
+        </div>
+      </article>
+
+      <!--Map Tools-->
+
+      <article class="sixteen columns main-content">
+        <hr>
+        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-11 col-lg-offset-0.5"><!--Bootstrap class to adjust for smaller screens-->
+          <ul>
+            <li class="sameLine first" style="margin-top:12px;">
+              <button onclick="redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
+            </li>
+            <li class="sameLine">
+              <!--Gradient Level Menu-->
+              <div id="comboDiv"><h4>Gradient Level</h4></div>
+            </li>
             <li class="sameLine">
               <!--Color Pickers (Customization tips at https://jscolor.com/try.php)-->
               <h4>Minimum Color:</h4>
               <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'redraw();' }"  id="min_color_picker" value="EBF5FF"> <!--Redraws map every time the map is changed; type initially reads "EBF5FF" upon loading-->
             </li>
-			<li class="sameLine">
+            <li class="sameLine">
               <h4>Maximum Color:</h4>
-		      <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'redraw();' }" id="max_color_picker" value="002966"> <!--Redraws map every time the map is changed; type initially reads "002966" upon loading-->
-		    </li>
-		  </ul>
-		</div>
-	  </article>
-	  
-	  <!--Map SVG and Spinner-->
-	  
-	  <article class="sixteen columns main-content">
-		<div id="mapContainer" class="row">
-		  <!-- Spinner Animation -->
-		  <div id="floatingBarsG" style="visibility: hidden">
-		    <div class="blockG" id="rotateG_01">
-			</div>
-			<div class="blockG" id="rotateG_02">
-			</div>
-			<div class="blockG" id="rotateG_03">
-			</div>
-			<div class="blockG" id="rotateG_04">
-			</div>
-			<div class="blockG" id="rotateG_05">
-			</div>
-			<div class="blockG" id="rotateG_06">
-			</div>
-			<div class="blockG" id="rotateG_07">
-			</div>
-			<div class="blockG" id="rotateG_08">
-			</div>
-	      </div>
-          <div style="background-color: black"></div>	
-   		</div>
+              <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'redraw();' }" id="max_color_picker" value="002966"> <!--Redraws map every time the map is changed; type initially reads "002966" upon loading-->
+            </li>
+            <li class="sameLine" style="margin-top:12px;">
+              <button>Download</button>
+            </li>
+          </ul>
+        </div>
       </article>
-        
+
+      <!--Map SVG and Spinner-->
+
+      <article class="sixteen columns main-content">
+        <div id="mapContainer" class="row">
+          <!-- Spinner Animation -->
+          <div id="floatingBarsG" style="visibility: hidden">
+            <div class="blockG" id="rotateG_01">
+            </div>
+            <div class="blockG" id="rotateG_02">
+            </div>
+            <div class="blockG" id="rotateG_03">
+            </div>
+            <div class="blockG" id="rotateG_04">
+            </div>
+            <div class="blockG" id="rotateG_05">
+            </div>
+            <div class="blockG" id="rotateG_06">
+            </div>
+            <div class="blockG" id="rotateG_07">
+            </div>
+            <div class="blockG" id="rotateG_08">
+            </div>
+          </div>
+          <div style="background-color: black"></div>
+          </div>
+          <button class="row col-xs-4 col-xs-offset-12 col-sm-3 col-sm-offset-10 col-md-2 col-md-offset-9 col-lg-2 col-lg-offset-8">Download</button>
+      </article>
+
     </div>
-      
-    <!--Footer--> 
-      
+
+    <!--Footer-->
+
     <footer>
       <div class="row">
-		<div id="footer-base">
-		  <div class="container">
-		    <div class="two columns">
-		      <a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
-		    </div>
+        <div id="footer-base">
+          <div class="container">
+            <div class="two columns">
+              <a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+            </div>
             <div class="two columns far-edge">
-		      Design by <a href="http://www.opendesigns.org">OD</a>
-		    </div>
-		  </div>
-		</div>
+              Design by <a href="http://www.opendesigns.org">OD</a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
-      
+
     <!-- USMapPoke.js builds map -->
     <script src="USMapPoke.js">drawTheUSMap();</script>
 
-	<script>
+    <script>
       function makeMap(source) {
         var newScript = document.createElement("script");
         newScript.setAttribute('id', 'scriptSrc');
-		newScript.setAttribute('type','text/javascript');
-		newScript.setAttribute('src', source);
-		document.getElementsByTagName("head")[0].appendChild(newScript);
-		//drawTheMap();
+        newScript.setAttribute('type','text/javascript');
+        newScript.setAttribute('src', source);
+        document.getElementsByTagName("head")[0].appendChild(newScript);
+        //drawTheMap();
       }
-			
+
       function selectData() {
-		if (document.getElementById("pokeRatio").checked == true) {
-			removeTestMap();
-			drawTheUSMap();
+        if (document.getElementById("pokeRatio").checked == true) {
+            removeTestMap();
+            drawTheUSMap();
         }
-		if (document.getElementById("testData").checked == true) {
-			//makeMap("testingGeneralization.js");
-			removeUSMap();
-			drawTheTestMap();
-		}
-		//makeMap();
+        if (document.getElementById("testData").checked == true) {
+            //makeMap("testingGeneralization.js");
+            removeUSMap();
+            drawTheTestMap();
+        }
+        //makeMap();
       }
-			
+
       function removeUS(){
         removeUSMap();
       }
@@ -199,6 +203,6 @@
         drawTheUSMap(String(getColor("min_color_picker")), String(getColor("max_color_picker")));
       }
     </script>
-      
+
   </body>
 </html>
