@@ -508,11 +508,9 @@ function GradientMap(feature){
 		}
         if(d == 0){
         	if(Object.keys(getCountyDictionaries()).length && Object.keys(getStateDictionaries()).length === 1){
-        		//console.log("here");
         		return "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td> "+d.toFixed(2)+"</td></tr>"+"</table>";
         	}
         	else{
-        		console.log("here");
         		var return_string = "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td>"+d.toFixed(2)+"</td></tr>";
         		for(var x = 1; x < getFeatures().length; x++){
         			var feature = getFeatures()[x];
