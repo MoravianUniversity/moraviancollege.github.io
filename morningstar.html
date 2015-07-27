@@ -162,6 +162,7 @@
       
     <!-- USMapPoke.js builds map -->
     <script src="gradientUSMap.js"></script>
+    <script src="mapManager.js"></script>
     
     <script>
             
@@ -317,15 +318,20 @@
 		        .setRestFileName('poke.csv')
 		        .setFunctions(getStateValuesFunction, getCountyValuesFunction)
 		        .setStateAbbreviations(state_abbreviations)
-		        .setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
-		        .setup()
-		        .drawMap();
-		        //.setColors('#F8FF99','#002966');
-		        //.drawMap();
-		        //edit
-		        //.removeMap()
-		        //.setup()
-		        //.drawMap();
+		        .setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+		    
+		    //var map2 = new GradientMap('poke_ratio')
+		        //.setColors('#EBF5FF','#002966')
+		        //.setRestFileName('poke.csv')
+		        //.setFunctions(getStateValuesFunction, getCountyValuesFunction)
+		        //.setStateAbbreviations(state_abbreviations)
+		        //.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+		    
+		    var manager = new mapManager();
+		    manager.addMap(map);
+		    //manager.addMap(map2);
+		    manager.drawMaps();
+
 		    function getStateDictionaries(){
 
 	            return dict_of_state_dict;
