@@ -10,6 +10,15 @@ function mapManager() {
         
     };
     
+    this.drawMaps = function(){
+        
+        for(var i = 0; i < this.mapList.length; i += 1){
+            this.mapList[i].setup();
+            this.mapList[i].drawMap();
+        }
+        
+    }
+    
     return this;
     
 };
