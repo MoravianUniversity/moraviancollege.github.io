@@ -115,18 +115,19 @@ function GradientMap(feature){
     
     this.mouseOut = function() {
     
-        d3.select("#tooltip" + newThis.id.toString()).transition().duration(2500).style("opacity", 0);
+        d3.select("#tooltip" + newThis.id.toString()).transition().duration(500).style("opacity", 0);
         
     }
     
     this.mouseOver = function(d){
-        
+        //console.log(this.id.toString(), newThis.id);
 
         d3.select("#tooltip" + newThis.id.toString()).transition().duration(200).style("opacity", 0.9);
         
         
         if(newThis.q[0] === "Gecko") {
             var coord = d3.mouse(this);
+            console.log(coord);
             var c_x = (coord[0] + 100) +"px";
             var c_y = (coord[1] + 650 + (newThis.id * 650)) + "px";
 
@@ -144,14 +145,14 @@ function GradientMap(feature){
         //state
         if(d.properties.name) {
             
-            d3.select("#tooltip" + newThis.id.toString()).html(newThis.tooltipHtml(d.properties.name, getStateDictionaries()))
+            d3.select("#tooltip" + newThis.id.toString()).html(newThis.tooltipHtml(d.properties.name, d.properties.value))
                 .style("left", c_x)
                 .style("top", c_y);
             
         }
         //county
         else if(d.properties.value){
-            d3.select("#tooltip" + newThis.id.toString()).html(newThis.tooltipHtml(d.properties.NAME, getCountyDictionaries()))
+            d3.select("#tooltip" + newThis.id.toString()).html(newThis.tooltipHtml(d.properties.NAME, d.properties.value))
                 .style("left", c_x)
                 .style("top", c_y);
         }
@@ -199,6 +200,7 @@ function GradientMap(feature){
             
             newThis.min = d3.min(data, function(d) { return +d[newThis.feature_desired]; }).toString();
             newThis.max = d3.max(data, function(d) { return +d[newThis.feature_desired]; }).toString();
+            console.log(data);
             if(!continuous){
                 
                 color.domain([newThis.min, newThis.max]);
@@ -250,8 +252,10 @@ function GradientMap(feature){
     };
     
     this.change_gradient = function(val) {
-
-
+        console.log(newThis.start_color);
+        console.log(newThis.end_color);
+        //edit
+        console.log(val);
         
         var inter = false;
         if(val==-1){
@@ -260,7 +264,7 @@ function GradientMap(feature){
         }
         else{
 
-
+            console.log(this);
             var newcolor = d3.scale.quantize()
                 .range(makeRange(val, newThis.start_color, newThis.end_color));
             newcolor.domain([
@@ -315,7 +319,7 @@ function GradientMap(feature){
         if (number == -1) {
             return this;
         }
-
+        //console.log(this.current_gradient);
         this.current_gradient = number;
         return this;
     };
@@ -328,7 +332,7 @@ function GradientMap(feature){
     };
     
     this.rangeBoxes = function(numOfBoxes) {
-
+        console.log(this);
         this.drawMinLabel();
         this.drawBoxes(numOfBoxes);
     };
@@ -369,9 +373,10 @@ function GradientMap(feature){
     
     this.drawBoxes = function(boxNum){
 
-
+        console.log(this);
         var colorArray = makeRange(boxNum, newThis.start_color, newThis.end_color);
         d3.selectAll(".rectangle").remove();
+        console.log("done");
         var i = 0;
         while(i < boxNum){
             this.grad_svg.append("rect")
@@ -452,6 +457,7 @@ function GradientMap(feature){
     
     var makeRange = function(step, startColor, endColor) {
         
+        console.log(step);
         var Rstart = hexToR(startColor);
         var Gstart = hexToG(startColor);
         var Bstart = hexToB(startColor);
@@ -490,56 +496,21 @@ function GradientMap(feature){
     };
     
     this.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
-        if(d == 0){
-        	if(getCountyDictionaries().length === 1 && getStateDictionaries().length === 1){
-        		return "<h4>"+n+"</h4><table>"+"<tr><td>"+getFeatures()[0]+":</td><td>"+d.toFixed(2)+"</td></tr>"+"</table>";
-        	}
-        	else{
-        		var return_string = "<h4>"+n+"</h4><table>"+"<tr><td>"+getFeatures()[0]+":</td><td>"+d.toFixed(2)+"</td></tr>";
-        		for(var x = 1; x < getFeatures().length; x++){
-        			var feature = getFeatures()[x];
-        			if(getCountyDictionaries()[feature][n] === undefined){
-        				return_string = return_string + "<tr><td>" + getFeatures()[x] + ":</td><td>" + d.toFixed(2)+"</td></tr>";
-        			}
-        			else{
-        				return_string = return_string + "<tr><td>" + getFeatures()[x] + ":</td><td>" + getCountyDictionaries()[feature][n].toFixed(2)+"</td></tr>";
-        			}
-        		}
-        		return return_string + "</table>";
-        	}       	
+        var specified_value = d.toFixed(2);
+        var feat = this.feature_desired.replace(" ", "&nbsp");
+        feat = feat.replace("_", "&nbsp");
+        var feat_words = feat.split("&nbsp");
+        feat = "";
+        for(var i = 0; i < feat_words.length; i += 1) {
+            feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
+            if(i != feat_words.length){
+                feat_words[i] = feat_words[i] + "&nbsp";
+            }
+            feat = feat + feat_words[i];
         }
-        else if(Object.keys(d).length == 1){
-        	var feature = getFeatures()[0];
-        	var specified_value = (Math.round(d[feature][n]*100)/100).toFixed(2);
-        	var feat = feature_desired.replace(" ", "&nbsp");
-        	feat = feat.replace("_", "&nbsp");
-        	var feat_words = feat.split("&nbsp");
-        	feat = "";
-        	for(var i = 0; i < feat_words.length; i += 1) {
-
-            	feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
-            	if(i != feat_words.length){
-                	feat_words[i] = feat_words[i] + "&nbsp";
-            	}
-				feat = feat + feat_words[i];
-			}
-			return "<h4>"+n+"</h4><table>"+
-				"<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
-				"</table>";
-		}
-		else{
-			return_string = "<h4>"+n+"</h4><table>";
-			for(var x = 0; x < Object.keys(d).length; x++){
-				var feature = getFeatures()[x];
-				if(x != Object.keys(d).length){
-					return_string = return_string +"<tr><td>" + feature + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2) +"</td>";
-				}
-				else{
-					return_string = return_string + "<td>" + feature + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2)+"</td></tr>";					
-        		}
-        	}
-        	return return_string + "</table>";
-        }
+        return "<h4>"+n+"</h4><table>"+
+            "<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
+            "</table>";
     };
     
     this.makeCombo = function(){
@@ -663,7 +634,7 @@ function GradientMap(feature){
         if (newThis.current_gradient != -1) {
             //edit
             //var newThis = this;
-
+            console.log(newThis.current_gradient);
             color = d3.scale.quantize()
                 .range(makeRange(newThis.current_gradient, newThis.start_color, newThis.end_color));
         }
