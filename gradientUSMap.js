@@ -490,28 +490,9 @@ function GradientMap(feature){
     };
     
     this.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
-        if(d == 0){
-        	if(getCountyDictionaries().length === 1 && getStateDictionaries().length === 1){
-        		return "<h4>"+n+"</h4><table>"+"<tr><td>"+getFeatures()[0]+":</td><td>"+d.toFixed(2)+"</td></tr>"+"</table>";
-        	}
-        	else{
-        		var return_string = "<h4>"+n+"</h4><table>"+"<tr><td>"+getFeatures()[0]+":</td><td>"+d.toFixed(2)+"</td></tr>";
-        		for(var x = 1; x < getFeatures().length; x++){
-        			var feature = getFeatures()[x];
-        			if(getCountyDictionaries()[feature][n] === undefined){
-        				return_string = return_string + "<tr><td>" + getFeatures()[x] + ":</td><td>" + d.toFixed(2)+"</td></tr>";
-        			}
-        			else{
-        				return_string = return_string + "<tr><td>" + getFeatures()[x] + ":</td><td>" + getCountyDictionaries()[feature][n].toFixed(2)+"</td></tr>";
-        			}
-        		}
-        		return return_string + "</table>";
-        	}       	
-        }
-        else if(Object.keys(d).length == 1){
-        	var feature = getFeatures()[0];
-        	var specified_value = (Math.round(d[feature][n]*100)/100).toFixed(2);
-        	var feat = feature_desired.replace(" ", "&nbsp");
+        var fancy_features = [];
+        for(var x = 0; x < getFeatures().length; x++){
+        	var feat = getFeatures()[x];
         	feat = feat.replace("_", "&nbsp");
         	var feat_words = feat.split("&nbsp");
         	feat = "";
@@ -523,8 +504,33 @@ function GradientMap(feature){
             	}
 				feat = feat + feat_words[i];
 			}
+			fancy_features.push(feat);
+		}
+        if(d == 0){
+        	if(Object.keys(getCountyDictionaries()).length && Object.keys(getStateDictionaries()).length === 1){
+        		//console.log("here");
+        		return "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td> "+d.toFixed(2)+"</td></tr>"+"</table>";
+        	}
+        	else{
+        		console.log("here");
+        		var return_string = "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td>"+d.toFixed(2)+"</td></tr>";
+        		for(var x = 1; x < getFeatures().length; x++){
+        			var feature = getFeatures()[x];
+        			if(getCountyDictionaries()[feature][n] === undefined){
+        				return_string = return_string + "<tr><td>" + fancy_features[x] + ":</td><td>" + d.toFixed(2)+"</td></tr>";
+        			}
+        			else{
+        				return_string = return_string + "<tr><td>" + fancy_features[x] + ":</td><td>" + getCountyDictionaries()[feature][n].toFixed(2)+"</td></tr>";
+        			}
+        		}
+        		return return_string + "</table>";
+        	}       	
+        }
+        else if(Object.keys(d).length == 1){
+        	var feature = getFeatures()[0];
+        	var specified_value = (Math.round(d[feature][n]*100)/100).toFixed(2);
 			return "<h4>"+n+"</h4><table>"+
-				"<tr><td>"+feat+":</td><td>"+(specified_value)+"</td></tr>"+
+				"<tr><td>"+fancy_features[0]+":</td><td>"+(specified_value)+"</td></tr>"+
 				"</table>";
 		}
 		else{
@@ -532,10 +538,10 @@ function GradientMap(feature){
 			for(var x = 0; x < Object.keys(d).length; x++){
 				var feature = getFeatures()[x];
 				if(x != Object.keys(d).length){
-					return_string = return_string +"<tr><td>" + feature + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2) +"</td>";
+					return_string = return_string +"<tr><td>" + fancy_features[x] + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2) +"</td>";
 				}
 				else{
-					return_string = return_string + "<td>" + feature + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2)+"</td></tr>";					
+					return_string = return_string + "<td>" + fancy_features[x] + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2)+"</td></tr>";					
         		}
         	}
         	return return_string + "</table>";
