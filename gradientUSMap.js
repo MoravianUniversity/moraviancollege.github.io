@@ -240,7 +240,7 @@ function GradientMap(feature){
                         }
                         
                     })
-                .on("click", link)
+                .on("click", newThis.linkWithObservers)
                 .on("mouseover", newThis.mouseOver)
                 .on("mouseout", newThis.mouseOut)
                 
@@ -250,6 +250,18 @@ function GradientMap(feature){
         return this;
         
     };
+    
+    this.linkWithObservers = function(d){
+        
+        newThis.link(d);
+        
+        for (var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].link(d);
+            
+        }
+        
+    }
     
     this.change_gradient = function(val) {
 
@@ -339,7 +351,7 @@ function GradientMap(feature){
         return this;
     };
     
-    var link = function(d){
+    this.link = function(d){
         
         newThis.grad_svg.select("#stateName").remove();
         //This is where the SVG generates the state name with x and y coordinates
@@ -763,7 +775,7 @@ function GradientMap(feature){
                     })
                     .style("stroke-width", "1")
                     .style("stroke", "black")
-                    .on("click", click)
+                    .on("click", newThis.clickWithObservers)
                     .on("mouseover", newThis.mouseOver)
                     .on("mouseout", newThis.mouseOut);
                 
@@ -792,6 +804,18 @@ function GradientMap(feature){
     this.addObserver = function(map){
         this.observers.push(map);
         return this;
+    }
+    
+    this.clickWithObservers = function(){
+        
+        newThis.drawMap();
+        
+        for (var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].drawMap();
+            
+        }
+        
     }
     
     return this;
