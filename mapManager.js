@@ -37,7 +37,7 @@ function mapManager() {
     this.setMapColors = function(min_color, max_color){
         for(var i = 0; i < this.mapList.length; i += 1){
             this.mapList[i].setColors(min_color, max_color);
-            this.mapList[i].drawMap();
+            this.mapList[i].change_gradient(this.mapList[i].current_gradient);
         }
     }
 
