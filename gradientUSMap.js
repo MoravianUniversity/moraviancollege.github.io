@@ -133,6 +133,18 @@ function GradientMap(feature){
         
     }
     
+    this.mouseOutWithObservers = function(){
+        
+        newThis.mouseOut();
+        
+        for (var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].mouseOut();
+            
+        }
+        
+    }
+    
     this.mouseOver = function(d){
         
 
@@ -266,7 +278,7 @@ function GradientMap(feature){
                     })
                 .on("click", newThis.linkWithObservers)
                 .on("mouseover", newThis.mouseOverWithObservers)
-                .on("mouseout", newThis.mouseOut)
+                .on("mouseout", newThis.mouseOutWithObservers)
                 
             })
         })
@@ -801,7 +813,7 @@ function GradientMap(feature){
                     .style("stroke", "black")
                     .on("click", newThis.clickWithObservers)
                     .on("mouseover", newThis.mouseOverWithObservers)
-                    .on("mouseout", newThis.mouseOut);
+                    .on("mouseout", newThis.mouseOutWithObservers);
                 
             })
             
