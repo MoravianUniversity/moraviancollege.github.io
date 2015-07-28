@@ -61,7 +61,7 @@ function GradientMap(feature){
             .append("div")
             .attr("id", "comboDiv" + this.id.toString());
         
-        this.makeCombo();
+        //this.makeCombo();
         
         this.mapDiv = d3.select("#mapContainer")
             .append("div")
@@ -84,7 +84,7 @@ function GradientMap(feature){
                 .call(this.zoom)
                 .append("g");
             
-        }else{
+        } else {
             
             this.svg = this.mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
@@ -487,61 +487,61 @@ function GradientMap(feature){
         return rang;
         
     };
-    
+
     this.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
         var fancy_features = [];
         for(var x = 0; x < getFeatures().length; x++){
-        	var feat = getFeatures()[x];
-        	feat = feat.replace("_", "&nbsp");
-        	var feat_words = feat.split("&nbsp");
-        	feat = "";
-        	for(var i = 0; i < feat_words.length; i += 1) {
+            var feat = getFeatures()[x];
+            feat = feat.replace("_", "&nbsp");
+            var feat_words = feat.split("&nbsp");
+            feat = "";
+            for(var i = 0; i < feat_words.length; i += 1) {
 
-            	feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
-            	if(i != feat_words.length){
-                	feat_words[i] = feat_words[i] + "&nbsp";
-            	}
-				feat = feat + feat_words[i];
-			}
-			fancy_features.push(feat);
-		}
+                feat_words[i] = feat_words[i].charAt(0).toUpperCase() + feat_words[i].slice(1);
+                if(i != feat_words.length){
+                    feat_words[i] = feat_words[i] + "&nbsp";
+                }
+                feat = feat + feat_words[i];
+            }
+            fancy_features.push(feat);
+        }
         if(d == 0){
-        	if(Object.keys(getCountyDictionaries()).length && Object.keys(getStateDictionaries()).length === 1){
-        		return "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td> "+d.toFixed(2)+"</td></tr>"+"</table>";
-        	}
-        	else{
-        		var return_string = "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td>"+d.toFixed(2)+"</td></tr>";
-        		for(var x = 1; x < getFeatures().length; x++){
-        			var feature = getFeatures()[x];
-        			if(getCountyDictionaries()[feature][n] === undefined){
-        				return_string = return_string + "<tr><td>" + fancy_features[x] + ":</td><td>" + d.toFixed(2)+"</td></tr>";
-        			}
-        			else{
-        				return_string = return_string + "<tr><td>" + fancy_features[x] + ":</td><td>" + getCountyDictionaries()[feature][n].toFixed(2)+"</td></tr>";
-        			}
-        		}
-        		return return_string + "</table>";
-        	}       	
+            if(Object.keys(getCountyDictionaries()).length && Object.keys(getStateDictionaries()).length === 1){
+                return "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td> "+d.toFixed(2)+"</td></tr>"+"</table>";
+            }
+            else{
+                var return_string = "<h4>"+n+"</h4><table>"+"<tr><td>"+fancy_features[0]+":</td><td>"+d.toFixed(2)+"</td></tr>";
+                for(var x = 1; x < getFeatures().length; x++){
+                    var feature = getFeatures()[x];
+                    if(getCountyDictionaries()[feature][n] === undefined){
+                        return_string = return_string + "<tr><td>" + fancy_features[x] + ":</td><td>" + d.toFixed(2)+"</td></tr>";
+                    }
+                    else{
+                        return_string = return_string + "<tr><td>" + fancy_features[x] + ":</td><td>" + getCountyDictionaries()[feature][n].toFixed(2)+"</td></tr>";
+                    }
+                }
+                return return_string + "</table>";
+            }
         }
         else if(Object.keys(d).length == 1){
-        	var feature = getFeatures()[0];
-        	var specified_value = (Math.round(d[feature][n]*100)/100).toFixed(2);
-			return "<h4>"+n+"</h4><table>"+
-				"<tr><td>"+fancy_features[0]+":</td><td>"+(specified_value)+"</td></tr>"+
-				"</table>";
-		}
-		else{
-			return_string = "<h4>"+n+"</h4><table>";
-			for(var x = 0; x < Object.keys(d).length; x++){
-				var feature = getFeatures()[x];
-				if(x != Object.keys(d).length){
-					return_string = return_string +"<tr><td>" + fancy_features[x] + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2) +"</td>";
-				}
-				else{
-					return_string = return_string + "<td>" + fancy_features[x] + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2)+"</td></tr>";					
-        		}
-        	}
-        	return return_string + "</table>";
+            var feature = getFeatures()[0];
+            var specified_value = (Math.round(d[feature][n]*100)/100).toFixed(2);
+            return "<h4>"+n+"</h4><table>"+
+                "<tr><td>"+fancy_features[0]+":</td><td>"+(specified_value)+"</td></tr>"+
+                "</table>";
+        }
+        else{
+            return_string = "<h4>"+n+"</h4><table>";
+            for(var x = 0; x < Object.keys(d).length; x++){
+                var feature = getFeatures()[x];
+                if(x != Object.keys(d).length){
+                    return_string = return_string +"<tr><td>" + fancy_features[x] + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2) +"</td>";
+                }
+                else{
+                    return_string = return_string + "<td>" + fancy_features[x] + ":</td><td>" + (Math.round(d[feature][n]*100)/100).toFixed(2)+"</td></tr>";
+                }
+            }
+            return return_string + "</table>";
         }
     };
     
