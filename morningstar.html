@@ -22,7 +22,7 @@
 
 		<!-- Scripts
 	================================================== -->
-		 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> <!--Bootstrap-->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> <!--Bootstrap-->
 		<script type="text/javascript" src="d3/d3.v3.js"></script> <!--d3 Map Drawing-->
 		<script type="text/javascript" src="gradientUSMap.js"></script> <!--Map Drawing-->
 		<script type="text/javascript" src="jscolor/jscolor.js"></script> <!--Color Picker-->
@@ -110,9 +110,6 @@
 							<h4>Maximum Color:</h4>
 							<input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'redraw();' }" id="max_color_picker" value="002966"> <!--Redraws map every time the map is changed; type initially reads "002966" upon loading-->
 						</li>
-						<li class="sameLine" style="margin-top:12px;">
-							<button>Download</button>
-						</li>
 					</ul>
 				</div>
 			</article>
@@ -141,8 +138,7 @@
 						</div>
 					</div>
 					<div style="background-color: black"></div>
-					</div>
-					<button class="row col-xs-4 col-xs-offset-12 col-sm-3 col-sm-offset-10 col-md-2 col-md-offset-9 col-lg-2 col-lg-offset-8">Download</button>
+				</div>
 			</article>
 
 		</div>
@@ -382,6 +378,5 @@
 				map.setColors(String(getColor("min_color_picker")), String(getColor("max_color_picker"))).drawMap();
 			}
 		</script>
-
 	</body>
 </html>
