@@ -1939,6 +1939,7 @@ pre code {
   }
   .col-md-12 {
     width: 100%;
+    margin: 0 auto;
   }
   .col-md-11 {
     width: 91.66666667%;
@@ -1954,6 +1955,7 @@ pre code {
   }
   .col-md-7 {
     width: 58.33333333%;
+    margins: auto;
   }
   .col-md-6 {
     width: 50%;
