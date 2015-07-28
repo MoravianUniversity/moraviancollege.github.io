@@ -53,9 +53,21 @@ function GradientMap(feature){
         
     }
     
+    this.zoomWithObservers = function(){
+        
+        newThis.zoomed();
+        
+        for(var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].zoomed();
+            
+        }
+        
+    }
+    
     this.zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
-        .on("zoom", this.zoomed);
+        .on("zoom", this.zoomWithObservers);
     
     this.setup = function(){
         
@@ -168,6 +180,18 @@ function GradientMap(feature){
         
     }
     
+    this.mouseOverWithObservers = function(d){
+        
+        newThis.mouseOver(d);
+        
+        for (var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].mouseOver(d);
+            
+        }
+        
+    }
+    
     this.drawMap = function() {
         
         newThis.svg.selectAll("path").remove();
@@ -241,7 +265,7 @@ function GradientMap(feature){
                         
                     })
                 .on("click", newThis.linkWithObservers)
-                .on("mouseover", newThis.mouseOver)
+                .on("mouseover", newThis.mouseOverWithObservers)
                 .on("mouseout", newThis.mouseOut)
                 
             })
@@ -776,7 +800,7 @@ function GradientMap(feature){
                     .style("stroke-width", "1")
                     .style("stroke", "black")
                     .on("click", newThis.clickWithObservers)
-                    .on("mouseover", newThis.mouseOver)
+                    .on("mouseover", newThis.mouseOverWithObservers)
                     .on("mouseout", newThis.mouseOut);
                 
             })
