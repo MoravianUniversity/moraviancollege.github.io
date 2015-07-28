@@ -187,11 +187,9 @@
                 var i = 0;
 		        var dataState;
 		        var stateAbbr = this.state_abbreviations[stateName];
-
 		        for (i = 0; i < data.length; i++) {
                     //Grab state name
                     dataState = data[i].state;
-
                     //Grab data value, and convert from string to float
                     if (dataState === stateAbbr) {
                     	for(var x = 0; x < features.length; x++){
@@ -199,7 +197,6 @@
                     	}
             	        return parseFloat(data[i].poke_ratio);
         	        }
-
 		        }
 	        };
 	        
@@ -212,13 +209,10 @@
                 var len;
                 var str;
                 var k;
-
                 for (i = 0; i < data.length; i++) {
                     //Grab state name
                     dataCounty = data[i].county;
-
                     part = dataCounty.split(" ");
-
                     // if the last thing is county/borough get rid of it
                     len = part.length;
                     if (part[len-1] === "County" || part[len-1] === "Borough" || part[len-1] === "Parish") {
@@ -241,7 +235,6 @@
                         }
                         dataCounty = str;
                     }
-
                     if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
             	        //Grab data value, and convert from string to float
             	        for(var x = 0; x < features.length; x++){
@@ -332,21 +325,15 @@
 		    manager.addMap(map);
 		    manager.addMap(map2);
 		    manager.drawMaps();
-
 		    function getStateDictionaries(){
-
 	            return dict_of_state_dict;
 	
             }
-
             function getCountyDictionaries(){
-
 	            return dict_of_county_dict;
 	
             }
-
             function getFeatures(){
-
 	            return features;
 	
             }
