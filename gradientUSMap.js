@@ -25,6 +25,8 @@ function GradientMap(feature){
     this.min = "0";
     this.max = "0";
     this.current_gradient = 2;
+    this.manager = null;
+    this.observers = [];
     
 
     var newThis = this;
@@ -781,6 +783,16 @@ function GradientMap(feature){
         //newThis.drawMap(map_json_file, poke_data);
         newThis.drawMap();
     };
+    
+    this.setManager = function(man){
+        this.manager = man;
+        return this;
+    }
+    
+    this.addObserver = function(map){
+        this.observers.push(map);
+        return this;
+    }
     
     return this;
     

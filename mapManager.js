@@ -6,6 +6,8 @@ function mapManager() {
     
     this.addMap = function(map) {
         
+        map.setManager(this);
+        
         this.mapList.push(map);
         
         return this;
@@ -72,7 +74,6 @@ function mapManager() {
             this.mapList[i].setColors(String(getColor("min_color_picker")), String(getColor("max_color_picker"))).drawMap();
         };
     };
-
 
     return this;
 
