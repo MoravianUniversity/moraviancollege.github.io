@@ -10,6 +10,17 @@ function mapManager() {
         
         this.mapList.push(map);
         
+        if(this.mapList.length != 1){
+            
+            for(var i = 0; i < this.mapList.length - 1; i += 1){
+                
+                this.mapList[i].addObserver(this.mapList[this.mapList.length - 1]);
+                this.mapList[this.mapList.length - 1].addObserver(this.mapList[i]);
+                
+            }
+            
+        }
+        
         return this;
         
     };
