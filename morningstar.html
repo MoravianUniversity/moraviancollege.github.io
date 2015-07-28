@@ -95,7 +95,7 @@
 	    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1"><!--Bootstrap class to adjust for smaller screens-->
 	      <ul>
 	        <li class="sameLine first" style="margin-top:10px;">
-	          <button onclick="redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
+	          <button onclick="manager.redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
 	        </li>
 	        <li class="sameLine">
 	          <!--Gradient Level Menu-->
@@ -104,11 +104,11 @@
             <li class="sameLine">
               <!--Color Pickers (Customization tips at https://jscolor.com/try.php)-->
               <h4>Minimum Color:</h4>
-              <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'redraw();' }"  id="min_color_picker" value="EBF5FF"> <!--Redraws map every time the map is changed; type initially reads "EBF5FF" upon loading-->
+              <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'manager.redraw();' }"  id="min_color_picker" value="EBF5FF"> <!--Redraws map every time the map is changed; type initially reads "EBF5FF" upon loading-->
             </li>
 			<li class="sameLine">
               <h4>Maximum Color:</h4>
-		      <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'redraw();' }" id="max_color_picker" value="002966"> <!--Redraws map every time the map is changed; type initially reads "002966" upon loading-->
+		      <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'manager.redraw();' }" id="max_color_picker" value="002966"> <!--Redraws map every time the map is changed; type initially reads "002966" upon loading-->
 		    </li>
 		  </ul>
 		</div>
@@ -162,6 +162,7 @@
       
     <!-- USMapPoke.js builds map -->
     <script src="gradientUSMap.js"></script>
+    <script src="mapManager.js"></script>
     
     <script>
             
@@ -317,15 +318,20 @@
 		        .setRestFileName('poke.csv')
 		        .setFunctions(getStateValuesFunction, getCountyValuesFunction)
 		        .setStateAbbreviations(state_abbreviations)
-		        .setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file)
-		        .setup()
-		        .drawMap();
-		        //.setColors('#F8FF99','#002966');
-		        //.drawMap();
-		        //edit
-		        //.removeMap()
-		        //.setup()
-		        //.drawMap();
+		        .setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+		    
+		    var map2 = new GradientMap('poke_ratio')
+		        .setColors('#EBF5FF','#002966')
+		        .setRestFileName('poke.csv')
+		        .setFunctions(getStateValuesFunction, getCountyValuesFunction)
+		        .setStateAbbreviations(state_abbreviations)
+		        .setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+		    
+		    var manager = new mapManager();
+		    manager.addMap(map);
+		    manager.addMap(map2);
+		    manager.drawMaps();
+
 		    function getStateDictionaries(){
 
 	            return dict_of_state_dict;
