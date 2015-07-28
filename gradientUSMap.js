@@ -53,9 +53,21 @@ function GradientMap(feature){
         
     }
     
+    this.zoomWithObservers = function(){
+        
+        newThis.zoomed();
+        
+        for(var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].zoomed();
+            
+        }
+        
+    }
+    
     this.zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
-        .on("zoom", this.zoomed);
+        .on("zoom", this.zoomWithObservers);
     
     this.setup = function(){
         
@@ -121,6 +133,18 @@ function GradientMap(feature){
         
     }
     
+    this.mouseOutWithObservers = function(){
+        
+        newThis.mouseOut();
+        
+        for (var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].mouseOut();
+            
+        }
+        
+    }
+    
     this.mouseOver = function(d){
         
 
@@ -163,6 +187,18 @@ function GradientMap(feature){
             d3.select("#tooltip" + newThis.id.toString()).html(newThis.tooltipHtml(d.properties.NAME, 0))
                 .style("left", c_x)
                 .style("top", c_y);
+            
+        }
+        
+    }
+    
+    this.mouseOverWithObservers = function(d){
+        
+        newThis.mouseOver(d);
+        
+        for (var i = 0; i < newThis.observers.length; i += 1){
+            
+            newThis.observers[i].mouseOver(d);
             
         }
         
@@ -241,8 +277,8 @@ function GradientMap(feature){
                         
                     })
                 .on("click", newThis.linkWithObservers)
-                .on("mouseover", newThis.mouseOver)
-                .on("mouseout", newThis.mouseOut)
+                .on("mouseover", newThis.mouseOverWithObservers)
+                .on("mouseout", newThis.mouseOutWithObservers)
                 
             })
         })
@@ -776,8 +812,8 @@ function GradientMap(feature){
                     .style("stroke-width", "1")
                     .style("stroke", "black")
                     .on("click", newThis.clickWithObservers)
-                    .on("mouseover", newThis.mouseOver)
-                    .on("mouseout", newThis.mouseOut);
+                    .on("mouseover", newThis.mouseOverWithObservers)
+                    .on("mouseout", newThis.mouseOutWithObservers);
                 
             })
             
