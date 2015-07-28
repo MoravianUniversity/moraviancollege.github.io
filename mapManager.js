@@ -6,7 +6,20 @@ function mapManager() {
     
     this.addMap = function(map) {
         
+        map.setManager(this);
+        
         this.mapList.push(map);
+        
+        if(this.mapList.length != 1){
+            
+            for(var i = 0; i < this.mapList.length - 1; i += 1){
+                
+                this.mapList[i].addObserver(this.mapList[this.mapList.length - 1]);
+                this.mapList[this.mapList.length - 1].addObserver(this.mapList[i]);
+                
+            }
+            
+        }
         
         return this;
         
@@ -72,7 +85,6 @@ function mapManager() {
             this.mapList[i].setColors(String(getColor("min_color_picker")), String(getColor("max_color_picker"))).drawMap();
         };
     };
-
 
     return this;
 
