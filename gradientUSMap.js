@@ -19,9 +19,13 @@ function GradientMap(feature){
     this.feature_desired = feature;
     
     //map variables
+    this.svgScaler = 1;
+    this.columnWidth = "col-md-12";
+    this.columnMargin;
+
     this.comboExists = false;
-    this.w = 800;
-    this.h = 600;
+    this.w = 800 * this.svgScaler;
+    this.h = 600 * this.svgScaler;
     this.min = "0";
     this.max = "0";
     this.current_gradient = 2;
@@ -71,21 +75,22 @@ function GradientMap(feature){
     
     this.setup = function(){
         
-        d3.select("#mapContainer")
-            .append("div")
-            .attr("id", "comboDiv" + this.id.toString());
+        //d3.select("#mapContainer")
+        //    .append("div")
+        //    .attr("id", "comboDiv" + this.id.toString());
         
         //this.makeCombo();
         
         this.mapDiv = d3.select("#mapContainer")
             .append("div")
             .attr("id", "mapSVG" + this.id.toString())
+            .attr("class", this.columnWidth)
             .style("width", this.w.toString() + "px")
             //.style("height", this.h.toString() + "px");
-            .style("margin", "0 auto");
+            .style("margin", "0" + newThis.columnMargin);
         
         this.grad_svg = this.mapDiv.append("svg")
-            .attr("width", 800)
+            .attr("width", this.svgScaler * 800)
             .attr("height", 40);
         
         if(this.canZoom){
@@ -214,7 +219,7 @@ function GradientMap(feature){
         //Define map projection
         this.projection = d3.geo.albersUsa()
             .translate([this.w/2, this.h/2])
-            .scale([900]);
+            .scale([this.svgScaler * 900]);
         
         //Path of GeoJSON
         this.path = d3.geo.path()
@@ -341,7 +346,17 @@ function GradientMap(feature){
         this.getCountyValuesFunction = function2;
         return this;
     };
-    
+
+    this.setScaler = function(scale, column_width, column_margins) {
+        this.svgScaler = scale;
+        this.columnWidth =column_width;
+        this.columnMargin = column_margins;
+        this.w = 800 * this.svgScaler;
+        this.h = 600 * this.svgScaler;
+
+        return this;
+    };
+
    this.setColors = function(start, end){
         this.start_color = start;
         this.end_color = end;
@@ -392,7 +407,7 @@ function GradientMap(feature){
         newThis.grad_svg.select("#stateName").remove();
         //This is where the SVG generates the state name with x and y coordinates
         newThis.grad_svg.append("text")
-            .attr("x", 625)
+            .attr("x", this.svgScaler * 625)
             .attr("y", 30)
             .text(d.properties.name)
             .attr("fill", "black")
