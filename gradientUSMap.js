@@ -277,8 +277,8 @@ function GradientMap(feature){
                         
                     })
                 .on("click", newThis.linkWithObservers)
-                .on("mouseover", newThis.mouseOverWithObservers)
-                .on("mouseout", newThis.mouseOutWithObservers)
+                .on("mouseover", newThis.mouseOver)
+                .on("mouseout", newThis.mouseOut)
                 
             })
         })
@@ -540,6 +540,7 @@ function GradientMap(feature){
 
     this.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
         var fancy_features = [];
+        console.log(d);
         for(var x = 0; x < getFeatures().length; x++){
             var feat = getFeatures()[x];
             feat = feat.replace("_", "&nbsp");
@@ -812,8 +813,8 @@ function GradientMap(feature){
                     .style("stroke-width", "1")
                     .style("stroke", "black")
                     .on("click", newThis.clickWithObservers)
-                    .on("mouseover", newThis.mouseOverWithObservers)
-                    .on("mouseout", newThis.mouseOutWithObservers);
+                    .on("mouseover", newThis.mouseOver)
+                    .on("mouseout", newThis.mouseOut);
                 
             })
             
