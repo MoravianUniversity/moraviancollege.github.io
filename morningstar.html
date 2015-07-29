@@ -166,15 +166,6 @@
     
     <script>
             
-            var dict_of_state_dict = {};
-            var dict_of_county_dict = {};
-            var features = ["poke_ratio"];
-            for(var count = 0; count < features.length; count++){
-	            dict_of_state_dict[features[count]] = {};
-	            dict_of_county_dict[features[count]] = {};
-            }
-            var feature_desired = "poke_ratio";
-		    
 		    var changeColor = function(){
 		        
 		        map.setColor(String(getColor(min_color_picker)), String(getColor(max_color_picker)));
@@ -183,7 +174,7 @@
 		    
 		    
 		    //map parts
-		    var getStateValuesFunction = function(data, stateName) {
+		    var getStateValuesFunction = function(data, stateName, feature) {
                 var i = 0;
 		        var dataState;
 		        var stateAbbr = this.state_abbreviations[stateName];
@@ -193,34 +184,15 @@
                     //Grab data value, and convert from string to float
                     if (dataState === stateAbbr) {
                     	for(var x = 0; x < features.length; x++){
-                    		dict_of_state_dict[features[x]][stateName] = data[i][feature_desired];
+                    		dict_of_state_dict[feature][stateName] = data[i][feature];
                     	}
-            	        return parseFloat(data[i].poke_ratio);
+            	        return parseFloat(data[i][feature]);
         	        }
 		        }
 	        };
-	        
-	        //edit for video
-	        var getStateValuesFunctionMigrant = function(data, stateName) {
-                var i = 0;
-		        var dataState;
-		        var stateAbbr = this.state_abbreviations[stateName];
-		        for (i = 0; i < data.length; i++) {
-                    //Grab state name
-                    dataState = data[i].state;
-                    //Grab data value, and convert from string to float
-                    if (dataState === stateAbbr) {
-                    	for(var x = 0; x < features.length; x++){
-                    		dict_of_state_dict[features[x]][stateName] = data[i][feature_desired];
-                    	}
-            	        return parseFloat(data[i].migrant_housing);
-        	        }
-		        }
-	        };
-	        
 	        //end edit
 	        
-	        var getCountyValuesFunction = function(data, countyName) {
+	        var getCountyValuesFunction = function(data, countyName, feature) {
 		        //Merge the ag. data and GeoJSON
                 //Loop through once for each ag. data value
                 var i = 0;
@@ -258,61 +230,15 @@
                     if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
             	        //Grab data value, and convert from string to float
             	        for(var x = 0; x < features.length; x++){
-                    		dict_of_county_dict[features[x]][countyName] = data[i][feature_desired];
+                    		dict_of_county_dict[feature][countyName] = data[i][feature];
                     	}
-            	        return parseFloat(data[i].poke_ratio);
+            	        return parseFloat(data[i][feature]);
                     }
            
                 }
 	        };
 	        
 	        //edit for video
-	        
-	        var getCountyValuesFunctionMigrant = function(data, countyName) {
-		        //Merge the ag. data and GeoJSON
-                //Loop through once for each ag. data value
-                var i = 0;
-                var dataCounty;
-                var part;
-                var len;
-                var str;
-                var k;
-                for (i = 0; i < data.length; i++) {
-                    //Grab state name
-                    dataCounty = data[i].county;
-                    part = dataCounty.split(" ");
-                    // if the last thing is county/borough get rid of it
-                    len = part.length;
-                    if (part[len-1] === "County" || part[len-1] === "Borough" || part[len-1] === "Parish") {
-                        str = "";
-                        for (k = 0; k < len-1; k++) {
-                            str += part[k];
-                            if (k !== len-2) {
-                                str += " ";
-                            }
-                        }
-                        dataCounty = str;
-                    }
-                    else if (part[len-2] === "Census") {
-                        str = "";
-                        for (k = 0; k < len-2; k++) {
-                            str += part[k];
-                            if (k !== len-3) {
-                                str += " ";
-                            }
-                        }
-                        dataCounty = str;
-                    }
-                    if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
-            	        //Grab data value, and convert from string to float
-            	        for(var x = 0; x < features.length; x++){
-                    		dict_of_county_dict[features[x]][countyName] = data[i][feature_desired];
-                    	}
-            	        return parseFloat(data[i].migrant_housing);
-                    }
-           
-                }
-	        };
 	        
 	        // Ignore jslint for state names with multiple words
 	        var state_abbreviations = {};
@@ -385,7 +311,7 @@
 		    var map2 = new GradientMap('migrant_housing')
 		        .setColors('#EBF5FF','#002966')
 		        .setRestFileName('poke.csv')
-		        .setFunctions(getStateValuesFunctionMigrant, getCountyValuesFunctionMigrant)
+		        .setFunctions(getStateValuesFunction, getCountyValuesFunction)
 		        //.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 		        .setStateAbbreviations(state_abbreviations)
 		        .setPaths(map_json_file, "json/migrantHousing.csv", county_path_file, "json/migrantHousing/");
@@ -394,7 +320,18 @@
 		    var manager = new mapManager();
 			manager.makeCombo();
 		    manager.addMap(map);
-		    manager.addMap(map2);
+		    //manager.addMap(map2);
+		    var dict_of_state_dict = {};
+            var dict_of_county_dict = {};
+            var features = [];
+            for(var x = 0; x < manager.maps().length; x++) {
+            	features.push(manager.maps()[x].getFeat());
+            }
+            for(var count = 0; count < features.length; count++){
+	            dict_of_state_dict[features[count]] = {};
+	            dict_of_county_dict[features[count]] = {};
+            }
+            var feature_desired = "poke_ratio";
 		    manager.drawMaps();
 		    function getStateDictionaries(){
 	            return dict_of_state_dict;

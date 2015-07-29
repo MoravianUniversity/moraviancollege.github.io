@@ -2,10 +2,18 @@ function mapManager() {
     
     this.mapList = [];
     this.current_gradient = 2;
+    this.mapCounter = 0;
     var newThis = this;
-    
+
+	this.maps = function() {
+	
+		return newThis.mapList;
+		
+	}
+	
     this.addMap = function(map) {
-        
+        this.mapCounter ++;
+
         map.setManager(this);
         
         this.mapList.push(map);
@@ -26,9 +34,25 @@ function mapManager() {
     };
     
     this.drawMaps = function(){
-        
+        var scale;
+        var column_width;
+        var column_margin;
+
+        if (this.mapCounter == 1) {
+            scale = 1;
+            column_width = "row";
+            column_margin = " auto";
+
+        } else {
+            scale = 0.65;
+            column_width = "col-md-7 col-md-offset-1";
+            column_margin = " 2.5%"
+        }
+
         for(var i = 0; i < this.mapList.length; i += 1){
-            console.log(this.mapList[i]);
+            console.log(scale);
+            this.mapList[i].setScaler(scale, column_width, column_margin);
+            console.log(this.mapList[i].svgScaler);
             this.mapList[i].setup();
             this.mapList[i].drawMap();
         }
