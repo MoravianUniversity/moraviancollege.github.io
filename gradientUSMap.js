@@ -69,6 +69,12 @@ function GradientMap(feature){
         
     }
     
+    this.getFeat = function() {
+    
+    	return newThis.feature_desired;
+    	
+    }
+    
     this.zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
         .on("zoom", this.zoomWithObservers);
@@ -169,7 +175,7 @@ function GradientMap(feature){
             })();
 
             var c_x = event.screenX - x_offset +"px";
-            var c_y = window.pageYOffset + event.screenY - 300 + "px";
+            var c_y = window.pageYOffset + event.screenY - 200 + "px";
         }
         
         //state
@@ -267,7 +273,7 @@ function GradientMap(feature){
                     .attr("stroke-width", "1")
                     .style("fill", function(d) {
                         //Get data value
-                        d.properties.value = getStateValuesFunction(data, d.properties.name);
+                        d.properties.value = getStateValuesFunction(data, d.properties.name, newThis.feature_desired);
                         var value = d.properties.value;
                         
                         if(!continuous && value) {//If value exists...
@@ -282,8 +288,8 @@ function GradientMap(feature){
                         
                     })
                 .on("click", newThis.linkWithObservers)
-                .on("mouseover", newThis.mouseOverWithObservers)
-                .on("mouseout", newThis.mouseOutWithObservers)
+                .on("mouseover", newThis.mouseOver)
+                .on("mouseout", newThis.mouseOut)
                 
             })
         })
@@ -324,7 +330,7 @@ function GradientMap(feature){
             newThis.drawBoxes(val, newThis.max);
         }
         
-        d3.selectAll("path")
+        d3.select("#mapSVG" + newThis.id.toString()).selectAll("path")
             .style("fill", function(d){
                 //Get data value
                 var value = d.properties.value;
@@ -555,6 +561,7 @@ function GradientMap(feature){
 
     this.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
         var fancy_features = [];
+        console.log(d);
         for(var x = 0; x < getFeatures().length; x++){
             var feat = getFeatures()[x];
             feat = feat.replace("_", "&nbsp");
@@ -807,7 +814,7 @@ function GradientMap(feature){
                             d.properties.NAME += " City";
                         }
                         
-                        d.properties.value = newThis.getCountyValuesFunction(data, d.properties.NAME);
+                        d.properties.value = newThis.getCountyValuesFunction(data, d.properties.NAME, newThis.feature_desired);
                         var value = d.properties.value;
                         
                         if (newThis.max == newThis.min) {
@@ -827,8 +834,8 @@ function GradientMap(feature){
                     .style("stroke-width", "1")
                     .style("stroke", "black")
                     .on("click", newThis.clickWithObservers)
-                    .on("mouseover", newThis.mouseOverWithObservers)
-                    .on("mouseout", newThis.mouseOutWithObservers);
+                    .on("mouseover", newThis.mouseOver)
+                    .on("mouseout", newThis.mouseOut);
                 
             })
             
