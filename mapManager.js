@@ -5,7 +5,12 @@ function mapManager() {
     this.mapCounter = 0;
     var newThis = this;
 
-
+	this.maps = function() {
+	
+		return newThis.mapList;
+		
+	}
+	
     this.addMap = function(map) {
         this.mapCounter ++;
 

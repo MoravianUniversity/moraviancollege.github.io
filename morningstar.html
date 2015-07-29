@@ -165,17 +165,6 @@
 		<script src="mapManager.js"></script>
 
 		<script>
-						var dict_of_state_housing_dict = {};
-						var dict_of_state_dict = {};
-						var dict_of_county_dict = {};
-						var features = ["poke_ratio"];
-						for(var count = 0; count < features.length; count++){
-							dict_of_state_dict[features[count]] = {};
-							dict_of_county_dict[features[count]] = {};
-							dict_of_state_housing_dict = {};
-						}
-						var feature_desired1 = "poke_ratio";
-						var feature_desired2 = "migrant_housing";
 
 				var changeColor = function(){
 
@@ -185,24 +174,25 @@
 
 
 				//map parts
-				var getStateValuesFunction = function(data, stateName) {
-					var i = 0;
-					var dataState;
-					var stateAbbr = this.state_abbreviations[stateName];
-					for (i = 0; i < data.length; i++) {
-						//Grab state name
-						dataState = data[i].state;
-						//Grab data value, and convert from string to float
-						if (dataState === stateAbbr) {
-							for(var x = 0; x < features.length; x++){
-								dict_of_state_dict[features[x]][stateName] = data[i][feature_desired1];
-							}
-							return parseFloat(data[i].poke_ratio);
+				var getStateValuesFunction = function(data, stateName, feature) {
+								var i = 0;
+						var dataState;
+						var stateAbbr = this.state_abbreviations[stateName];
+						for (i = 0; i < data.length; i++) {
+										//Grab state name
+										dataState = data[i].state;
+										//Grab data value, and convert from string to float
+										if (dataState === stateAbbr) {
+											for(var x = 0; x < features.length; x++){
+												dict_of_state_dict[feature][stateName] = data[i][feature];
+											}
+											return parseFloat(data[i][feature]);
+									}
 						}
-					}
-				};
+					};
+					//end edit
 
-				/*var getStateValuesMigrant = function(data, stateName) {
+			/*var getStateValuesMigrant = function(data, stateName) {
 					var i = 0;
 					var dataState;
 					for (i = 0; i < data.length; i++) {
@@ -219,7 +209,7 @@
 					}
 				};*/
 
-					var getCountyValuesFunction = function(data, countyName) {
+					var getCountyValuesFunction = function(data, countyName, feature) {
 						//Merge the ag. data and GeoJSON
 								//Loop through once for each ag. data value
 								var i = 0;
@@ -257,13 +247,16 @@
 										if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
 											//Grab data value, and convert from string to float
 											for(var x = 0; x < features.length; x++){
-												dict_of_county_dict[features[x]][countyName] = data[i][feature_desired1];
+												dict_of_county_dict[feature][countyName] = data[i][feature];
 											}
-											return parseFloat(data[i].poke_ratio);
+											return parseFloat(data[i][feature]);
 										}
 
 								}
 					};
+
+					//edit for video
+
 					// Ignore jslint for state names with multiple words
 					var state_abbreviations = {};
 					state_abbreviations["Alabama"] = "AL";
@@ -321,7 +314,6 @@
 
 					//Create file paths. Used in setPaths function
 					var us_poke_data_file = " json/poke_ratio_correct2.csv";
-					//var migrant_housing_file = "json/CensusStateMigrantHousing.csv";
 					var map_json_file = "json/us-states.json";
 					var county_path_file = "json/stateJSON/";
 					var county_poke_data_file = "json/countyPokes/";
@@ -333,23 +325,36 @@
 						.setStateAbbreviations(state_abbreviations)
 						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
 
-			var map2 = new GradientMap('poke_ratio')
-						.setColors('#ADF500','#BD2066')
+				var map2 = new GradientMap('migrant_housing')
+						.setColors('#EBF5FF','#002966')
 						.setRestFileName('poke.csv')
 						.setFunctions(getStateValuesFunction, getCountyValuesFunction)
+						//.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 						.setStateAbbreviations(state_abbreviations)
-						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+						.setPaths(map_json_file, "json/migrantHousing.csv", county_path_file, "json/migrantHousing/");
+						//.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
 
-				/*var map2 = new GradientMap('migrant_housing')
+			/*var map2 = new GradientMap('migrant_housing')
 						.setColors('#EBF5FF','#002966')
 						.setRestFileName('census.csv')
 						.setFunction(getStateValuesMigrant)
 						.setPath(map_json_file, migrant_housing_file, county_path_file);*/
 
 				var manager = new mapManager();
-				manager.makeCombo();
+			manager.makeCombo();
 				manager.addMap(map);
-				manager.addMap(map2);
+				//manager.addMap(map2);
+				var dict_of_state_dict = {};
+						var dict_of_county_dict = {};
+						var features = [];
+						for(var x = 0; x < manager.maps().length; x++) {
+							features.push(manager.maps()[x].getFeat());
+						}
+						for(var count = 0; count < features.length; count++){
+							dict_of_state_dict[features[count]] = {};
+							dict_of_county_dict[features[count]] = {};
+						}
+						var feature_desired = "poke_ratio";
 				manager.drawMaps();
 				function getStateDictionaries(){
 							return dict_of_state_dict;
