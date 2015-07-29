@@ -155,7 +155,7 @@ function GradientMap(feature){
         }
         
     }
-    
+    var Location=this.id%2;
     this.mouseOver = function(d){
         
 
@@ -163,10 +163,18 @@ function GradientMap(feature){
         
         
         if(newThis.q[0] === "Gecko") {
+            if(Location==0){
             var coord = d3.mouse(this);
             var c_x = (coord[0] + 100) +"px";
-            var c_y = (coord[1] + 680 + (newThis.id * 650)) + "px";
-
+            var c_y = (coord[1] + 680 + (newThis.id* 200)) + "px";}
+            else{
+            var coord = d3.mouse(this);
+            if(newThis.id > 2){
+            var c_x = (coord[0] + 100+(newThis.id*125)) +"px"
+            var c_y = (coord[1] + 680+(newThis.id* 100)) + "px";}
+            else{
+            var c_x = (coord[0] + 100+(newThis.id*450)) +"px";
+            var c_y = (coord[1] + 680) + "px";}}
         } else{
             var x_offset = (function () {
                 var offset_temp = window.getComputedStyle(document.getElementById("Main_Content")).marginLeft;
