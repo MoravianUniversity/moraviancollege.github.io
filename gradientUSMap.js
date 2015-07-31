@@ -69,6 +69,12 @@ function GradientMap(feature){
         
     }
     
+    this.getFeat = function() {
+    
+    	return newThis.feature_desired;
+    	
+    }
+    
     this.zoom = d3.behavior.zoom()
         .scaleExtent([1, 10])
         .on("zoom", this.zoomWithObservers);
@@ -149,7 +155,7 @@ function GradientMap(feature){
         }
         
     }
-    
+    var Location=this.id%2;
     this.mouseOver = function(d){
         
 
@@ -157,10 +163,18 @@ function GradientMap(feature){
         
         //If the browser is Firefox or built with the Gecko engine
         if(newThis.q[0] === "Gecko") {
+            if(Location==0){
             var coord = d3.mouse(this);
             var c_x = (coord[0] + 100) +"px";
-            var c_y = (coord[1] + 680 + (newThis.id * 650)) + "px";
-
+            var c_y = (coord[1] + 680 + (newThis.id* 200)) + "px";}
+            else{
+            var coord = d3.mouse(this);
+            if(newThis.id > 2){
+            var c_x = (coord[0] + 100+(newThis.id*125)) +"px"
+            var c_y = (coord[1] + 680+(newThis.id* 100)) + "px";}
+            else{
+            var c_x = (coord[0] + 100+(newThis.id*450)) +"px";
+            var c_y = (coord[1] + 680) + "px";}}
         } else{
             var x_offset = (function () {
                 var offset_temp = window.getComputedStyle(document.getElementById("Main_Content")).marginLeft;
@@ -178,13 +192,9 @@ function GradientMap(feature){
             })();
 
 
-
-            //var zoom = detectZoom.zoom();
-
             var c_x = ((event.screenX - x_offset)/  zoom[0]) +"px";
             var c_y = ((window.pageYOffset + event.screenY - zoom[1])/zoom[0]) + "px";
-            //var c_x = event.screenX + "px";
-            //var c_y = event.screenY + "px";
+
 
             console.log("event.screenX ,", event.screenX + "px");
             console.log("event.screenY ,", event.screenY + "px");
@@ -286,7 +296,7 @@ function GradientMap(feature){
                     .attr("stroke-width", "1")
                     .style("fill", function(d) {
                         //Get data value
-                        d.properties.value = getStateValuesFunction(data, d.properties.name);
+                        d.properties.value = getStateValuesFunction(data, d.properties.name, newThis.feature_desired);
                         var value = d.properties.value;
                         
                         if(!continuous && value) {//If value exists...
@@ -301,8 +311,8 @@ function GradientMap(feature){
                         
                     })
                 .on("click", newThis.linkWithObservers)
-                .on("mouseover", newThis.mouseOverWithObservers)
-                .on("mouseout", newThis.mouseOutWithObservers)
+                .on("mouseover", newThis.mouseOver)
+                .on("mouseout", newThis.mouseOut)
                 
             })
         })
@@ -343,7 +353,7 @@ function GradientMap(feature){
             newThis.drawBoxes(val, newThis.max);
         }
         
-        d3.selectAll("path")
+        d3.select("#mapSVG" + newThis.id.toString()).selectAll("path")
             .style("fill", function(d){
                 //Get data value
                 var value = d.properties.value;
@@ -574,6 +584,7 @@ function GradientMap(feature){
 
     this.tooltipHtml = function(n, d){    /* function to create html content string in tooltip div. */
         var fancy_features = [];
+        console.log(d);
         for(var x = 0; x < getFeatures().length; x++){
             var feat = getFeatures()[x];
             feat = feat.replace("_", "&nbsp");
@@ -826,7 +837,7 @@ function GradientMap(feature){
                             d.properties.NAME += " City";
                         }
                         
-                        d.properties.value = newThis.getCountyValuesFunction(data, d.properties.NAME);
+                        d.properties.value = newThis.getCountyValuesFunction(data, d.properties.NAME, newThis.feature_desired);
                         var value = d.properties.value;
                         
                         if (newThis.max == newThis.min) {
@@ -846,8 +857,8 @@ function GradientMap(feature){
                     .style("stroke-width", "1")
                     .style("stroke", "black")
                     .on("click", newThis.clickWithObservers)
-                    .on("mouseover", newThis.mouseOverWithObservers)
-                    .on("mouseout", newThis.mouseOutWithObservers);
+                    .on("mouseover", newThis.mouseOver)
+                    .on("mouseout", newThis.mouseOut);
                 
             })
             
