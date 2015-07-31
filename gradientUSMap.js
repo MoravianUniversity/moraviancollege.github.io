@@ -155,7 +155,7 @@ function GradientMap(feature){
 
         d3.select("#tooltip" + newThis.id.toString()).transition().duration(200).style("opacity", 0.9);
         
-        
+        //If the browser is Firefox or built with the Gecko engine
         if(newThis.q[0] === "Gecko") {
             var coord = d3.mouse(this);
             var c_x = (coord[0] + 100) +"px";
@@ -168,8 +168,27 @@ function GradientMap(feature){
                 return Number(offset_temp.substr(0, length));
             })();
 
-            var c_x = event.screenX - x_offset +"px";
-            var c_y = window.pageYOffset + event.screenY - 300 + "px";
+            var zoom = (function () {
+                var zoom_temp = detectZoom.zoom();
+                if (zoom_temp > 1.0) {
+                    return zoom = [zoom_temp, 175];
+                } else {
+                    return zoom = [zoom_temp, 300];
+                }
+            })();
+
+
+
+            //var zoom = detectZoom.zoom();
+
+            var c_x = ((event.screenX - x_offset)/  zoom[0]) +"px";
+            var c_y = ((window.pageYOffset + event.screenY - zoom[1])/zoom[0]) + "px";
+            //var c_x = event.screenX + "px";
+            //var c_y = event.screenY + "px";
+
+            console.log("event.screenX ,", event.screenX + "px");
+            console.log("event.screenY ,", event.screenY + "px");
+            console.log("Zoom:", detectZoom.zoom());
         }
         
         //state
