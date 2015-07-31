@@ -38,7 +38,7 @@ svg {
 	color: black;
 }
 #tooltip {   
-	position: absolute;           
+	position: absolute;
 	text-align: left;
 	padding: 20px;             
 	margin: 10px;
@@ -55,6 +55,7 @@ svg {
 	text-align: center;
 }
 .tooltip{
+	position: fixed;
 	background:rgba(0,0,0,0.9);
 	border:1px solid grey;
 	border-radius:5px;
