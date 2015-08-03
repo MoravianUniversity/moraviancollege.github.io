@@ -97,6 +97,9 @@
 					<li class="sameLine first" style="margin-top:10px;">
 						<button onclick="manager.redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
 					</li>
+					<!--<li class="sameLine" style="margin-top:10px;">
+						<button onclick="manager.addMap(map2);">Add Map</button><!--Resets map to original view (does not reset color gradient)-->
+					<!--</li> -->
 					<li class="sameLine">
 						<!--Gradient Level Menu-->
 						<div id="comboDiv"><h4>Gradient Level</h4></div>
@@ -191,23 +194,6 @@
 						}
 					};
 					//end edit
-
-			/*var getStateValuesMigrant = function(data, stateName) {
-					var i = 0;
-					var dataState;
-					for (i = 0; i < data.length; i++) {
-						//Grab state name
-						dataState = data[i].NAME;
-						console.log(dataState);
-						//Grab data value, and convert from string to float
-						if (dataState === stateName) {
-							for(var x = 0; x < features.length; x++){
-								dict_of_state_housing_dict[features[x]][stateName] = data[i][feature_desired2];
-							}
-							return parseFloat(data[i].H0050007);
-						}
-					}
-				};*/
 
 					var getCountyValuesFunction = function(data, countyName, feature) {
 						//Merge the ag. data and GeoJSON
@@ -334,16 +320,11 @@
 						.setPaths(map_json_file, "json/migrantHousing.csv", county_path_file, "json/migrantHousing/");
 						//.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
 
-			var map3 = new GradientMap('migrant_housing')
-						.setColors('#EBF5FF','#002966')
-						.setRestFileName('census.csv')
-						.setFunction(getStateValuesMigrant)
-						.setPath(map_json_file, migrant_housing_file, county_path_file);*/
 
 				var manager = new mapManager();
 			manager.makeCombo();
 				manager.addMap(map);
-				manager.addMap(map2);
+				//manager.addMap(map2);
 				var dict_of_state_dict = {};
 						var dict_of_county_dict = {};
 						var features = [];
