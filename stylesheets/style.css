@@ -48,11 +48,11 @@ svg {
 	border-radius: 2px;           
 	pointer-events: none;         
 }
-#tooltip h4{
+.tooltip h4{
 	color: skyblue;
 	margin:0;
 	font-size:14px;
-	text-align: center;
+	text-align: left;
 }
 .tooltip{
 	position: fixed;
