@@ -28,6 +28,7 @@
 	<script type="text/javascript" src="gradientUSMap.js"></script> <!--Map Drawing-->
     <script type="text/javascript" src="jscolor/jscolor.js"></script> <!--Color Picker-->
     <script type="text/javascript" src="js/bootstrap.min.js"></script> <!--Bootstrap-->
+	<script type="text/javascript" src="js_detect_zoom/detect-zoom.js"></script>
 
     <!--Browser Tab Icon-->
 	<link rel="shortcut icon" href="images/mocostar.png">
@@ -334,7 +335,10 @@
 	            dict_of_county_dict[features[count]] = {};
             }
             var feature_desired = "poke_ratio";
+
 		    manager.drawMaps();
+
+
 		    function getStateDictionaries(){
 	            return dict_of_state_dict;
 	
