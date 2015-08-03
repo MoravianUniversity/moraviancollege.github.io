@@ -159,7 +159,7 @@ function GradientMap(feature){
     this.mouseOver = function(d){
         
 
-        d3.select("#tooltip" + newThis.id.toString()).transition().duration(200).style("opacity", 0.9);
+        d3.select("#tooltip" + newThis.id.toString()).transition().duration(200).style("opacity", 0.97);
         
         //If the browser is Firefox or built with the Gecko engine
         if(newThis.q[0] === "Gecko") {
