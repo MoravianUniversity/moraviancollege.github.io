@@ -239,6 +239,32 @@
                 }
 	        };
 	        
+	        //use this function for the migrant housing dataset
+            var getCensusStateValuesFunction = function(data, stateName){    
+                var jsonFile;
+                var dataState;
+                var value;
+
+                var xhReq = new XMLHttpRequest();
+                xhReq.open("GET", "json/StateMigrantHousing2010.json", false);
+                xhReq.send(null);
+                jsonFile = JSON.parse(xhReq.responseText);
+
+                for (i = 0; i < jsonFile.length; i++) {
+                    //Grab state name
+                    dataState = jsonFile[i][1];
+
+                    //Grab data value, and convert from string to float
+                    if (dataState === stateName) {
+                        for(var x = 0; x < features.length; x++){
+                            dict_of_state_dict[features[x]][stateName] = jsonFile[i][0];
+                        }
+                        value = parseFloat(jsonFile[i][0]);
+                        return value;
+                    }
+                }
+            };
+	        
 	        //edit for video
 	        
 	        // Ignore jslint for state names with multiple words
