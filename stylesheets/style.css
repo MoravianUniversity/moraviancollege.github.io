@@ -38,7 +38,7 @@ svg {
 	color: black;
 }
 #tooltip {   
-	position: absolute;           
+	position: absolute;
 	text-align: left;
 	padding: 20px;             
 	margin: 10px;
@@ -48,13 +48,14 @@ svg {
 	border-radius: 2px;           
 	pointer-events: none;         
 }
-#tooltip h4{
+.tooltip h4{
 	color: skyblue;
 	margin:0;
 	font-size:14px;
-	text-align: center;
+	text-align: left;
 }
 .tooltip{
+	position: fixed;
 	background:rgba(0,0,0,0.9);
 	border:1px solid grey;
 	border-radius:5px;
