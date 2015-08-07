@@ -7,6 +7,7 @@
 	<title>CS Projects: MorningStar</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
+	
 
 	<!-- Mobile Specific Metas
 	================================================== -->
@@ -339,17 +340,17 @@
 
 				var map2 = new GradientMap('migrant_housing')
 						.setColors('#EBF5FF','#002966')
-						.setRestFileName('poke.csv')
+						.setRestFileName('migrantHousing.csv')
 						.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 						//.setFunctions(getStateValuesFunction, getCountyValuesFunction)
 						.setStateAbbreviations(state_abbreviations)
-						.setPaths(map_json_file, "json/migrantHousing.csv", county_path_file, "json/migrantHousing/");
+						.setPaths(map_json_file, "json/CensusMigrantHousingState.csv", county_path_file, "json/migrantHousing/");
 						//.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
 
 				var manager = new mapManager();
 			manager.makeCombo();
 				manager.addMap(map);
-				//manager.addMap(map2);
+				manager.addMap(map2);
 
 				var dict_of_state_dict = {};
 						var dict_of_county_dict = {};
