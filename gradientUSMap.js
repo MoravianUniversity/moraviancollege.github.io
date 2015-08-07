@@ -86,7 +86,8 @@ function GradientMap(feature){
         //    .attr("id", "comboDiv" + this.id.toString());
         
         //this.makeCombo();
-        
+
+        // Creates the map div
         this.mapDiv = d3.select("#mapContainer")
             .append("div")
             .attr("id", "mapSVG" + this.id.toString())
@@ -94,11 +95,13 @@ function GradientMap(feature){
             .style("width", this.w.toString() + "px")
             //.style("height", this.h.toString() + "px");
             .style("margin", "0" + newThis.columnMargin);
-        
+
+        // Appends an svg with the map controls/gradient to the div
         this.grad_svg = this.mapDiv.append("svg")
             .attr("width", this.svgScaler * 800)
             .attr("height", 40);
-        
+
+        // Checks to see if the zoom function is compatible with the web browser being used
         if(this.canZoom){
             
             this.svg = this.mapDiv.append("svg")
@@ -110,7 +113,7 @@ function GradientMap(feature){
                 .append("g");
             
         } else {
-            
+            // Appends an svg to the div for us to put a map into
             this.svg = this.mapDiv.append("svg")
                 .attr("style", "border: thin solid gray; border-radius: 5px;")
                 .attr("width", this.w)
@@ -119,7 +122,7 @@ function GradientMap(feature){
                 .append("g");
             
         }
-        
+
         d3.select("#mapContainer")
             .append("div")
             .attr("id", "tooltip" + this.id.toString())
@@ -128,9 +131,10 @@ function GradientMap(feature){
         return this;
         
     };
-    
+
+    // This function resets the map to its original scale and position
     this.reset = function(){
-    
+
         this.zoom.scale(1);
         this.zoom.translate([0, 0]);
         this.svg.transition().duration(0).
@@ -317,6 +321,7 @@ function GradientMap(feature){
                         }
                         
                     })
+                // Apply these attributes to this map object
                 .on("click", newThis.linkWithObservers)
                 .on("mouseover", newThis.mouseOver)
                 .on("mouseout", newThis.mouseOut)
@@ -466,9 +471,8 @@ function GradientMap(feature){
         this.rest_of_filename = new_name;
         return this;
     };
-    
-    this.drawBoxes = function(boxNum){
 
+    this.drawBoxes = function(boxNum){
 
         var colorArray = makeRange(boxNum, newThis.start_color, newThis.end_color);
         newThis.grad_svg.selectAll(".rectangle").remove();
@@ -696,7 +700,9 @@ function GradientMap(feature){
         });
         
     };
-    
+
+    // This function computes the geometric center of each state based on the furthest points of the country/state
+    // rather than the center of mass
     this.computeCenter = function(data){
         
         var nums = [];
@@ -865,6 +871,7 @@ function GradientMap(feature){
                             return "#ccc";
                         }
                     })
+                    // Apply these attributes to this map object
                     .style("stroke-width", "1")
                     .style("stroke", "black")
                     .on("click", newThis.clickWithObservers)
