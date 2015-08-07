@@ -271,6 +271,13 @@ function GradientMap(feature){
             
             newThis.min = d3.min(data, function(d) { return +d[newThis.feature_desired]; }).toString();
             newThis.max = d3.max(data, function(d) { return +d[newThis.feature_desired]; }).toString();
+            
+            //use this for migrant housing dataset
+			//var newMin = 8;
+			//var newMax = 2209;
+			//newThis.min = newMin.toString();
+			//newThis.max = newMax.toString();
+			
             if(!continuous){
                 
                 color.domain([newThis.min, newThis.max]);
@@ -624,6 +631,10 @@ function GradientMap(feature){
             return "<h4>"+n+"</h4><table>"+
                 "<tr><td>"+fancy_features[0]+":</td><td>"+(specified_value)+"</td></tr>"+
                 "</table>";
+            //use this for migrant housing dataset
+			/* return "<h4>"+n+"</h4><table>"+
+				"<tr><td>"+"Migrant Housing"+":</td><td>"+(specified_value)+"</td></tr>"+
+				"</table>"; */
         }
         else{
             return_string = "<h4>"+n+"</h4><table>";
