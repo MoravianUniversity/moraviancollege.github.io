@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+	<head>
+
+		<!-- Basic Page Needs
+		================================================== -->
+		<meta charset="utf-8">
+		<title>CS Projects: OpenMRS</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<!-- Mobile Specific Metas
+		================================================== -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<!-- CSS
+		================================================== -->
+		<link rel="stylesheet" type="text/css" href="stylesheets/base.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/skeleton.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/layout.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/style.css"><!--Map-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css"> <!--Bootstrap-->
+
+		<!--Browser Tab Icon-->
+		<link rel="shortcut icon" href="images/mocostar.png">
+
+	</head>
+	<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<!--Header-->
+
+	<header id="header" class="site-header" role="banner">
+		<div class="container sixteen columns over">
+			<h1 id="site-title" class="site-title">
+				<a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+			</h1>
+		</div>
+	</header>
+
+	<!--Page Body-->
+	<div id="Main_Content" class="container">
+		<div class="sixteen columns main-content">
+			<!--Back Button-->
+			<script> function visitPage(){
+					window.location='index.html';
+					}
+			</script>
+			<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
+			<!--Page Title-->
+			<h1 style="text-align:center;">OpenMRS</h1>
+			<br>
+		</div>
+
+		<!--Side Bar-->
+
+		<div class="container">
+			<aside class="six columns right-sidebar">
+				<div class="sidebar-widget social">
+					<img src="images/piecharts.png" class="scale-with-grid" style="border:1px solid lightgrey;border-radius:5px;">
+					<br>
+					<hr>
+					<h4 style="text-align:center">Student Developers:</h4>
+					<p>Myles Barros, Megan Biernat, Jason Boccuti, David Cariello, Steve Chakif, Lewis Cooper, Alec Gerhart, Justin Dilts, Michael Eckhart, Nick Forouraghi, Karli Gnehm, Rachel Johnson, Charlie McDonald, Jesse Perry, Vincent Pillinger, Alli Samson, Alek Szilagy</p>
+
+					<h4 style="text-align:center">About the Project</h4>
+					<p>This project was a result of a partnership between <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a> and <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a> based on mutual interest in OpenMRS. Students from the senior capstone course designed the prototype, and a team of summer research students implemented the module. Through this experience, students were exposed to a wide variety of technologies they would not normally see in the undergraduate curriculum. They also had the opportunity to apply skills developed in an academic setting to a real-world problem. <a href="http://openmrs.org/" style="font-size:14px;color:SkyBlue">OpenMRS</a> has expressed interest in the module, and this collaboration will continue during the 2014-2015 academic year.</p>
+
+					<p>If you'd like to check out the project's Github, the repository is located <a href="https://github.com/MoravianOpenMRS/openmrs-module-dataaggregation" style="font-size:14px;color:SkyBlue">here</a>.</p>
+				</div>
+			</aside>
+
+			<!--Main Content-->
+
+			<article class="eleven columns main-content">
+				<img src="images/diseaseovertime.png" class="scale-with-grid" style="border:1px solid lightgrey;border-radius:5px;">
+				<p></p>
+				<h3>Example: Trends Over Time</h3>
+				<p>A hospital administrator wants to see the trends in disease burden during an 8-month period. For the nine diseases of interest, she queries her hospital’s OpenMRS instance for the disease burden for each month. Graphing the data, she discovers that the cases of influenza have decreased while the number of cases of viral meningitis have risen.</p>
+				<hr>
+				<br>
+
+				<img src="images/bargraph.png" class="scale-with-grid" style="border:1px solid lightgrey;border-radius:5px;">
+				<p></p>
+				<h3>Example: Regional Data</h3>
+				<p>A government official wants to know how cities are coping with various diseases. His sends a query to OpenMRS instances at seven different cities with parameters that specify the diseases of interest. By tallying the results, the official is able to visually compare the disease burden between the cities and see that Dar.es.Salaam has the largest number of cases for all three diseases.</p>
+				<br>
+			</article>
+		</div>
+
+		<!--Footer-->
+
+		<footer>
+			<div class="row">
+				<div id="footer-base">
+					<div class="container">
+						<div class="two columns">
+							<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+						</div>
+						<div class="two columns far-edge">
+							Design by <a href="http://www.opendesigns.org">OD</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	</body>
+</html>
