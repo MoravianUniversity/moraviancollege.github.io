@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-  <head>
+	<head>
 
 	<!-- Basic Page Needs
-  ================================================== -->
+	================================================== -->
 	<meta charset="utf-8">
 	<title>CS Projects: MorningStar</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
 	<!-- Mobile Specific Metas
-  ================================================== -->
+	================================================== -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!-- CSS
-  ================================================== -->
+	================================================== -->
 	<link rel="stylesheet" type="text/css" href="stylesheets/base.css"><!--Web Page-->
 	<link rel="stylesheet" type="text/css" href="stylesheets/skeleton.css"><!--Web Page-->
 	<link rel="stylesheet" type="text/css" href="stylesheets/layout.css"><!--Web Page-->
-    <link rel="stylesheet" type="text/css" href="stylesheets/style.css"><!--Map-->
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css"> <!--Bootstrap-->
-    
-    <!-- Scripts
-  ================================================== -->
- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> <!--Bootstrap-->
-    <script type="text/javascript" src="d3/d3.v3.js"></script> <!--d3 Map Drawing-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/style.css"><!--Map-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css"> <!--Bootstrap-->
+
+		<!-- Scripts
+	================================================== -->
+	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> <!--Bootstrap-->
+		<script type="text/javascript" src="d3/d3.v3.js"></script> <!--d3 Map Drawing-->
 	<script type="text/javascript" src="gradientUSMap.js"></script> <!--Map Drawing-->
-    <script type="text/javascript" src="jscolor/jscolor.js"></script> <!--Color Picker-->
-    <script type="text/javascript" src="js/bootstrap.min.js"></script> <!--Bootstrap-->
+		<script type="text/javascript" src="jscolor/jscolor.js"></script> <!--Color Picker-->
+		<script type="text/javascript" src="js/bootstrap.min.js"></script> <!--Bootstrap-->
 	<script type="text/javascript" src="js_detect_zoom/detect-zoom.js"></script>
 
-    <!--Browser Tab Icon-->
+		<!--Browser Tab Icon-->
 	<link rel="shortcut icon" href="images/mocostar.png">
 
-  </head>
-  <body>
+	</head>
+	<body>
 
 	<!-- Primary Page Layout
 	================================================== -->
@@ -41,87 +41,89 @@
 	<!--Header-->
 
 	<header id="header" class="site-header" role="banner">
-      <div class="container sixteen columns over">
-        <h1 id="site-title" class="site-title">
-          <a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
-        </h1>
-      </div>
-    </header>
+			<div class="container sixteen columns over">
+				<h1 id="site-title" class="site-title">
+					<a href="index.html" id="logo"><img src="images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+				</h1>
+			</div>
+		</header>
 
-    <!--Page Body-->
+		<!--Page Body-->
 
 	<div id="Main_Content" class="container">
-	  <div class="sixteen columns main-content">
-	    <!--Back Button-->
-	    <script> function visitPage(){
-          window.location='index.html'; 
-          }
-	    </script>
-	    <button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
-	    <!--Page Title-->
-	    <h1 style="text-align:center;">MorningStar</h1>
-	  </div>
-	
-	  <!--Left-Hand Side Bar-->
-	
-	  <aside class="six columns right-sidebar">
-        <div class="sidebar-widget social">
-		  <h4 style="text-align:center">Student Developers:</h4>
-		  <p>Megan Biernat, Jason Boccuti, Steve Chakif, Lewis Cooper, William Collins, Jon Diehl, Alec Gerhart, Hansen Huang, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, Michael Vitone, John Vonelli</p>
-		
-		  <h4 style="text-align:center">About the Project</h4>
-	      <p>MorningStar is a collaboration of Merck Co, DocGraph, and Moravian College to provide students an opportunity to work directly with data, specifically in this case, that of diabetes and HA1c test poke ratios. We want to be able to develop a good way to visualize the analyzed data in a map. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a>, the HA1c test data was supplied by <a href="http://www.docgraph.org" style="font-size:14px;color:SkyBlue">DocGraph</a>, and the developing teams of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p> 
-        </div>
-      </aside>
-    
-      <!--Main Content-->
-    
-      <article class="ten columns main-content">  
-        <div id="pageTitle">
-          <br>
-	      <p>If you'd like to check out the blog that the group has written about the progress of the project, you can click <a href="http://morningstar.moravian.edu/" style="font-size:14px;color:SkyBlue">here</a>, or for the Github repository for the project is located <a href="https://github.com/MoravianCollege/moraviancollege.github.io" style="font-size:14px;color:SkyBlue">here</a>.</p>
-		  
-		  <h3 style="text-align:center">Map Description</h3>
-		  <p>The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The average poke ratio across the United States is 1.63; State ratio ranges from a minimum of 1.39 to a maximum of 1.79. The map below shows poke ratio per state (including Puerto Rico) by Blue-White Scale, while areas without any data available are in grey. You may change the gradient level and colors for more details.</p>
-			
-		  <p>Directions: To navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Reload Map Button.</p>
-		  <p>* Note - The zoom function is not compatible with Mozilla Firefox.</p>
-	    </div>
-	  </article>
-	  
-	  <!--Map Tools-->
-	  
-	  <article class="sixteen columns main-content">
-	    <hr>
-	    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1"><!--Bootstrap class to adjust for smaller screens-->
-	      <ul>
-	        <li class="sameLine first" style="margin-top:10px;">
-	          <button onclick="manager.redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
-	        </li>
-	        <li class="sameLine">
-	          <!--Gradient Level Menu-->
-		      <div id="comboDiv"><h4>Gradient Level</h4></div>
-		    </li>
-            <li class="sameLine">
-              <!--Color Pickers (Customization tips at https://jscolor.com/try.php)-->
-              <h4>Minimum Color:</h4>
-              <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'recolor();' }"  id="min_color_picker" value="EBF5FF"> <!--Redraws map every time the map is changed; type initially reads "EBF5FF" upon loading-->
-            </li>
-			<li class="sameLine">
-              <h4>Maximum Color:</h4>
-		      <input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'recolor();' }" id="max_color_picker" value="002966"> <!--Redraws map every time the map is changed; type initially reads "002966" upon loading-->
-		    </li>
-		  </ul>
+		<div class="sixteen columns main-content">
+			<!--Back Button-->
+			<script> function visitPage(){
+					window.location='index.html';
+					}
+			</script>
+			<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
+			<!--Page Title-->
+			<h1 style="text-align:center;">MorningStar</h1>
 		</div>
-	  </article>
-	  
-	  <!--Map SVG and Spinner-->
-	  
-	  <article class="sixteen columns main-content">
+
+		<!--Left-Hand Side Bar-->
+
+		<aside class="six columns right-sidebar">
+				<div class="sidebar-widget social">
+			<h4 style="text-align:center">Student Developers:</h4>
+			<p>Megan Biernat, Jason Boccuti, Steve Chakif, Lewis Cooper, William Collins, Jon Diehl, Alec Gerhart, Hansen Huang, Anna Lamoureux, Steve MacDonald, Charles McDonald, Martin Nesbitt, Andrew Reed, Josh Russett, Michael Turnbach, Michael Vitone, John Vonelli</p>
+
+			<h4 style="text-align:center">About the Project</h4>
+				<p>MorningStar is a collaboration of Merck Co, DocGraph, and Moravian College to provide students an opportunity to work directly with data, specifically in this case, that of diabetes and HA1c test poke ratios. We want to be able to develop a good way to visualize the analyzed data in a map. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a>, the HA1c test data was supplied by <a href="http://www.docgraph.org" style="font-size:14px;color:SkyBlue">DocGraph</a>, and the developing teams of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p>
+
+			<p>If you'd like to check out the blog that the group has written about the progress of the project, you can click <a href="http://morningstar.moravian.edu/" style="font-size:14px;color:SkyBlue">here</a>, or for the Github repository for the project is located <a href="https://github.com/MoravianCollege/moraviancollege.github.io" style="font-size:14px;color:SkyBlue">here</a>.</p>
+				</div>
+			</aside>
+
+			<!--Main Content-->
+
+			<article class="ten columns main-content">
+				<div id="pageTitle">
+
+			<h3 style="text-align:center">Map Description</h3>
+			<p>We want to be able to show easy-to-understand maps so that one can effectively explore multiple data sets on a large scale and create hypotheses about possible links between elements before then taking it to a more complex data analysis tool. Even though the project started out as a data visualization of HA1c data, it has morphed into a much more generalized tool that can be used to visualized any data sats. At the moment, the data sets being using are HA1c poke ratio and migrant housing, but any number of data sets could be used and compared in the future. See the ReadMe.md of the repository for more details.</p>
+
+			<p>The Hemoglobin A1c (HA1c) test is a blood test measuring the average blood sugar level over the past 2 to 3 months, and is used to see how well a person's diabetes is being controlled. Poke ratio is a ratio represented by the average number of tests done per patient over the number of tests, with an ideal number of 4 tests per year per patient. The Medicare billing data used in this project is collected in 2013. The maps below show poke ratio (left) and migrant housing (right) by Blue-White Scale, while areas without any data available are in grey. You may change the gradient level and colors for more details.</p>
+
+			<p>Play around with the data! To navigate the map simply click on any state to enter the state and view county data. To return to the Country Map, click on the state again or click on Reload Map Button. You can pan by dragging the map around and zoom by scrolling. See if you can find any patterns between the two.</p>
+			<p>* Note - The zoom function is not compatible with Mozilla Firefox.</p>
+			</div>
+		</article>
+
+		<!--Map Tools-->
+
+		<article class="sixteen columns main-content">
+			<hr>
+			<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1"><!--Bootstrap class to adjust for smaller screens-->
+				<ul>
+					<li class="sameLine first" style="margin-top:10px;">
+						<button onclick="manager.redraw();">Reload Map</button><!--Resets map to original view (does not reset color gradient)-->
+					</li>
+					<li class="sameLine">
+						<!--Gradient Level Menu-->
+					<div id="comboDiv"><h4>Gradient Level</h4></div>
+				</li>
+						<li class="sameLine">
+							<!--Color Pickers (Customization tips at https://jscolor.com/try.php)-->
+							<h4>Minimum Color:</h4>
+							<input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'recolor();' }"  id="min_color_picker" value="EBF5FF"> <!--Redraws map every time the map is changed; type initially reads "EBF5FF" upon loading-->
+						</li>
+			<li class="sameLine">
+							<h4>Maximum Color:</h4>
+					<input class="color {pickerFaceColor:'#003c67',pickerFace:3,pickerBorder:0,pickerInsetColor:'black',onImmediateChange:'recolor();' }" id="max_color_picker" value="002966"> <!--Redraws map every time the map is changed; type initially reads "002966" upon loading-->
+				</li>
+			</ul>
+		</div>
+		</article>
+
+		<!--Map SVG and Spinner-->
+
+		<article class="sixteen columns main-content">
 		<div id="mapContainer" class="row">
-		  <!-- Spinner Animation -->
-		  <div id="floatingBarsG" style="visibility: hidden">
-		    <div class="blockG" id="rotateG_01">
+			<!-- Spinner Animation -->
+			<div id="floatingBarsG" style="visibility: hidden">
+				<div class="blockG" id="rotateG_01">
 			</div>
 			<div class="blockG" id="rotateG_02">
 			</div>
@@ -137,280 +139,280 @@
 			</div>
 			<div class="blockG" id="rotateG_08">
 			</div>
-	      </div>
-          <div style="background-color: black"></div>	
-   		</div>
-      </article>
-        
-    </div>
-      
-    <!--Footer--> 
-      
-    <footer>
-      <div class="row">
-		<div id="footer-base">
-		  <div class="container">
-		    <div class="two columns">
-		      <a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
-		    </div>
-            <div class="two columns far-edge">
-		      Design by <a href="http://www.opendesigns.org">OD</a>
-		    </div>
-		  </div>
+				</div>
+					<div style="background-color: black"></div>
+			 </div>
+			</article>
+
 		</div>
-      </div>
-    </footer>
-      
-    <!-- USMapPoke.js builds map -->
-    <script src="gradientUSMap.js"></script>
-    <script src="mapManager.js"></script>
-    
-    <script>
-            
-		    var changeColor = function(){
-		        
-		        map.setColor(String(getColor(min_color_picker)), String(getColor(max_color_picker)));
-		        
-		    };
-		    
-		    
-		    //map parts
-		    var getStateValuesFunction = function(data, stateName, feature) {
-                var i = 0;
-		        var dataState;
-		        var stateAbbr = this.state_abbreviations[stateName];
-		        for (i = 0; i < data.length; i++) {
-                    //Grab state name
-                    dataState = data[i].state;
-                    //Grab data value, and convert from string to float
-                    if (dataState === stateAbbr) {
-                    	for(var x = 0; x < features.length; x++){
-                    		dict_of_state_dict[feature][stateName] = data[i][feature];
-                    	}
-            	        return parseFloat(data[i][feature]);
-        	        }
-		        }
-	        };
-	        //end edit
-	        
-	        var getCountyValuesFunction = function(data, countyName, feature) {
-		        //Merge the ag. data and GeoJSON
-                //Loop through once for each ag. data value
-                var i = 0;
-                var dataCounty;
-                var part;
-                var len;
-                var str;
-                var k;
-                for (i = 0; i < data.length; i++) {
-                    //Grab state name
-                    dataCounty = data[i].county;
-                    part = dataCounty.split(" ");
-                    // if the last thing is county/borough get rid of it
-                    len = part.length;
-                    if (part[len-1] === "County" || part[len-1] === "Borough" || part[len-1] === "Parish") {
-                        str = "";
-                        for (k = 0; k < len-1; k++) {
-                            str += part[k];
-                            if (k !== len-2) {
-                                str += " ";
-                            }
-                        }
-                        dataCounty = str;
-                    }
-                    else if (part[len-2] === "Census") {
-                        str = "";
-                        for (k = 0; k < len-2; k++) {
-                            str += part[k];
-                            if (k !== len-3) {
-                                str += " ";
-                            }
-                        }
-                        dataCounty = str;
-                    }
-                    if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
-            	        //Grab data value, and convert from string to float
-            	        for(var x = 0; x < features.length; x++){
-                    		dict_of_county_dict[feature][countyName] = data[i][feature];
-                    	}
-            	        return parseFloat(data[i][feature]);
-                    }
-           
-                }
-	        };
-	        
-	        //use this function for the migrant housing dataset
-            var getCensusStateValuesFunction = function(data, stateName){    
-                var jsonFile;
-                var dataState;
-                var value;
 
-                var xhReq = new XMLHttpRequest();
-                xhReq.open("GET", "json/StateMigrantHousing2010.json", false);
-                xhReq.send(null);
-                jsonFile = JSON.parse(xhReq.responseText);
+		<!--Footer-->
 
-                for (i = 0; i < jsonFile.length; i++) {
-                    //Grab state name
-                    dataState = jsonFile[i][1];
+		<footer>
+			<div class="row">
+				<div id="footer-base">
+					<div class="container">
+						<div class="two columns">
+							<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+						</div>
+						<div class="two columns far-edge">
+							 Design by <a href="http://www.opendesigns.org">OD</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
 
-                    //Grab data value, and convert from string to float
-                    if (dataState === stateName) {
-                        for(var x = 0; x < features.length; x++){
-                            dict_of_state_dict[features[x]][stateName] = jsonFile[i][0];
-                        }
-                        value = parseFloat(jsonFile[i][0]);
-                        return value;
-                    }
-                }
-            };
-	        
-	        //edit for video
-	        
-	        // Ignore jslint for state names with multiple words
-	        var state_abbreviations = {};
-	        state_abbreviations["Alabama"] = "AL";
-	        state_abbreviations["Alaska"] = "AK";
-	        state_abbreviations["Arizona"] = "AZ";
-	        state_abbreviations["Arkansas"] = "AR";
-	        state_abbreviations["California"] = "CA";
-	        state_abbreviations["Colorado"] = "CO";
-	        state_abbreviations["Connecticut"] = "CT";
-	        state_abbreviations["Delaware"] = "DE";
-	        state_abbreviations["District of Columbia"] = "DC";
-	        state_abbreviations["Florida"] = "FL";
-	        state_abbreviations["Georgia"] = "GA";
-	        state_abbreviations["Hawaii"] = "HI";
-	        state_abbreviations["Idaho"] = "ID";
-	        state_abbreviations["Illinois"] = "IL";
-	        state_abbreviations["Indiana"] = "IN";
-	        state_abbreviations["Iowa"] = "IA";
-	        state_abbreviations["Kansas"] = "KS";
-	        state_abbreviations["Kentucky"] = "KY";
-	        state_abbreviations["Louisiana"] = "LA";
-	        state_abbreviations["Maine"] = "ME";
-	        state_abbreviations["Maryland"] = "MD";
-	        state_abbreviations["Massachusetts"] = "MA";
-	        state_abbreviations["Michigan"] = "MI";
-	        state_abbreviations["Minnesota"] = "MN";
-	        state_abbreviations["Mississippi"] = "MS";
-	        state_abbreviations["Missouri"] = "MO";
-	        state_abbreviations["Montana"] = "MT";
-	        state_abbreviations["Nebraska"] = "NE";
-	        state_abbreviations["Nevada"] = "NV";
-	        state_abbreviations["New Hampshire"] = "NH";
-	        state_abbreviations["New Jersey"] = "NJ";
-	        state_abbreviations["New Mexico"] = "NM";
-	        state_abbreviations["New York"] = "NY";
-	        state_abbreviations["North Carolina"] = "NC";
-	        state_abbreviations["North Dakota"] = "ND";
-	        state_abbreviations["Ohio"] = "OH";
-	        state_abbreviations["Oklahoma"] = "OK";
-	        state_abbreviations["Oregon"] = "OR";
-	        state_abbreviations["Pennsylvania"] = "PA";
-	        state_abbreviations["Rhode Island"] = "RI";
-	        state_abbreviations["South Carolina"] = "SC";
-	        state_abbreviations["South Dakota"] = "SD";
-	        state_abbreviations["Tennessee"] = "TN";
-	        state_abbreviations["Texas"] = "TX";
-	        state_abbreviations["Utah"] = "UT";
-	        state_abbreviations["Vermont"] = "VT";
-	        state_abbreviations["Virginia"] = "VA";
-	        state_abbreviations["Washington"] = "WA";
-	        state_abbreviations["West Virginia"] = "WV";
-	        state_abbreviations["Wisconsin"] = "WI";
-	        state_abbreviations["Wyoming"] = "WY";
-	        state_abbreviations["Puerto Rico"] = "PR";
-	        
-	        //Create file paths. Used in setPaths function
-	        var us_poke_data_file = " json/poke_ratio_correct2.csv";
-	        var map_json_file = "json/us-states.json";
-	        var county_path_file = "json/stateJSON/";
-	        var county_poke_data_file = "json/countyPokes/";
-		    
-		    var map = new GradientMap('poke_ratio')
-		        .setColors('#EBF5FF','#002966')
-		        .setRestFileName('poke.csv')
-		        .setFunctions(getStateValuesFunction, getCountyValuesFunction)
-		        .setStateAbbreviations(state_abbreviations)
-		        .setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
-		    
-		    var map2 = new GradientMap('migrant_housing')
-		        .setColors('#EBF5FF','#002966')
-		        .setRestFileName('poke.csv')
-		        .setFunctions(getStateValuesFunction, getCountyValuesFunction)
-		        //.setFunctions(getStateValuesFunction, getCountyValuesFunction)
-		        .setStateAbbreviations(state_abbreviations)
-		        .setPaths(map_json_file, "json/migrantHousing.csv", county_path_file, "json/migrantHousing/");
-		        //.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
-		    
-		    var manager = new mapManager();
+		<!-- USMapPoke.js builds map -->
+		<script src="gradientUSMap.js"></script>
+		<script src="mapManager.js"></script>
+
+		<script>
+
+				var changeColor = function(){
+
+						map.setColor(String(getColor(min_color_picker)), String(getColor(max_color_picker)));
+
+				};
+
+
+				//map parts
+				var getStateValuesFunction = function(data, stateName, feature) {
+								var i = 0;
+						var dataState;
+						var stateAbbr = this.state_abbreviations[stateName];
+						for (i = 0; i < data.length; i++) {
+										//Grab state name
+										dataState = data[i].state;
+										//Grab data value, and convert from string to float
+										if (dataState === stateAbbr) {
+											for(var x = 0; x < features.length; x++){
+												dict_of_state_dict[feature][stateName] = data[i][feature];
+											}
+											return parseFloat(data[i][feature]);
+									}
+						}
+					};
+					//end edit
+
+					var getCountyValuesFunction = function(data, countyName, feature) {
+						//Merge the ag. data and GeoJSON
+								//Loop through once for each ag. data value
+								var i = 0;
+								var dataCounty;
+								var part;
+								var len;
+								var str;
+								var k;
+								for (i = 0; i < data.length; i++) {
+										//Grab state name
+										dataCounty = data[i].county;
+										part = dataCounty.split(" ");
+										// if the last thing is county/borough get rid of it
+										len = part.length;
+										if (part[len-1] === "County" || part[len-1] === "Borough" || part[len-1] === "Parish") {
+												str = "";
+												for (k = 0; k < len-1; k++) {
+														str += part[k];
+														if (k !== len-2) {
+																str += " ";
+														}
+												}
+												dataCounty = str;
+										}
+										else if (part[len-2] === "Census") {
+												str = "";
+												for (k = 0; k < len-2; k++) {
+														str += part[k];
+														if (k !== len-3) {
+																str += " ";
+														}
+												}
+												dataCounty = str;
+										}
+										if (dataCounty.toLowerCase() === countyName.toLowerCase()) {
+											//Grab data value, and convert from string to float
+											for(var x = 0; x < features.length; x++){
+												dict_of_county_dict[feature][countyName] = data[i][feature];
+											}
+											return parseFloat(data[i][feature]);
+										}
+
+								}
+					};
+
+					//use this function for the migrant housing dataset
+						var getCensusStateValuesFunction = function(data, stateName){
+								var jsonFile;
+								var dataState;
+								var value;
+
+								var xhReq = new XMLHttpRequest();
+								xhReq.open("GET", "json/StateMigrantHousing2010.json", false);
+								xhReq.send(null);
+								jsonFile = JSON.parse(xhReq.responseText);
+
+								for (i = 0; i < jsonFile.length; i++) {
+										//Grab state name
+										dataState = jsonFile[i][1];
+
+										//Grab data value, and convert from string to float
+										if (dataState === stateName) {
+												for(var x = 0; x < features.length; x++){
+														dict_of_state_dict[features[x]][stateName] = jsonFile[i][0];
+												}
+												value = parseFloat(jsonFile[i][0]);
+												return value;
+										}
+								}
+						};
+
+					//edit for video
+
+					// Ignore jslint for state names with multiple words
+					var state_abbreviations = {};
+					state_abbreviations["Alabama"] = "AL";
+					state_abbreviations["Alaska"] = "AK";
+					state_abbreviations["Arizona"] = "AZ";
+					state_abbreviations["Arkansas"] = "AR";
+					state_abbreviations["California"] = "CA";
+					state_abbreviations["Colorado"] = "CO";
+					state_abbreviations["Connecticut"] = "CT";
+					state_abbreviations["Delaware"] = "DE";
+					state_abbreviations["District of Columbia"] = "DC";
+					state_abbreviations["Florida"] = "FL";
+					state_abbreviations["Georgia"] = "GA";
+					state_abbreviations["Hawaii"] = "HI";
+					state_abbreviations["Idaho"] = "ID";
+					state_abbreviations["Illinois"] = "IL";
+					state_abbreviations["Indiana"] = "IN";
+					state_abbreviations["Iowa"] = "IA";
+					state_abbreviations["Kansas"] = "KS";
+					state_abbreviations["Kentucky"] = "KY";
+					state_abbreviations["Louisiana"] = "LA";
+					state_abbreviations["Maine"] = "ME";
+					state_abbreviations["Maryland"] = "MD";
+					state_abbreviations["Massachusetts"] = "MA";
+					state_abbreviations["Michigan"] = "MI";
+					state_abbreviations["Minnesota"] = "MN";
+					state_abbreviations["Mississippi"] = "MS";
+					state_abbreviations["Missouri"] = "MO";
+					state_abbreviations["Montana"] = "MT";
+					state_abbreviations["Nebraska"] = "NE";
+					state_abbreviations["Nevada"] = "NV";
+					state_abbreviations["New Hampshire"] = "NH";
+					state_abbreviations["New Jersey"] = "NJ";
+					state_abbreviations["New Mexico"] = "NM";
+					state_abbreviations["New York"] = "NY";
+					state_abbreviations["North Carolina"] = "NC";
+					state_abbreviations["North Dakota"] = "ND";
+					state_abbreviations["Ohio"] = "OH";
+					state_abbreviations["Oklahoma"] = "OK";
+					state_abbreviations["Oregon"] = "OR";
+					state_abbreviations["Pennsylvania"] = "PA";
+					state_abbreviations["Rhode Island"] = "RI";
+					state_abbreviations["South Carolina"] = "SC";
+					state_abbreviations["South Dakota"] = "SD";
+					state_abbreviations["Tennessee"] = "TN";
+					state_abbreviations["Texas"] = "TX";
+					state_abbreviations["Utah"] = "UT";
+					state_abbreviations["Vermont"] = "VT";
+					state_abbreviations["Virginia"] = "VA";
+					state_abbreviations["Washington"] = "WA";
+					state_abbreviations["West Virginia"] = "WV";
+					state_abbreviations["Wisconsin"] = "WI";
+					state_abbreviations["Wyoming"] = "WY";
+					state_abbreviations["Puerto Rico"] = "PR";
+
+					//Create file paths. Used in setPaths function
+					var us_poke_data_file = " json/poke_ratio_correct2.csv";
+					var map_json_file = "json/us-states.json";
+					var county_path_file = "json/stateJSON/";
+					var county_poke_data_file = "json/countyPokes/";
+
+				var map = new GradientMap('poke_ratio')
+						.setColors('#EBF5FF','#002966')
+						.setRestFileName('poke.csv')
+						.setFunctions(getStateValuesFunction, getCountyValuesFunction)
+						.setStateAbbreviations(state_abbreviations)
+						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+
+				var map2 = new GradientMap('migrant_housing')
+						.setColors('#EBF5FF','#002966')
+						.setRestFileName('poke.csv')
+						.setFunctions(getStateValuesFunction, getCountyValuesFunction)
+						//.setFunctions(getStateValuesFunction, getCountyValuesFunction)
+						.setStateAbbreviations(state_abbreviations)
+						.setPaths(map_json_file, "json/migrantHousing.csv", county_path_file, "json/migrantHousing/");
+						//.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
+
+				var manager = new mapManager();
 			manager.makeCombo();
-		    manager.addMap(map);
-		    //manager.addMap(map2);
-		    
-		    var dict_of_state_dict = {};
-            var dict_of_county_dict = {};
-            var features = [];
-            for(var x = 0; x < manager.maps().length; x++) {
-            	features.push(manager.maps()[x].getFeat());
-            }
-            for(var count = 0; count < features.length; count++){
-	            dict_of_state_dict[features[count]] = {};
-	            dict_of_county_dict[features[count]] = {};
-            }
-            var feature_desired = "poke_ratio";
+				manager.addMap(map);
+				//manager.addMap(map2);
 
-		    manager.drawMaps();
+				var dict_of_state_dict = {};
+						var dict_of_county_dict = {};
+						var features = [];
+						for(var x = 0; x < manager.maps().length; x++) {
+							features.push(manager.maps()[x].getFeat());
+						}
+						for(var count = 0; count < features.length; count++){
+							dict_of_state_dict[features[count]] = {};
+							dict_of_county_dict[features[count]] = {};
+						}
+						var feature_desired = "poke_ratio";
+
+				manager.drawMaps();
 
 
-		    function getStateDictionaries(){
-	            return dict_of_state_dict;
-	
-            }
-            function getCountyDictionaries(){
-	            return dict_of_county_dict;
-	
-            }
-            function getFeatures(){
-	            return features;
-	
-            }
+				function getStateDictionaries(){
+							return dict_of_state_dict;
+
+						}
+						function getCountyDictionaries(){
+							return dict_of_county_dict;
+
+						}
+						function getFeatures(){
+							return features;
+
+						}
 		</script>
 
 	<script>
-      function makeMap(source) {
-        var newScript = document.createElement("script");
-        newScript.setAttribute('id', 'scriptSrc');
+			function makeMap(source) {
+				var newScript = document.createElement("script");
+				newScript.setAttribute('id', 'scriptSrc');
 		newScript.setAttribute('type','text/javascript');
 		newScript.setAttribute('src', source);
 		document.getElementsByTagName("head")[0].appendChild(newScript);
 		//drawTheMap();
-      }
-			
-      function selectData() {
+			}
+
+			function selectData() {
 		if (document.getElementById("pokeRatio").checked == true) {
 			removeTestMap();
 			drawTheUSMap();
-        }
+				}
 		if (document.getElementById("testData").checked == true) {
 			//makeMap("testingGeneralization.js");
 			removeUSMap();
 			drawTheTestMap();
 		}
 		//makeMap();
-      }
-			
-      function removeUS(){
-        removeUSMap();
-      }
-      function getColor(input_id){
-        return "#" +  document.getElementById(input_id).color.toString();
-      }
-      function recolor(){
-        manager.setMapColors(String(getColor("min_color_picker")), String(getColor("max_color_picker")));
-      }
-    </script>
-      
-  </body>
+			}
+
+			function removeUS(){
+				removeUSMap();
+			}
+			function getColor(input_id){
+				return "#" +  document.getElementById(input_id).color.toString();
+			}
+			function recolor(){
+				manager.setMapColors(String(getColor("min_color_picker")), String(getColor("max_color_picker")));
+			}
+		</script>
+
+	</body>
 </html>
