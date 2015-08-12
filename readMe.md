@@ -46,7 +46,7 @@ After creating this map, you will have to create a mapManager object. After crea
 
 ##Our Suggestion
 
-We have written code for our poke ratio example that can be slightly changed to fit other forms of data. If your data contains two columns, one for locations and one for values, then you can write your functions in a similar way to how the poke ratio example is written. To write the function that you are using to get the values from your national data, we reccomend that you use your state/province name parameter as a key. You could go through your data until you find the state/province that you are looking for, and then take the value from that space and return it. This could also work for the function that you are writing to get data from your city/county data. The reason that these are separate functions is that you might want to treat the data differently. For example, the poke ratio example gets rid of words such as "County", "Borough", and "Parish" in getCountyValuesFunction().
+We have written code for our poke ratio example that can be slightly changed to fit other forms of data. If your data contains two columns, one for locations and one for values, then you can write your functions in a similar way to how the poke ratio example is written. To write the function that you are using to get the values from your national data, we recommend that you use your state/province name parameter as a key. You could go through your data until you find the state/province that you are looking for, and then take the value from that space and return it. This could also work for the function that you are writing to get data from your city/county data. The reason that these are separate functions is that you might want to treat the data differently. For example, the poke ratio example adjusts for words such as "County", "Borough", and "Parish" in getCountyValuesFunction().
 
 If you are using data that pertains to the United States, you can create a state_abbreviations dictionary like so:
 
@@ -60,27 +60,20 @@ You would continue this for each state that you were using.
 
 After this, you create the map, like so:
 
-	var map = gradientMap.setColors("#EBF5FF","#002966")
-				.setFeature("poke_ratio")
-				.setRestFileName("poke.csv")
-				.setFunctions(getStateValuesFunction, getCountyValuesFunction)
-				.setStateAbbreviations(state_abbreviations)
-				.setPaths("json/us-states.json", "json/poke_ratio_correct2.csv", "json/stateJSON/", "json/countyPokes/")
-				.setup();
-				
-	map.drawMap();
+	var map = new GradientMap('poke_ratio')
+						.setColors('#EBF5FF','#002966')
+						.setRestFileName('poke.csv')
+						.setFunctions(getStateValuesFunction, getCountyValuesFunction)
+						.setStateAbbreviations(state_abbreviations)
+						.setPaths(map_json_file, us_poke_data_file, county_path_file, county_poke_data_file);
 	
 
-It is recommended that you put this in a callable function, so that you can draw the map dyamically.
+After creating the map, create your map manager, run its makeCombo function, and add the map to it. For example:
 
-	function drawTheMap(){
-		//draw map
-	}
+	var manager = new mapManager();
+	manager.makeCombo();
+	manager.addMap(map);
 
-It would also be advisable to add a function that will allow you to remove your map. This will be useful in allowing you to change the map that you are showing, in case you have multiple data sets. A simple way to do this is to use Gradient Map's removeMap function, like this:
+Finally, call your map manager's drawMaps function to draw all maps in the manager.
 
-	function removeMyMap(){
-		
-		thisMap.removeMap();
-		
-	}
+	manager.drawMaps();
