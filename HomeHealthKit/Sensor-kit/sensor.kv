@@ -1,0 +1,58 @@
+#:kivy 1.0.9
+
+<Sensor>:
+    orientation: 'vertical'
+
+    # Bind the user class variable in Sensor to the text in the spinner
+    user: user_spinner.text
+
+    Spinner:
+        # The id allows us to do the binding above
+        id: user_spinner
+        text: 'Select User'
+        values: ['Guest 1', 'Guest 2', 'Guest 3', 'Guest 4']
+        size_hint: .4, .06
+        pos_hint: {'x': .3, 'y': .8}
+        
+    Label:
+    	text: '1. Relax and sit upright with your upper arm positioned so it is level with their heart and feet flat on the floor.\n2. Remove excess clothing that might interfere with the BP cuff or constrict blood flow in the arm.\n3. Choose the proper BP cuff size.\n4. Locate the brachial artery and position the BP cuff according to cuff instructions.\n5. Run the test on the BP machine.\n6. After the BP machine is done with the reading, press "Run Test" button.'
+    	size_hint: .8, .2
+    	pos_hint: {'center_x': .5, 'center_y': .75}
+        halign: 'center'
+        font_size: '14sp'
+
+	Button:
+        text: 'Run Test'
+        size_hint: .3, .06
+        pos_hint: {'center_x': .5, 'center_y': .6}
+        # We run the method in The Sensor class and pass the text
+        # currently selected in the spinner (above)
+        on_press: root.runBP()
+        
+    GridLayout:
+        cols: 2
+        rows: 3
+        size_hint: .8, .3
+        pos_hint: {'center_x': .5, 'center_y': .2}
+        
+
+        Label:
+            font_size: 30
+            text: "Systolic:"
+        Label:
+            font_size: 30
+            text: str(root.systolic)
+        Label:
+            font_size: 30
+            text: "Diastolic:"
+        Label:
+            font_size: 30
+            text: str(root.diastolic)
+        Label:
+            font_size: 30
+            text: "Pulse:"
+        Label:
+            font_size: 30
+            text: str(root.pulse)
+
+    
