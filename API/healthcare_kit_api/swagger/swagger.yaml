@@ -1,0 +1,954 @@
+---
+swagger: "2.0"
+info:
+  description: "The Healthcare Kit API is intended to serve as an interface for communication\
+    \ between three seperate components; a medical sensor kit, a database, and an\
+    \ application. It provides a loose coupling between all three of these components\
+    \ such that future changes to any of these systems can be done as simply as possible.\n\
+    The Healthcare Kit API includes methods for adding users to a database, updating\
+    \ user information in the database, collecting user information, and pushing and\
+    \ pulling medical sensor data from the database. In order to keep the Healthcare\
+    \ API Kit flexible, it is designed to accomodate data from any type of medical\
+    \ test. However, the current version of the API ('0.0.1') only supports three\
+    \ types of tests; blood pressure, pulse recovery, and electrical resistance.'\n"
+  version: "0.0.1"
+  title: "Healthcare Kit API"
+paths:
+  /addBloodPressure:
+    post:
+      tags:
+      - "default_controller"
+      description: "Adds an array of blood pressure test data to a database. This\
+        \ method is\nintended only to be used as a 'proof-of-concept.'\n"
+      operationId: "controllers.default_controller.add_blood_pressure_post"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "bloodPressureData"
+        description: "An array containing blood pressure test data that will be sent\
+          \ to a database\nfor further use. The format of this array should be; \n\
+          (<timestamp>, <diastolic>, <systolic>, <pulse>)\nAccepted timestamp format:\
+          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Successful response (Data has been successfully added to the\
+            \ database)"
+          schema:
+            $ref: "#/definitions/Blood_Pressure_Data"
+        400:
+          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        415:
+          description: "Unsupported media type"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests have been made to add\
+            \ data in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+#  /addData:
+#    post:
+#      tags:
+#      - "default_controller"
+#      description: "Adds an array of arrays of data. First is timestamp every other\
+#        \ is datapoint.\nAdds data from a device to a database. Some example formats\
+#        \ \nfor this data include;\nBloodPressure: [[timestamp, systolic, diastolic,\
+#        \ pulse]]\nRecovery: ((timestamp, pulse)...)\n"
+#      operationId: "controllers.default_controller.add_data_post"
+#      parameters:
+#      - name: "userID"
+#        in: "query"
+#        description: "User ID"
+#        required: true
+#        type: "integer"
+#        format: "int32"
+#      - name: "testType"
+#        in: "query"
+#        description: "Test keyword specifying what type of data the api should expect.\
+#          \ (Current options: 'BloodPressure', 'Recovery')\n"
+#        required: true
+#        type: "string"
+#      - name: "data"
+#        in: "query"
+#        description: "BloodPressure: [timestamp, systolic, diastolic, pulse] Recovery:\\ ((timestamp, pulse)...)"
+#
+#        required: true
+#        type: "array"
+#        items:
+#          type: "string"
+#        collectionFormat: "multi"
+#      responses:
+#        200:
+#          description: "Successful response (Data has been successfully posted to\
+#            \ the database)"
+#          schema:
+#            $ref: "#/definitions/Data"
+#        400:
+#          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+#          schema:
+#            $ref: "#/definitions/Error"
+#        415:
+#          description: "Unsupported media type"
+#          schema:
+#            $ref: "#/definitions/Error"
+#        429:
+#         description: "Too many requests (Too many requests have been made to add\
+#            \ data in some timeframe)"
+#          schema:
+#            $ref: "#/definitions/Error"
+#        500:
+#          description: "Internal server error"
+#          schema:
+#            $ref: "#/definitions/Error"
+#        599:
+#          description: "Network connection timeout error"
+#          schema:
+#            $ref: "#/definitions/Error"
+  /addElectricalResistanceTest:
+    post:
+      tags:
+      - "default_controller"
+      description: "Adds an array of electrical resistance data to a database. This\
+        \ method\nis intended only to be used as a 'proof of concept.'\n"
+      operationId: "controllers.default_controller.add_electrical_resistance_test_post"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "electricalResistanceData"
+        description: "An array of data containing a timestamp, conductance reading,\
+          \ resistance \nreading, and current. \nAccepted format: (<timestamp>, <conductance>,\
+          \ <resistance>, <current>)\n"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "Successful response (Data has been successfully added to the\
+            \ database"
+          schema:
+            $ref: "#/definitions/Electrical_Resistance_Data"
+        400:
+          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        415:
+          description: "Unsupported media type"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests have been made to add\
+            \ data in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+  /addRecoveryTest:
+    post:
+      tags:
+      - "default_controller"
+      description: "Adds an array of pulse recovery data to a database. This method\
+        \ is \nintended only to be used as a 'proof of concept.'\n"
+      operationId: "controllers.default_controller.add_recovery_test_post"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "recoveryTestData"
+        description: "An array containing all recoveryTestPoint items from a pulse\
+          \ recovery test\nthat will be sent to a database.\nAccepted format: [(<timestamp>,\
+          \ <pulse>)...]\nAccepted timestamp format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00\
+          \ (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: true
+        schema:
+          type: "array"
+      responses:
+        200:
+          description: "Successful response (Data has been successfully added to the\
+            \ database"
+          schema:
+            $ref: "#/definitions/Pulse_Recovery_Data"
+        400:
+          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        415:
+          description: "Unsupported media type"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests have been made to add\
+            \ data in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+  /addUser:
+    post:
+      tags:
+      - "default_controller"
+      description: "Creates a user by taking general patient information from a device\
+        \ and posts it to a database along with an automatically generated userID.\
+        \ This userID serves as a unique identifier for the patient within the database.\n"
+      operationId: "controllers.default_controller.add_user_post"
+      parameters:
+      - name: "lastName"
+        in: "query"
+        description: "The last name of the user. (Max length of 35.)"
+        required: true
+        type: "string"
+        maxLength: 35
+        format: "string"
+      - name: "middleInitial"
+        in: "query"
+        description: "User's middle initial initial"
+        required: true
+        type: "string"
+        maxLength: 1
+      - name: "firstName"
+        in: "query"
+        description: "The first name of the user. (Max length of 35.)"
+        required: true
+        type: "string"
+        maxLength: 35
+        format: "string"
+      - name: "birthdate"
+        in: "query"
+        description: "Birthdate of the user.\nAccepted format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00\
+          \ (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: true
+        type: "string"
+        format: "date"
+      responses:
+        201:
+          description: "Successful creation (Patient information and userID were successfully\
+            \ posted to the database)"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Bad request (Bad syntax, missing parameters, pre-existing\
+            \ user/userID, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests to add a user have sent\
+            \ within some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+  /getBloodPressure:
+    get:
+      tags:
+      - "default_controller"
+      description: "Returns data pertaining to all blood pressure tests taken between\
+        \ a start\ntime and an end time, given a userID. This data will be returned\
+        \ as an \narray of bloodPressureData items.\n"
+      operationId: "controllers.default_controller.get_blood_pressure_get"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "startTime"
+        in: "query"
+        description: "Optional Starting date and time specification. Accepted format:\
+          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "endTime"
+        in: "query"
+        description: "Optional Ending date and time specification. Accepted format:\
+          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      responses:
+        200:
+          description: "Successful response (Successfully got data)"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Blood_Pressure_Data"
+        206:
+          description: "Partial response (Too much data requested)"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Blood_Pressure_Data"
+          headers:
+            content-range:
+              type: "integer"
+              description: "Range of the content returned (in bytes)\n"
+              maximum: 100000000
+            content-size:
+              type: "integer"
+              description: "Total size of requested data (in bytes)\n"
+            date:
+              type: "string"
+              format: "date-time"
+              description: "Date of request, in the form of a timestamp.\nAccepted\
+                \ format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        400:
+          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests for data have been sent\
+            \ in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+#  /getData:
+#    get:
+#      tags:
+#      - "default_controller"
+#      description: "Fetches all of the data according to specified parameters. If\
+#        \ the get \nrequest is called without any of the optional parameters, an \n\
+#        all-encompasing return is made. Lack of specification in any of the \noptional\
+#        \ parameters will result in unspecified returns, e.g. omitting a \ntest type\
+#        \ will return all test types, etc. However, if the content-range \nreturned\
+#        \ is less than the content-size the data will be returned in \nsmaller 'chunks.'\
+#        \ The content-range should be regulated server-side\nfrom the database.\n"
+#      operationId: "controllers.default_controller.get_data_get"
+#      parameters:
+#      - name: "userID"
+#        in: "query"
+#        description: "User ID"
+#        required: true
+#        type: "integer"
+#        format: "int32"
+#      - name: "testType"
+#        in: "query"
+#        description: "Test keyword specifying what type of data the api should expect.\
+#          \ (Current options: 'BloodPressure', 'Recovery', 'ElectricalResistance')\n"
+#        required: false
+#       type: "string"
+#      - name: "startTime"
+#        in: "query"
+#        description: "Optional Starting date and time specification. Accepted format:\
+#          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+#        required: false
+#        type: "string"
+#        format: "date-time"
+#      - name: "endTime"
+#        in: "query"
+#        description: "Optional Ending date and time specification. Accepted format:\
+#          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+#        required: false
+#        type: "string"
+#       format: "date-time"
+#      responses:
+#        200:
+#          description: "Successful response (Successfully got data)"
+#          schema:
+#            $ref: "#/definitions/Data_List"
+#        206:
+#          description: "Partial response (Too much data requested)"
+#          schema:
+#            $ref: "#/definitions/Data_List"
+#          headers:
+#            content-range:
+#              type: "integer"
+#              description: "Range of the content returned (in bytes)\n"
+#              maximum: 100000000
+#            content-size:
+#              type: "integer"
+#              description: "Total size of requested data (in bytes)\n"
+#            date:
+#              type: "string"
+#              format: "date-time"
+#              description: "Date of request, in the form of a timestamp.\nAccepted\
+#                \ format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+#        400:
+#          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+#          schema:
+#            $ref: "#/definitions/Error"
+#        429:
+#          description: "Too many requests (Too many requests for data have been sent\
+#            \ in some timeframe)"
+#          schema:
+#            $ref: "#/definitions/Error"
+#        500:
+#          description: "Internal server error"
+#          schema:
+#            $ref: "#/definitions/Error"
+#        599:
+#          description: "Network connection timeout error"
+#          schema:
+#            $ref: "#/definitions/Error"
+  /getElectricalResistance:
+    get:
+      tags:
+      - "default_controller"
+      description: "Returns a users data pertaining to all electrical resistance tests\
+        \ \nbetween some start time and some end time.\n"
+      operationId: "controllers.default_controller.get_electrical_resistance_get"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "startTime"
+        in: "query"
+        description: "Optional Starting date and time specification. Accepted format:\
+          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "endTime"
+        in: "query"
+        description: "Optional Ending date and time specification. Accepted format:\
+          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      responses:
+        200:
+          description: "Successful response (Successfully got data)"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Electrical_Resistance_Data"
+        206:
+          description: "Partial response (Too much data requested)"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Electrical_Resistance_Data"
+          headers:
+            content-range:
+              type: "integer"
+              description: "Range of the content returned (in bytes)\n"
+              maximum: 100000000
+            content-size:
+              type: "integer"
+              description: "Total size of requested data (in bytes)\n"
+            date:
+              type: "string"
+              format: "date-time"
+              description: "Date of request, in the form of a timestamp.\nAccepted\
+                \ format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        400:
+          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests for data have been sent\
+            \ in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+  /getRecoveryTest:
+    get:
+      tags:
+      - "default_controller"
+      description: "Returns a users data pertaining to all pulse recovery tests taken\
+        \ between \nsome start time and some end time. \n"
+      operationId: "controllers.default_controller.get_recovery_test_get"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "startTime"
+        in: "query"
+        description: "Optional Starting date and time specification. Accepted format:\
+          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "endTime"
+        in: "query"
+        description: "Optional Ending date and time specification. Accepted format:\
+          \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      responses:
+        200:
+          description: "Successful response (Successfully got data)"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Pulse_Recovery_Data"
+        206:
+          description: "Partial response (Too much data requested)"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Pulse_Recovery_Data"
+          headers:
+            content-range:
+              type: "integer"
+              description: "Range of the content returned (in bytes)\n"
+              maximum: 100000000
+            content-size:
+              type: "integer"
+              description: "Total size of requested data (in bytes)\n"
+            date:
+              type: "string"
+              format: "date-time"
+              description: "Date of request, in the form of a timestamp.\nAccepted\
+                \ format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        400:
+          description: "Bad request (Bad syntax, missing/invalid parameters, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests for data have been sent\
+            \ in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+  /getUserIndex:
+    get:
+      tags:
+      - "default_controller"
+      description: "Returns an index (list) of users, based on regex parameters. If\
+        \ the get \nrequest is called without any of the optional parameters, an \n\
+        all-encompasing return is made. Omitting any parameter will return a list\
+        \ \nof users matching all other parameters. For example, if lastName is the\
+        \ \nonly specified parameter, a list of users with the same last name will\
+        \ \nbe returned. Similarly if lastName, firstName, and middleInitial are \n\
+        specified, a list of users with the same names will be returned.\n"
+      operationId: "controllers.default_controller.get_user_index_get"
+      parameters:
+      - name: "lastName"
+        in: "query"
+        description: "The last name of the user. (Max length of 35.)"
+        required: false
+        type: "string"
+        maxLength: 35
+        format: "string"
+      - name: "middleInitial"
+        in: "query"
+        description: "User's middle initial initial\n"
+        required: false
+        type: "string"
+        maxLength: 1
+      - name: "firstName"
+        in: "query"
+        description: "The first name of the user. (Max length of 35.)"
+        required: false
+        type: "string"
+        maxLength: 35
+        format: "string"
+      - name: "birthdate"
+        in: "query"
+        description: "Birthdate of the user.\nAccepted format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00\
+          \ (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "string"
+      responses:
+        200:
+          description: "Successful response (Search was successful, users acquired)"
+          schema:
+            $ref: "#/definitions/User_List"
+        400:
+          description: "Bad request (bad syntax, missing/invalid parameters, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests were made to get the\
+            \ index of users in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+  /getUserInfo:
+    get:
+      tags:
+      - "default_controller"
+      description: "Fetches user information from the database.\n"
+      operationId: "controllers.default_controller.get_user_info_get"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Successful response (User info has been successfully retrieved)"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Bad request (Bad syntax, missing/invalid userID, etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests have been made to get\
+            \ userinfo in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+  /updateUser:
+    put:
+      tags:
+      - "default_controller"
+      description: "Updates user information. At least one parameter must be included\
+        \ \nto update the user info. Otherwise, a bad request will be thrown.\n"
+      operationId: "controllers.default_controller.update_user_put"
+      parameters:
+      - name: "userID"
+        in: "query"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int32"
+      - name: "lastName"
+        in: "query"
+        description: "The last name of the user. (Max length of 35.)"
+        required: false
+        type: "string"
+        maxLength: 35
+        format: "string"
+      - name: "middleInitial"
+        in: "query"
+        description: "User's middle initial initial\n"
+        required: false
+        type: "string"
+        maxLength: 1
+      - name: "firstName"
+        in: "query"
+        description: "The first name of the user. (Max length of 35.)"
+        required: false
+        type: "string"
+        maxLength: 35
+        format: "string"
+      - name: "birthdate"
+        in: "query"
+        description: "Birthdate of the user.\nAccepted format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00\
+          \ (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+        required: false
+        type: "string"
+        format: "date"
+      responses:
+        204:
+          description: "Successful update (User information has been successfully\
+            \ updated)"
+        400:
+          description: "Bad request (Bad syntax, invalid parameters/missing all parameters,\
+            \ etc.)"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests (Too many requests have been sent to update\
+            \ the user in some timeframe)"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: "#/definitions/Error"
+        599:
+          description: "Network connection timeout error"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
+    description: "Generic error response format. Includes error-code, error-message,\
+      \ and \nfields.\n"
+  User:
+    type: "object"
+    properties:
+      userID:
+        type: "integer"
+        format: "int32"
+      lastName:
+        type: "string"
+        maxLength: 56
+      middleInitial:
+        type: "string"
+        maxLength: 1
+      firstName:
+        type: "string"
+      birthDate:
+        type: "string"
+        format: "date"
+    description: "Basic format for a user with basic data; userID to identify users,\
+      \ \nfirst name, last name and middle initial, as well as birthdate and \nsex.\n"
+  Data:
+    type: "object"
+    properties:
+      userID:
+        type: "integer"
+        format: "int32"
+      test:
+        type: "string"
+      data:
+        type: "array"
+        items:
+          type: "integer"
+    description: "Format for a generic set of data, bound to a user by userID. Includes\
+      \ a\ntest type, and an array of data.\n"
+  User_List:
+    type: "object"
+    format: "array"
+    description: "Array of User objects, used in getUserIndex to return a list of\
+      \ users.\n"
+  Data_List:
+    type: "array"
+    description: "Array of Data objects, used to get data from the server in getData.\n"
+    items:
+      $ref: "#/definitions/Data"
+  Blood_Pressure_Data:
+    type: "object"
+    format: "array"
+    description: "An array of blood pressure data used in getData/bloodPressure\n\
+      Accepted format: (<timestamp>, <diastolic>, <systolic>, <pulse>)\n"
+  Pulse_Recovery_Data:
+    type: "object"
+    format: "array"
+    description: "An array of two-item array containing timestamp and pulse data,\
+      \ used in\ngetData/recoveryTest\nFormat: [(<timestamp>, <pulse>)...]\nTimestamp\
+      \ format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+  Electrical_Resistance_Data:
+    type: "object"
+    format: "array"
+    description: "An array containing a timestamp, conductance reading, resistance\
+      \ reading, \nand electric current. \nFormat:  (<timestamp>, <conductance>, <resistance>,\
+      \ <current>)\n"
+parameters:
+  reqLastName:
+    name: "lastName"
+    in: "query"
+    description: "The last name of the user. (Max length of 35.)"
+    required: true
+    type: "string"
+    maxLength: 35
+    format: "string"
+  reqMiddleInitial:
+    name: "middleInitial"
+    in: "query"
+    description: "User's middle initial initial\n"
+    required: true
+    type: "string"
+    maxLength: 1
+  reqFirstName:
+    name: "firstName"
+    in: "query"
+    description: "The first name of the user. (Max length of 35.)"
+    required: true
+    type: "string"
+    maxLength: 35
+    format: "string"
+  reqBirthdate:
+    name: "birthdate"
+    in: "query"
+    description: "Birthdate of the user.\nAccepted format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00\
+      \ (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+    required: true
+    type: "string"
+    format: "date"
+  lastName:
+    name: "lastName"
+    in: "query"
+    description: "The last name of the user. (Max length of 35.)"
+    required: false
+    type: "string"
+    maxLength: 35
+    format: "string"
+  middleInitial:
+    name: "middleInitial"
+    in: "query"
+    description: "User's middle initial initial\n"
+    required: false
+    type: "string"
+    maxLength: 1
+  firstName:
+    name: "firstName"
+    in: "query"
+    description: "The first name of the user. (Max length of 35.)"
+    required: false
+    type: "string"
+    maxLength: 35
+    format: "string"
+  birthdate:
+    name: "birthdate"
+    in: "query"
+    description: "Birthdate of the user.\nAccepted format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00\
+      \ (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+    required: false
+    type: "string"
+    format: "date"
+  reqUserID:
+    name: "userID"
+    in: "query"
+    description: "User ID"
+    required: true
+    type: "integer"
+    format: "int32"
+  testType:
+    name: "testType"
+    in: "query"
+    description: "Test keyword specifying what type of data the api should expect.\
+      \ (Current options: 'BloodPressure', 'Recovery', 'ElectricalResistance')\n"
+    required: false
+    type: "string"
+  reqTestType:
+    name: "testType"
+    in: "query"
+    description: "Test keyword specifying what type of data the api should expect.\
+      \ (Current options: 'BloodPressure', 'Recovery')\n"
+    required: true
+    type: "string"
+  startTime:
+    name: "startTime"
+    in: "query"
+    description: "Optional Starting date and time specification. Accepted format:\
+      \ ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+    required: false
+    type: "string"
+    format: "date-time"
+  endTime:
+    name: "endTime"
+    in: "query"
+    description: "Optional Ending date and time specification. Accepted format: ISO\
+      \ 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+    required: false
+    type: "string"
+    format: "date-time"
+  data:
+    name: "data"
+    in: "query"
+    description: "BloodPressure: [timestamp, systolic, diastolic, pulse]\nRecovery:\
+      \ ((timestamp, pulse)...)\n"
+    required: true
+    type: "array"
+    items:
+      type: "string"
+    collectionFormat: "multi"
+  bloodPressureData:
+    in: "body"
+    name: "bloodPressureData"
+    description: "An array containing blood pressure test data that will be sent to\
+      \ a database\nfor further use. The format of this array should be; \n(<timestamp>,\
+      \ <diastolic>, <systolic>, <pulse>)\nAccepted timestamp format: ISO 8601 e.g.\
+      \ 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+    required: true
+    schema:
+      type: "array"
+      items:
+        type: "string"
+  recoveryTestData:
+    in: "body"
+    name: "recoveryTestData"
+    description: "An array containing all recoveryTestPoint items from a pulse recovery\
+      \ test\nthat will be sent to a database.\nAccepted format: [(<timestamp>, <pulse>)...]\n\
+      Accepted timestamp format: ISO 8601 e.g. 2016-07-12T13:21:35+00:00 (YYYY-MM-DDTHH:MM:SS+00:00)\n"
+    required: true
+    schema:
+      type: "array"
+  electricalResistanceData:
+    in: "body"
+    name: "electricalResistanceData"
+    description: "An array of data containing a timestamp, conductance reading, resistance\
+      \ \nreading, and current. \nAccepted format: (<timestamp>, <conductance>, <resistance>,\
+      \ <current>)\n"
+    required: true
+    schema:
+      type: "array"
+      items:
+        type: "string"
