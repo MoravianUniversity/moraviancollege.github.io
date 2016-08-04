@@ -1,0 +1,99 @@
+#: kivy 1.0.9
+
+<PlotTest>:
+
+	patient: patient_spinner.text
+
+	BoxLayout:
+
+		orientation: 'horizontal'
+		size_hint: [1, .1]
+		pos_hint: {'x': 0, 'y': .9}
+
+		Spinner:
+			id: test_spinner
+			text: 'Blood Pressure'
+			values: ['Blood Pressure']
+
+		Button:
+			text: 'Go'
+			on_press: root.change_points(graph)
+			on_press: root.change_points_over_time(graph2)
+
+		Spinner:
+			id: patient_spinner
+			text: 'Patient 1'
+			values: ['Patient 1', 'Patient 2', 'Patient 3', 'Patient 4', 'Bob E Smith', 'Mike F James']
+
+	Label:
+		text: 'Most Recent Blood Pressure'
+		size_hint: .1, .1
+		pos_hint: {'x': .2, 'y': .75}
+
+	Label:
+		text: 'Blood Pressure Over the Past 6 months'
+		size_hint: .1, .1
+		pos_hint: {'x': .68, 'y': .75}
+
+	BoxLayout:
+
+		orientation: 'horizontal'
+		size_hint: [.95, .75]
+		pos_hint: {'x': 0, 'y': 0}
+
+		Graph:
+			id: graph
+			size_hint_x: 1
+			size_hint_y: 1
+			tick_color: 1, 1, 1, 1
+			drawborder: True
+			xlabel: 'Diastolic'
+			ylabel: 'Systolic'
+			x_ticks_major: 10
+			y_ticks_major: 10
+			y_grid_label: True
+			x_grid_label: True
+			padding: 5
+			x_grid: False
+			y_grid: False
+			xmin: -0
+			xmax: 100
+			ymin: -0
+			ymax: 200
+			canvas.before:
+				Color:
+					rgba: 1, 0, 0, .85
+				Rectangle:
+					pos: 101, 85
+					size: graph.width - 131, graph.height - 108
+				Color:
+					rgba: 1, 1, 0, .85
+				Rectangle:
+					pos: 101, 85
+					size: (graph.width - 131) * .9, (graph.height - 107) * .7
+				Color:
+					rgba: 0, 1, 0, .85
+				Rectangle:
+					pos: 101, 85
+					size: (graph.width - 131) * .8, (graph.height - 108) * .6
+				Color:
+					rgba: 0, 0, 1, .75
+				Rectangle:
+					pos: 101, 85
+					size: (graph.width - 131) * .6, (graph.height - 107) * .3
+
+		Graph:
+			id: graph2
+			xlabel: 'January-June 2016'
+			ylabel: 'BloodPressure (Top=Systolic, Bottom= Diastolic)'
+			x_ticks_major: 1
+			y_ticks_major: 10
+			y_grid_label: True
+			x_grid_label: False
+			padding: 5
+			x_grid: True
+			y_grid: True
+			xmin:0
+			xmax: 15
+			ymin: 0
+			ymax: 200
