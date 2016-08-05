@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+	<head>
+
+		<!-- Basic Page Needs
+		================================================== -->
+		<meta charset="utf-8">
+		<title>CS Projects: OpenMRS</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<!-- Mobile Specific Metas
+		================================================== -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<!-- CSS
+		================================================== -->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/base.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/skeleton.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/layout.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/style.css"><!--Map-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/bootstrap.css"> <!--Bootstrap-->
+
+		<!--Browser Tab Icon-->
+		<link rel="shortcut icon" href="../images/mocostar.png">
+
+	</head>
+	<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<!--Header-->
+
+	<header id="header" class="site-header" role="banner">
+		<div class="container sixteen columns over">
+			<h1 id="site-title" class="site-title">
+				<a href="../index.html" id="logo"><img src="../images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+			</h1>
+		</div>
+	</header>
+
+	<!--Page Body-->
+	<div id="Main_Content" class="container">
+		<div class="sixteen columns main-content">
+			<!--Back Button-->
+			<script> function visitPage(){
+					window.location='../index.html';
+					}
+			</script>
+			<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
+			<!--Page Title-->
+			<h1 style="text-align:center;">Hydra/Linea Transformation</h1>
+			<br>
+		</div>
+
+		<!--Side Bar-->
+
+		<div class="container">
+			<aside class="six columns right-sidebar">
+				<div class="sidebar-widget social">
+					<h4 style="text-align:center">Developers:</h4>
+					<p>Megan Biernat, Gabriel Fournier, Anna Lamoureux, Martin Nesbitt, Joshua Russett, John Vonelli, Nicholas Zambelli</p>
+
+					<h4 style="text-align:center">About the Project</h4>
+					<p>Powerful conclusions frequently occur when unrelated datasets are combined. Unfortunately, data scientists are, more often than not, unaware of the available data. To address this problem Merck developed Hydra to catalogue datasets and facilitate data sharing among departments.</p>
+					<p>In 2015, a fork of Hydra (called Linea) was given to DocGraph, and additional features were added to meet their needs. This early release of Hydra lacked the ability for users to input new datasets, which meant that DocGraph had to add these datasets to the database manually.</p>
+					<p>Development of Hydra continued while the Linea version remained static. Our task was to merge the existing features of Linea with the new features of Hydra. We re-skinned Hydra to utilize the DocGraph theme, added OAuth authentication for Google accounts, and developed a process to transfer the database between versions.</p>
+					<img src="images/intro.png" style="border:1px solid lightgrey;border-radius:5px; width: 80%">
+					<br>
+					<br>
+					<br>
+					<h4 style="text-align:center">Conclusion</h4>
+					<p>According to Fred Trotter: “These improvements will improve the quality of the abstraction layer that it provides to the data scientist… it is hard to estimate the value of improved abstraction layers, but inevitably the gains are always made by making hard tasks that come later simpler and easier to approach.”</p>
+				</div>
+			</aside>
+
+			<!--Main Content-->
+
+			<article class="eleven columns main-content">
+				<h3>Reskinning</h3>
+				<p>To reskin Hydra, we edited Javascript and the CSS files to replace color hex codes, replace images, and adjust sizes.  Along with this, the newsfeed page that Linea uses was present in Hydra, but was not being utilized, so we enabled it in the updated Linea version.  Lastly, an “About” item in the navigation menu that links to the DocGraph website was also added.</p>
+				<img src="images/LineaThumbNail.jpg" style="border:1px solid lightgrey;border-radius:5px;width: 70%">
+				<hr>
+				<br>
+				<h3>Google OAuth</h3>
+				<p>Using OAuth allows for developers to shift the burden of authentication from their own personal implementations to a well-established, third-party entity such as Google. For the user, utilization of OAuth for authentication tends to be much simpler because it eliminates the need to create another account.</p>
+				<h4>OAuth Process</h4>
+				<img src="images/oauth.jpg" class="scale-with-grid" style="border:1px solid lightgrey;border-radius:5px;">				
+				<br>
+				<br>
+				<br>
+				<h4>OAuth Implementation</h4>
+				<ul style="list-style-type:circle">
+					<li>We used the OmniAuth gem for Ruby on Rails, which acts as a dissociated black-box for authentication and supports the use of multiple providers and even LDAP.</li>
+					<li>In Linea, the OmniAuth gem generates the code that does the heavy lifting for steps 1 and 2 of the graphic: receiving the token and pushing it back up to the server.</li>
+					<li>The OmniAuth gem also does the heavy-lifting of the token validation server side (step 3), really allowing the developers to focus on generating the proper user session after the user has been authenticated.</li>
+				</ul>
+				<hr>
+				<br>
+				<h3>Database Transfer</h3>
+				<ul style="list-style-type:circle">
+					<li>Because Hydra and Linea evolved independently, they have different tables within their database, and sometimes different fields within the same table.</li>
+					<li>Hydra and Linea share most (22) tables within their databases, which were easily carried over into the new database.</li>
+					<li>Hydra had 11 tables not in Linea, but these were eliminated because they were empty in Hydra and not referenced in the code.</li>
+					<li>Linea had 3 tables not in Hydra that corresponded to features unique to Linea.</li>
+						<ul style="list-style-type:square">
+							<li>These tables were approved to be dropped.</li>
+							<li>We transferred the tables anyway to ensure no data was lost.</li>
+						</ul>
+				</ul>
+				<img src="images/db.jpg" class="scale-with-grid" style="border:1px solid lightgrey;border-radius:5px;">
+				<br>
+			</article>
+		</div>
+
+		<!--Footer-->
+
+		<footer>
+			<div class="row">
+				<div id="footer-base">
+					<div class="container">
+						<div class="two columns">
+							<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+						</div>
+						<div class="two columns far-edge">
+							Design by <a href="http://www.opendesigns.org">OD</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	</body>
+</html>
