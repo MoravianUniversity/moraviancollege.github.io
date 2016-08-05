@@ -85,7 +85,7 @@
 				<img src="images/k50.png" style="border:1px solid lightgrey;border-radius:5px;width: 50%">
 				<br>
 				<br>
-				<p>We believe that the doctors in the large clusters are correctly classified. The ones in the small clusters are more likely to be classified. Because the number of doctors outside the large clusters is small, a one-by-one check of their classification is feasible.</p>
+				<p>Because <i>k</i>-means groups items that are similar together, we believe that the doctors in the large clusters are correctly classified. The ones in the small clusters are more likely to be misclassified. Because the number of doctors outside the large clusters is small, a one-by-one check of their classification is feasible.</p>
 				<br>
 				
 				</div>
@@ -98,7 +98,7 @@
 				<br>
 				<p></p>
 				<h3>The 2014 Medicare Billing Data</h3>
-				<p>This dataset contains 28 fields, which include Doctor NPI's, Doctor classification, HCPCS codes and counts. This data holds records for 938,146 doctors, with 91 different classifications and 5,972 HCPCS codes.</p>
+				<p>This dataset contains 28 fields, which include Doctor NPI's, Doctor classification, HCPCS codes and procedure counts. This data holds records for 938,146 doctors, with 91 different classifications and 5,972 HCPCS codes.</p>
 				<img src="images/doctorcounts.png" style="border:1px solid lightgrey;border-radius:5px;width: 75%%">
 
 				<hr>
@@ -108,7 +108,7 @@
 				
 				<p></p>
 				<h3>Data Normalization and Scaling</h3>
-				<p>We normalized the data for each doctor to use the percent of total billed procedures instead of the procedure count. This was done so that the quantity of patients did not affect our clustering. We then applied a non-linear scaling function to each attribute to produce a normalized distribution of the data, so that doctors would be more spaced out, making clustering a simpler task.
+				<p>We normalized the data for each doctor in order to use the percent of total billed procedures instead of the procedure count. This was done so that the quantity of patients did not affect our clustering. We then applied a non-linear scaling function to each attribute to produce a normalized distribution of the data, so that doctors would be more spaced out, making clustering a simpler task.
 </p>
 				<img src="images/normalizationandscaling.png" style="border:1px solid lightgrey;border-radius:5px;width: 100%">
 				<br>
@@ -119,7 +119,7 @@
 				
 				<p></p>
 				<h3>Future Work</h3>
-				<p>We would like to find the proper <i>k</i> to use on Internal Medicine, so that we can properly classify these doctors. In addition to this, we still have 90 other types of doctors to analyze. On top of this, we would like to find a solid way of finding out what the misclassified doctors truly are. We would also like to find new techniques of reducing dimensions, such as folding, instead of using standard deviation.</p>
+				<p>We would like to find the proper <i>k</i> to use on Internal Medicine, so that we can properly classify these doctors. In addition, we still have 90 other types of doctors to analyze. On top of this, finding a solid way of finding out what the misclassified doctors truly are is a step we must take in the future. We would also like to find new techniques of reducing dimensions, such as folding, instead of using standard deviation.</p>
 
 				<br>
 
