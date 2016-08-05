@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+	<head>
+
+		<!-- Basic Page Needs
+		================================================== -->
+		<meta charset="utf-8">
+		<title>CS Projects: Identifying Misclassification of Doctors in Medicare Data</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<!-- Mobile Specific Metas
+		================================================== -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<!-- CSS
+		================================================== -->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/base.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/skeleton.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/layout.css"><!--Web Page-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/style.css"><!--Map-->
+		<link rel="stylesheet" type="text/css" href="../stylesheets/bootstrap.css"> <!--Bootstrap-->
+
+		<!--Browser Tab Icon-->
+		<link rel="shortcut icon" href="../images/mocostar.png">
+
+	</head>
+	<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+
+	<!--Header-->
+
+	<header id="header" class="site-header" role="banner">
+		<div class="container sixteen columns over">
+			<h1 id="site-title" class="site-title">
+				<a href="../index.html" id="logo"><img src="../images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+			</h1>
+		</div>
+	</header>
+
+	<!--Page Body-->
+	<div id="Main_Content" class="container">
+		<div class="sixteen columns main-content">
+			<!--Back Button-->
+			<script> function visitPage(){
+					window.location='../index.html';
+					}
+			</script>
+			<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
+			<!--Page Title-->
+			<h1 style="text-align:center;">Identifying Misclassification of Doctors in Medicare Data</h1>
+			<br>
+		</div>
+
+		<!--Side Bar-->
+
+		<div class="container">
+			<aside class="seven columns right-sidebar">
+				<div class="sidebar-widget social">
+					<br>
+					<hr>
+					<h4 style="text-align:center">Student Developers:</h4>
+					<p>William Collins & Alec Gerhart</p>
+
+					<h4 style="text-align:center">About the Project</h4>
+					
+<p>According to Fred Trotter, 30% of the 938,000 doctors who billed Medicare in 2014 have an incorrect address. Fred corrected the dataset, but this created suspicion towards other parts of the dataset being mislabeled. We explored the error in doctor classification in the 2014 Medicare Billing data. We developed a procedure to identify a subset of the doctors with likely incorrect classifications. For this research, we focussed on doctors who are classified as Internal Medicine.</p>
+				<p></p>
+				<h3><i>K</i>-means Clustering Algorithm</h3>
+				<p>The <i>k</i>-means algorithm takes data with <i>n</i> numeric attributes and identifies <i>k</i> clusters of that data within <i>n</i>-dimensional space. The choice of <i>k</i> affects the quality of that clustering.</p>
+				<img src="images/kmeansGraphic.png" style="border:1px solid lightgrey;border-radius:5px;width: 75%">
+				<br>
+<p></p>
+				<h3>Dimension Reduction</h3>
+				<p>A run of <i>k</i>-means with 5,972 HCPCS codes would take too long and use too much memory. Our solution was to remove some of the features (procedures) from the dataset. Common procedure codes such as 99214 (office visit) would cause <i>k</i>-means to group doctors together who are in fact different. We filtered features based on their standard deviation across all doctors. If a feature had a low standard deviation, then it is likely that all of the doctors had a similar value for that procedure, so it was removed. This filtering resulted in a dataset with only 452 features.</p>
+				<br>
+				<p></p>
+				<h3>Results</h3>
+				<p>We ran the <i>k</i>-means algorithm with 10 clusters, and found that 99.99% of the doctors were in one cluster. The other clusters had a total of 14 doctors.</p>
+				<img src="images/k10.png" style="border:1px solid lightgrey;border-radius:5px;width: 50%">
+				<br>
+				<br>
+				<p>Finally, we ran the algorithm with 50 clusters. One cluster had 58% of the doctors, and another had 41.8% of them. The other 48 clusters had 124 doctors.</p>
+				<img src="images/k50.png" style="border:1px solid lightgrey;border-radius:5px;width: 50%">
+				<br>
+				<br>
+				<p>Because <i>k</i>-means groups items that are similar together, we believe that the doctors in the large clusters are correctly classified. The ones in the small clusters are more likely to be misclassified. Because the number of doctors outside the large clusters is small, a one-by-one check of their classification is feasible.</p>
+				<br>
+				
+				</div>
+			</aside>
+
+			<!--Main Content-->
+
+			<article class="six columns main-content">
+				<br>
+				<br>
+				<p></p>
+				<h3>The 2014 Medicare Billing Data</h3>
+				<p>This dataset contains 28 fields, which include Doctor NPI's, Doctor classification, HCPCS codes and procedure counts. This data holds records for 938,146 doctors, with 91 different classifications and 5,972 HCPCS codes.</p>
+				<img src="images/doctorcounts.png" style="border:1px solid lightgrey;border-radius:5px;width: 75%%">
+
+				<hr>
+				<br>
+
+				
+				
+				<p></p>
+				<h3>Data Normalization and Scaling</h3>
+				<p>We normalized the data for each doctor in order to use the percent of total billed procedures instead of the procedure count. This was done so that the quantity of patients did not affect our clustering. We then applied a non-linear scaling function to each attribute to produce a normalized distribution of the data, so that doctors would be more spaced out, making clustering a simpler task.
+</p>
+				<img src="images/normalizationandscaling.png" style="border:1px solid lightgrey;border-radius:5px;width: 100%">
+				<br>
+				<br>
+				<p>We ran the algorithm with 25 clusters, and found one cluster with 93% of the doctors, and another cluster with 6.8%of the doctors. The rest of the clusters had a total of 95 doctors.</p>
+				<img src="images/k25.png" style="border:1px solid lightgrey;border-radius:5px;width: 75%">
+				
+				
+				<p></p>
+				<h3>Future Work</h3>
+				<p>We would like to find the proper <i>k</i> to use on Internal Medicine, so that we can properly classify these doctors. In addition, we still have 90 other types of doctors to analyze. On top of this, finding a solid way of finding out what the misclassified doctors truly are is a step we must take in the future. We would also like to find new techniques of reducing dimensions, such as folding, instead of using standard deviation.</p>
+
+				<br>
+
+				
+				
+
+			</article>
+		</div>
+
+		<!--Footer-->
+
+		<footer>
+			<div class="row">
+				<div id="footer-base">
+					<div class="container">
+						<div class="two columns">
+							<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+						</div>
+						<div class="two columns far-edge">
+							Design by <a href="http://www.opendesigns.org">OD</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	</body>
+</html>
