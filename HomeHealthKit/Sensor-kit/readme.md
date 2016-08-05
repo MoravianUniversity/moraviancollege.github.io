@@ -14,3 +14,5 @@ first create a .o file for your cpp file by using the command
 
 Second command:
 	g++ -shared -Wl,-soname,lib_name_you_wish_to_use.so -o libname_you_wish_to_use.so 	name_of_o_file_created_above.o eHealth.o arduPi.o
+
+For additional information please contact Michael Turnbach at stmpt03@moravian.edu or Andrew Reed at stabr02@moravian.edu
