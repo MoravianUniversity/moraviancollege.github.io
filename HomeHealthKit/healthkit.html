@@ -31,125 +31,118 @@
 	</head>
 	<body>
 
-	<!-- Primary Page Layout
-	================================================== -->
+		<!-- Primary Page Layout
+		================================================== -->
 
-	<!--Header-->
+		<!--Header-->
 
-	<header id="header" class="site-header" role="banner">
-		<div class="container sixteen columns over">
-			<h1 id="site-title" class="site-title">
-				<a href="index.html" id="logo"><img src="../images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
-			</h1>
-		</div>
-	</header>
+		<header id="header" class="site-header" role="banner">
+			<div class="container sixteen columns over">
+				<h1 id="site-title" class="site-title">
+					<a href="index.html" id="logo"><img src="../images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+				</h1>
+			</div>
+		</header>
 
-	<!--Page Body-->
+		<!--Page Body-->
 
-	<div id="Main_Content" class="container">
-		<div class="sixteen columns main-content">
-			<!--Back Button-->
-			<script> function visitPage(){
-					window.location='index.html';
-					}
-			</script>
-			<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
-			<!--Page Title-->
-			<h1 style="text-align:center;">Home Healthkit</h1>
-			<br>
-		</div>
+		<div id="Main_Content" class="container">
+			<div class="sixteen columns main-content">
+				<!--Back Button-->
+				<script> function visitPage(){
+						window.location='../index.html';
+						}
+				</script>
+				<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
+				<!--Page Title-->
+				<h1 style="text-align:center;">Home Healthkit</h1>
+				<br>
+			</div>
 
-		<!--Side Bar-->
+			<!--Side Bar-->
 
-		<aside class="six columns right-sidebar" style="padding-right: 20px">
-			<div class="sidebar-widget social">
-				<h3 style="text-align:center">Student Developers:</h4>
-				<p>Megan Biernat, Gabriel Fournier, Anna Lamoureux, Martin Nesbitt, Andrew Reed, Joshua Russett, Michael Turnbach, John Vonelli, Nicholas Zambelli</p>
+			<aside class="six columns right-sidebar" style="padding-right: 20px">
+				<div class="sidebar-widget social">
+					<h3 style="text-align:center">Student Developers:</h4>
+					<p>Megan Biernat, Gabriel Fournier, Anna Lamoureux, Martin Nesbitt, Andrew Reed, Joshua Russett, Michael Turnbach, John Vonelli, Nicholas Zambelli</p>
+						
+					<img src="images/flowchart.png" class="scale-with-grid" style="padding:5px">
+					<h3 style="text-align:center">About the Project</h3>
+					<p>For patients who attend annual check ups, health data is recorded and an opinion of general health is given based on trends over time. This method results in data having long periods of time between new entries, making trends difficult to track. Our sensor platform allows a patient to run tests at home and upload the results to a server, allowing for an increase in testing frequency. The server is accessible anywhere the internet is available, allowing patients to run tests in a doctor’s office, at home, or while traveling. Using the Data Visualization App, medical professionals can view patient data over time in order to track each patient’s overall health. Monitoring health in such a way increases testing flexibility and allows dangerous trends to be corrected before serious illnesses take effect.</p>
 				
-				<img src="images/flowchart.png" class="scale-with-grid" style="padding:5px">
-
-				<h3 style="text-align:center">About the Project</h4>
-				<p>For patients who attend annual check ups, health data is recorded and an opinion of general health is given based on trends over time. This method results in data having long periods of time between new entries, making trends difficult to track. Our sensor platform allows a patient to run tests at home and upload the results to a server, allowing for an increase in testing frequency. The server is accessible anywhere the internet is available, allowing patients to run tests in a doctor’s office, at home, or while traveling. Using the Data Visualization App, medical professionals can view patient data over time in order to track each patient’s overall health. Monitoring health in such a way increases testing flexibility and allows dangerous trends to be corrected before serious illnesses take effect.</p>
+					<p>The healthkit was developed as a collaboration between Merck Co and Moravian College to provide students an opportunity to work directly with data and new languages and technologies. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a> and the developing team of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p>
+					
+					<h3 style="text-align:center">Architecture</h3>
+					<p>For data collection, we used C++ libraries to read raw data from an e-Health Platform Sensor Kit, connected to a Raspberry Pi, to allow the data input app, built in Python and Kivy, to interpret and display the data. The data server provides a RESTful API, implemented in Flask, that stores the data in a MySQL database. A second Kivy app gets data from the database through the API and allows users to see data over time.</p>
+					<img src="images/tech.png" style="width:100%; padding-bottom: 10px">
 				
-				<p>The healthkit was developed as a collaboration between Merck Co and Moravian College to provide students an opportunity to work directly with data and new languages and technologies. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a> and the developing team of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p>
-				
-				<h3 style="text-align:center">Architecture</h3>
-				
-				<p>For data collection, we used C++ libraries to read raw data from an e-Health Platform Sensor Kit, connected to a Raspberry Pi, to allow the data input app, built in Python and Kivy, to interpret and display the data. The data server provides a RESTful API, implemented in Flask, that stores the data in a MySQL database. A second Kivy app gets data from the database through the API and allows users to see data over time.</p>
-				
-				<img src="images/tech.png" style="width:100%; padding-bottom: 10px">
-				
-				<div class="row">
-					<h3 style="text-align:center">Conclusions</h3>
-					<div style="float:left; width:45%">
-						<h4 style="text-align:center">Advantages</h4>
-						<ul style="list-style-type:circle">
-							<li>Home sensors allow patients to provide doctors with more frequent data.</li>
-							<li>Other sensors such as Fitbit could be integrated to this system.</li>
-							<li>The increase in data could lead to additional research opportunities.</li>
-						</ul>
+					<div class="row">
+						<h3 style="text-align:center">Conclusions</h3>
+						<div style="float:left; width:45%">
+							<h4 style="text-align:center">Advantages</h4>
+							<ul style="list-style-type:circle">
+								<li>Home sensors allow patients to provide doctors with more frequent data.</li>
+								<li>Other sensors such as Fitbit could be integrated to this system.</li>
+								<li>The increase in data could lead to additional research opportunities.</li>
+							</ul>
+						</div>
+						<div style="float:right; width:45%">
+							<h4 style="text-align:center">Potential Drawbacks</h4>
+							<ul style="list-style-type:circle">
+								<li>The sensor kit is not medically certified.</li>
+								<li>Sensor kits are expensive and the sensors are not portable.</li>
+								<li>While the current architecture works on a very small scale, if it were to be more widely used, the architecture improvements and added security would significantly increase cost.</li>
+							</ul>
+						</div>
 					</div>
-					<div style="float:right; width:45%">
-						<h4 style="text-align:center">Potential Drawbacks</h4>
-						<ul style="list-style-type:circle">
-							<li>The sensor kit is not medically certified.</li>
-							<li>Sensor kits are expensive and the sensors are not portable.</li>
-							<li>While the current architecture works on a very small scale, if it were to be more widely used, the architecture improvements and added security would significantly increase cost.</li>
-						</ul>
+				</div>
+			</aside>
+
+			<!--Main Content-->
+
+			<article class="ten columns main-content">
+				<div id="pageTitle">
+					<div class="row">
+						<h3 style="text-align:center">Sensor Interface</h3>
+						<p>The e-Health Library provided by Cooking-Hacks is written in C++. We used the Ctypes Python library to utilize the e-Health Library in Python. We wrote a sensor library to allow users to interact with the sensors in a Pythonic way. The sensor controls library contains high-level functions that abstract away the details of interacting with the sensors.</p>
+					</div>
+				
+					<div class="row">
+						<h3 style="text-align:center">Data Input App</h3>
+						<p>The input app (to the left) allows patients to collect their medical data, display the results, and send the data to the server. With the simple interface, speed of data collection and storage, and future compatibility with iOS and Android, the app encourages individuals to test more often, decreasing the time-interval between data points for physicians.</p>				
+						<img src="images/input.png" style="float:right; padding-top:15px; padding-bottom:30px; width:100%">
+					</div>
+				
+					<div class="row">
+						<h3 style="text-align:center">RESTful API</h3>
+						<p>The REST API was implemented in Python using the Flask framework. The API supports an arbitrary number of patients (users). Currently, the API supports data from blood pressure, electrical resistance, and heart rate recovery tests, but it can easily be expanded to support other forms of data. The API is flexible because it supports optional parameters for most functions.</p>
+						<img src="images/API%20Diagram.png" style="float:right; width:90%; padding-top:15px; padding-bottom:30px; padding-right: 90px">
+					</div>
+				
+					<div class="row">
+						<h3 style="text-align:center">Data Visualization App</h3>
+						<p>This app demonstrates a potential use case for doctors. The doctor can view a patient’s most recent blood pressure reading and historic data simultaneously. The drop-down menu allows the doctor to cycle through patients.</p>
+						<img src="images/dataVis.png" style="width:100%; padding-top:15px; padding-bottom:30px;">
+					</div>
+				</div>
+			</article>
+		</div>
+
+		<!--Footer-->
+
+		<footer>
+			<div class="row">
+				<div id="footer-base">
+					<div class="container">
+						<div class="two columns">
+							<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+						</div>
+						<div class="two columns far-edge">
+							Design by <a href="http://www.opendesigns.org">OD</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</aside>
-
-		<!--Main Content-->
-
-		<article class="ten columns main-content">
-			
-			<div id="pageTitle">
-				<div class="row">
-					<h3 style="text-align:center">Sensor Interface</h3>
-					<p>The e-Health Library provided by Cooking-Hacks is written in C++. We used the Ctypes Python library to utilize the e-Health Library in Python. We wrote a sensor library to allow users to interact with the sensors in a Pythonic way. The sensor controls library contains high-level functions that abstract away the details of interacting with the sensors.</p>
-				</div>
-				
-				<div class="row">
-					<h3 style="text-align:center">Data Input App</h3>
-					<p>The input app (to the left) allows patients to collect their medical data, display the results, and send the data to the server. With the simple interface, speed of data collection and storage, and future compatibility with iOS and Android, the app encourages individuals to test more often, decreasing the time-interval between data points for physicians.</p>				
-					<img src="images/input.png" style="float:right; padding-top:15px; padding-bottom:30px; width:100%">
-				</div>
-				
-				<div class="row">
-					<h3 style="text-align:center">RESTful API</h3>
-					<p>The REST API was implemented in Python using the Flask framework. The API supports an arbitrary number of patients (users). Currently, the API supports data from blood pressure, electrical resistance, and heart rate recovery tests, but it can easily be expanded to support other forms of data. The API is flexible because it supports optional parameters for most functions.</p>
-					<img src="images/API%20Diagram.png" style="float:right; width:90%; padding-top:15px; padding-bottom:30px; padding-right: 90px">
-				</div>
-				
-				<div class="row">
-					<h3 style="text-align:center">Data Visualization App</h3>
-					<p>This app demonstrates a potential use case for doctors. The doctor can view a patient’s most recent blood pressure reading and historic data simultaneously. The drop-down menu allows the doctor to cycle through patients.</p>
-					<img src="images/dataVis.png" style="width:100%; padding-top:15px; padding-bottom:30px;">
-				</div>
-				
-				
-			</div>
-		</article>
-
-	</div>
-
-	<!--Footer-->
-
-	<footer>
-		<div class="row">
-			<div id="footer-base">
-				<div class="container">
-					<div class="two columns">
-						<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
-					</div>
-					<div class="two columns far-edge">
-						Design by <a href="http://www.opendesigns.org">OD</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+		</footer>
 	</body>
 </html>
