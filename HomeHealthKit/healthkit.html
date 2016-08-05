@@ -39,7 +39,7 @@
 		<header id="header" class="site-header" role="banner">
 			<div class="container sixteen columns over">
 				<h1 id="site-title" class="site-title">
-					<a href="index.html" id="logo"><img src="../images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
+					<a href="../index.html" id="logo"><img src="../images/mocologo.png" alt="Moravian Logo" height="65" width="275" display="float" text-align="center"/></a>
 				</h1>
 			</div>
 		</header>
@@ -48,12 +48,6 @@
 
 		<div id="Main_Content" class="container">
 			<div class="sixteen columns main-content">
-				<!--Back Button-->
-				<script> function visitPage(){
-						window.location='../index.html';
-						}
-				</script>
-				<button onclick="visitPage();"><i class="icon-chevron-left"></i> Back to Projects Page</button>
 				<!--Page Title-->
 				<h1 style="text-align:center;">Home Healthkit</h1>
 				<br>
@@ -70,7 +64,7 @@
 					<h3 style="text-align:center">About the Project</h3>
 					<p>For patients who attend annual check ups, health data is recorded and an opinion of general health is given based on trends over time. This method results in data having long periods of time between new entries, making trends difficult to track. Our sensor platform allows a patient to run tests at home and upload the results to a server, allowing for an increase in testing frequency. The server is accessible anywhere the internet is available, allowing patients to run tests in a doctor’s office, at home, or while traveling. Using the Data Visualization App, medical professionals can view patient data over time in order to track each patient’s overall health. Monitoring health in such a way increases testing flexibility and allows dangerous trends to be corrected before serious illnesses take effect.</p>
 				
-					<p>The healthkit was developed as a collaboration between Merck Co and Moravian College to provide students an opportunity to work directly with data and new languages and technologies. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a> and the developing team of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>.</p>
+					<p>The healthkit was developed as a collaboration between Merck Co and Moravian College to provide students an opportunity to work directly with data and new languages and technologies. If you would like to check out the sponsors of this project, funding and project guidance is provided by <a href="http://www.merck.com/index.html" style="font-size:14px;color:SkyBlue">Merck Co</a> and the developing team of students are from <a href="http://www.moravian.edu" style="font-size:14px;color:SkyBlue">Moravian College</a>. The Github repository for this project is located <a href="https://github.com/MoravianCollege/moraviancollege.github.io/tree/master/HomeHealthKit" style="font-size:14px;color:SkyBlue">here</a>.</p>
 					
 					<h3 style="text-align:center">Architecture</h3>
 					<p>For data collection, we used C++ libraries to read raw data from an e-Health Platform Sensor Kit, connected to a Raspberry Pi, to allow the data input app, built in Python and Kivy, to interpret and display the data. The data server provides a RESTful API, implemented in Flask, that stores the data in a MySQL database. A second Kivy app gets data from the database through the API and allows users to see data over time.</p>
@@ -135,7 +129,7 @@
 				<div id="footer-base">
 					<div class="container">
 						<div class="two columns">
-							<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2015
+							<a href="http://mathcs.moravian.edu/">Moravian College CS Department</a> &copy; 2016
 						</div>
 						<div class="two columns far-edge">
 							Design by <a href="http://www.opendesigns.org">OD</a>
